@@ -1,3 +1,4 @@
+package logic;
 
 class Product {
 
@@ -30,8 +31,8 @@ class Product {
 
 	private int id;
 	private String name;
-	private String description;
-	private double price;
+	private String phone;
+	private Address address;
 	
 	private Product() { }
 	
@@ -39,19 +40,11 @@ class Product {
 		return name;
 	}
 	
-	/**
-	 *  Get description
-	 *  
-	 *  @return description
-	**/
-	public String getDescription() {
-		return description;
+	public String getPhone() {
+		return phone;
 	}
 	
-	/**
-	 *  Get price
-	**/
-	public double getPrice() {
+	public double getAddress() {
 		return price;
 	}
 	
