@@ -1,28 +1,29 @@
 package logic;
 
-class Product {
+class User {
 
-	static public Product create(String name, String description, double price) {
+	static public User create(String name, String phone, Address address) {
 		
 		// TODO: Insert into database
 		
-		Product p = new Product();
+		User p = new User();
 		p.name = name;
-		p.description = description;
-		p.price = price;
+		p.phone = phone;
+		p.address = address;
 		
 		return p;
 	}
 	
-	static public Product retrieve(int id) {
-		Product[] list = retrieve({id});
+	static public User retrieve(int id) {
+		int[] l = {id};
+		User[] list = retrieve(l);
 		return list[0];
 	}
 
-	static public Product[] retrieve(int[] id) {
+	static public User[] retrieve(int[] id) {
 		// TODO: Select from database
 		
-		Product[] list;
+		User[] list = null;
 		
 		return list;
 	}
@@ -34,43 +35,57 @@ class Product {
 	private String phone;
 	private Address address;
 	
-	private Product() { }
-	
+	private User() { }
+
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
-	
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the phone
+	 */
 	public String getPhone() {
 		return phone;
 	}
-	
-	public double getAddress() {
-		return price;
-	}
-	
-	
-	public void setName(n) {
-		// TODO: Update database
-		name = n;
-	}
-	
+
 	/**
-	 *  Set description
-	 *  
-	 *  @return description
-	**/
-	public void setDescription(d) {
-		// TODO: Update database
-		description = d;
+	 * @param phone the phone to set
+	 */
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	
+
 	/**
-	 *  set price
-	**/
-	public void setPrice(p) {
-		// TODO: Update database
-		price = p;
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 	
+
 	
 }

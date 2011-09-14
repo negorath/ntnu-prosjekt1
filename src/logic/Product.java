@@ -1,6 +1,6 @@
 package logic;
 
-class Product {
+public class Product {
 
 	static public Product create(String name, String description, double price) {
 		
@@ -15,14 +15,15 @@ class Product {
 	}
 	
 	static public Product retrieve(int id) {
-		Product[] list = retrieve({id});
+		int[] l = {id};
+		Product[] list = retrieve(l);
 		return list[0];
 	}
 
 	static public Product[] retrieve(int[] id) {
 		// TODO: Select from database
 		
-		Product[] list;
+		Product[] list = null;
 		
 		return list;
 	}
@@ -35,50 +36,56 @@ class Product {
 	private double price;
 	
 	private Product() { }
-	
+
+	/**
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
-	 *  Get description
-	 *  
-	 *  @return description
-	**/
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}
-	
+
 	/**
-	 *  Get price
-	**/
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the price
+	 */
 	public double getPrice() {
 		return price;
 	}
-	
-	
-	public void setName(n) {
-		// TODO: Update database
-		name = n;
-	}
-	
+
 	/**
-	 *  Set description
-	 *  
-	 *  @return description
-	**/
-	public void setDescription(d) {
-		// TODO: Update database
-		description = d;
+	 * @param price the price to set
+	 */
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
 	}
 	
-	/**
-	 *  set price
-	**/
-	public void setPrice(p) {
-		// TODO: Update database
-		price = p;
-	}
 	
 	
 }
