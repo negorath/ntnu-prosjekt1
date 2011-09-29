@@ -3,21 +3,47 @@ package logic;
 public class Address {
 	
 	private int id;
-	private String address;
+	private String street;
+	private String houseNumber;
+	private String houseLetter;
 	private String zipcode;
 	private String city;
 	private String country;
 	/**
 	 * @return the address
 	 */
-	public String getAddress() {
-		return address;
+	public String getStreet() {
+		return street;
 	}
 	/**
 	 * @param address the address to set
 	 */
-	public void setAddress(String address) {
-		this.address = address;
+	public void setStreet(String address) {
+		this.street = address;
+	}
+	/**
+	 * @return the houseNumber
+	 */
+	public String getHouseNumber() {
+		return houseNumber;
+	}
+	/**
+	 * @param houseNumber the houseNumber to set
+	 */
+	public void setHouseNumber(String houseNumber) {
+		this.houseNumber = houseNumber;
+	}
+	/**
+	 * @return the houseLetter
+	 */
+	public String getHouseLetter() {
+		return houseLetter;
+	}
+	/**
+	 * @param houseLetter the houseLetter to set
+	 */
+	public void setHouseLetter(String houseLetter) {
+		this.houseLetter = houseLetter;
 	}
 	/**
 	 * @return the zipcode
