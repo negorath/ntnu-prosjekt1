@@ -13,8 +13,8 @@ public class Address {
 
 	private int id;
 	private String street;
-	private String houseNumber;
-	private String houseLetter;
+	private int houseNumber;
+	private char houseLetter;
 	private String zipcode;
 	private String city;
 	private String country;
@@ -33,25 +33,25 @@ public class Address {
 	/**
 	 * @return the houseNumber
 	 */
-	public String getHouseNumber() {
+	public int getHouseNumber() {
 		return houseNumber;
 	}
 	/**
 	 * @param houseNumber the houseNumber to set
 	 */
-	public void setHouseNumber(String houseNumber) {
+	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
 	/**
 	 * @return the houseLetter
 	 */
-	public String getHouseLetter() {
+	public char getHouseLetter() {
 		return houseLetter;
 	}
 	/**
 	 * @param houseLetter the houseLetter to set
 	 */
-	public void setHouseLetter(String houseLetter) {
+	public void setHouseLetter(char houseLetter) {
 		this.houseLetter = houseLetter;
 	}
 	/**
