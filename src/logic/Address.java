@@ -2,6 +2,15 @@ package logic;
 
 public class Address {
 	
+
+	public Address(String street, String houseNumber, String zipcode,String city) {
+		super();
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.zipcode = zipcode;
+		this.city = city;
+	}
+
 	private int id;
 	private String street;
 	private String houseNumber;

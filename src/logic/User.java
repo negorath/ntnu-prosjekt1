@@ -1,6 +1,6 @@
 package logic;
 
-class User {
+public class User {
 
 	static public User create(String name, String phone, Address address) {
 		
@@ -35,7 +35,7 @@ class User {
 	private String phone;
 	private Address address;
 	
-	private User() { }
+	public User() { }
 
 	/**
 	 * @return the name
