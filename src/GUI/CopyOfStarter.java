@@ -30,6 +30,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
 import javax.swing.tree.DefaultTreeCellEditor.EditorContainer;
 import javax.swing.JScrollPane;
 
@@ -53,11 +54,13 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
-public class CopyOfStarter{
+import database.TemporaryUser;
 
+public class CopyOfStarter{
+	private TemporaryDatabase database = new TemporaryDatabase();
 	private JFrame frame;
 	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar, redigerNavn, redigerNummer, redigerGatenavn;
-	private JTextField redigerHusnr, redigerPostnummer, redigerPoststed;
+	private JTextField redigerHusnr, redigerPostnummer, redigerPoststed, husNr, husBokstav, land;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel lblRegistrerteAdresser, label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
@@ -79,6 +82,15 @@ public class CopyOfStarter{
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
 	DefaultListModel model = new DefaultListModel();
+	private JTextField textField;
+	private JTextField textField_1;
+	private JLabel lblPostnummer;
+	private JLabel lblPoststed;
+	private JLabel lblKommentar;
+	private JLabel lblRingendeNummer;
+	private JLabel lblBestillinger;
+	private JButton btnLeggTil_1;
+	private JButton btnFjernElement;
 	
 	/**
 	 * Launch the application.
@@ -165,16 +177,20 @@ public class CopyOfStarter{
 				list = new JList(model);
 			}
 		});
+		
+		btnFjernElement = new JButton("Fjern");
+		btnFjernElement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		 		int i = list.getSelectedIndex();
+		 		model.remove(i);
+			}
+		});
+		btnFjernElement.setBounds(174, 0, 69, 23);
+		reciept.add(btnFjernElement);
 		btnFjernAlt.setBounds(253, 0, 89, 23);
 		reciept.add(btnFjernAlt);
 		
 		 list = new JList(model);		 
-		 list.addMouseListener(new MouseAdapter() {
-		 	@Override
-		 	public void mouseClicked(MouseEvent arg0) {
-		 		
-		 	}
-		 });
 		list.setBounds(10, 21, 332, 404);
 		reciept.add(list);
 		
@@ -222,7 +238,6 @@ public class CopyOfStarter{
 				for(int i = 0; i<kvittering.size(); i++){
 					temp[i] = kvittering.get(i);
 				}
-//				Product.retrieve(temp);
 				frame.repaint();
 			}
 			
@@ -328,61 +343,121 @@ public class CopyOfStarter{
 		bestillingsInfo.setLayout(null);
 		
 		navn = new JTextField();
-		navn.setBounds(16, 16, 133, 28);
+		navn.setBounds(16, 30, 278, 28);
 		navn.setText("Navn");
 		bestillingsInfo.add(navn);
 		navn.setColumns(10);
 		
 		nummer = new JTextField();
 		nummer.setFont(new Font("Verdana", Font.BOLD, 20));
-		nummer.setBounds(639, 16, 134, 28);
+		nummer.setBounds(635, 26, 134, 28);
 		nummer.setText("Nummer");
 		bestillingsInfo.add(nummer);
 		nummer.setColumns(10);
 		
 		gatenavn = new JTextField();
-		gatenavn.setBounds(16, 48, 133, 28);
+		gatenavn.setBounds(16, 83, 190, 28);
 		gatenavn.setText("Adresse");
 		bestillingsInfo.add(gatenavn);
 		gatenavn.setColumns(10);
 		
 		postnummer = new JTextField();
-		postnummer.setBounds(16, 80, 133, 28);
+		postnummer.setBounds(16, 135, 133, 28);
 		postnummer.setText("Postnr.");
 		bestillingsInfo.add(postnummer);
 		postnummer.setColumns(10);
 		
 		poststed = new JTextField();
-		poststed.setBounds(153, 80, 134, 28);
+		poststed.setBounds(160, 135, 134, 28);
 		poststed.setText("Sted");
 		bestillingsInfo.add(poststed);
 		poststed.setColumns(10);
 		
 		kommentar = new JTextField();
-		kommentar.setBounds(16, 112, 133, 28);
+		kommentar.setBounds(16, 190, 190, 93);
 		kommentar.setText("Kommentar");
 		bestillingsInfo.add(kommentar);
 		kommentar.setColumns(10);
 		
 		 chckbxLevering = new JCheckBox("Levering");
-		chckbxLevering.setBounds(16, 146, 85, 23);
+		chckbxLevering.setBounds(212, 190, 85, 23);
 		bestillingsInfo.add(chckbxLevering);
 		
 		 rdbtnKort = new JRadioButton("Kort");
 		buttonGroup.add(rdbtnKort);
-		rdbtnKort.setBounds(153, 146, 58, 23);
+		rdbtnKort.setBounds(213, 233, 58, 23);
 		bestillingsInfo.add(rdbtnKort);
 		
 		 rdbtnKontant = new JRadioButton("Kontant");
 		buttonGroup.add(rdbtnKontant);
-		rdbtnKontant.setBounds(215, 146, 81, 23);
+		rdbtnKontant.setBounds(212, 259, 81, 23);
 		bestillingsInfo.add(rdbtnKontant);
 		
 		 list_1 = new JList(model);
 		 
 		
-		list_1.setBounds(336, 11, 265, 379);
+		list_1.setBounds(336, 30, 265, 379);
 		bestillingsInfo.add(list_1);
+		
+		JLabel lblFulltNavn = new JLabel("Fullt Navn");
+		lblFulltNavn.setBounds(16, 12, 133, 14);
+		bestillingsInfo.add(lblFulltNavn);
+		
+		JLabel lblGatenavn = new JLabel("Gatenavn");
+		lblGatenavn.setBounds(16, 69, 111, 14);
+		bestillingsInfo.add(lblGatenavn);
+		
+		textField = new JTextField();
+		textField.setBounds(216, 83, 34, 28);
+		bestillingsInfo.add(textField);
+		textField.setColumns(10);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(260, 83, 34, 28);
+		bestillingsInfo.add(textField_1);
+		
+		JLabel lblHusnr = new JLabel("Husnr og bokstav");
+		lblHusnr.setBounds(204, 69, 90, 14);
+		bestillingsInfo.add(lblHusnr);
+		
+		lblPostnummer = new JLabel("Postnummer");
+		lblPostnummer.setBounds(16, 122, 133, 14);
+		bestillingsInfo.add(lblPostnummer);
+		
+		lblPoststed = new JLabel("Poststed");
+		lblPoststed.setBounds(159, 122, 135, 14);
+		bestillingsInfo.add(lblPoststed);
+		
+		lblKommentar = new JLabel("Kommentar");
+		lblKommentar.setBounds(16, 174, 190, 14);
+		bestillingsInfo.add(lblKommentar);
+		
+		lblRingendeNummer = new JLabel("Ringende Nummer");
+		lblRingendeNummer.setBounds(635, 12, 134, 14);
+		bestillingsInfo.add(lblRingendeNummer);
+		
+		lblBestillinger = new JLabel("Bestillinger");
+		lblBestillinger.setBounds(336, 12, 81, 14);
+		bestillingsInfo.add(lblBestillinger);
+		
+		JButton btnRediger_1 = new JButton("Rediger");
+		btnRediger_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedComponent(bestilling);
+			}
+		});
+		btnRediger_1.setBounds(512, 8, 89, 23);
+		bestillingsInfo.add(btnRediger_1);
+		
+		btnLeggTil_1 = new JButton("Legg til");
+		btnLeggTil_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
+			}
+		});
+		btnLeggTil_1.setBounds(16, 294, 89, 23);
+		bestillingsInfo.add(btnLeggTil_1);
 		
 		 outgoing = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Utgående", null, outgoing, null);
@@ -467,33 +542,30 @@ public class CopyOfStarter{
 		btnHentNr.setBounds(171, 39, 89, 23);
 		Rediger.add(btnHentNr);
 		
+		//INCALL; SLÅR OPP I DATABASEN OG HENTER INFO OM MULIG
 		 btnIncall = new JButton("Incall");
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
-				//INFOTABBEN:
-				
-				
-				User customer = HelpUser.getBob();
-				
-				
-				navn.setText(customer.getName());
-				gatenavn.setText(customer.getAddress().getStreet() + " " + customer.getAddress().getHouseNumber());
-				postnummer.setText(customer.getAddress().getZipcode());
-				poststed.setText(customer.getAddress().getCity());
-				
-//				navn.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				gatenavn.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				postnummer.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				poststed.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				//REDIGERTABBEN:
-//				redigerNummer.setText(nr);
-//				redigerNavn.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				redigerGatenavn.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				redigerPostnummer.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-//				redigerPoststed.setText(logic.User.retrieve(Integer.parseInt(nr)).getName());
-
+				try{
+					TemporaryUser user = database.getUser(nr);						
+					navn.setText(user.getName());
+					gatenavn.setText(user.getAddress().getStreet() + " " + user.getAddress().getHouseNumber());
+					//legger til houseletter hvis det finnes
+					if(user.getAddress().getHouseLetter() != null){
+						gatenavn.setText(gatenavn.getText() + user.getAddress().getHouseLetter());
+					}
+					postnummer.setText(user.getAddress().getZipcode());
+					poststed.setText(user.getAddress().getCity());
+					kommentar.setText(user.getKommentar());
+				}catch(Exception ee){
+					navn.setText("");
+					gatenavn.setText("");
+					postnummer.setText("");
+					poststed.setText("");
+					kommentar.setText("");
+				}
 				frame.repaint();
 			}
 		});
