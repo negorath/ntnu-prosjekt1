@@ -52,7 +52,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.VetoableChangeListener;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
+
 
 import database.TemporaryUser;
 
@@ -65,8 +65,8 @@ public class CopyOfStarter{
 	private JLabel lblRegistrerteAdresser, label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
 	private JComboBox comboBox;
-	private JTabbedPane tabbedPane, outgoing;
-	private int count = 1;
+	private JTabbedPane tabbedPane;
+	private String count;
 	private JRadioButton rdbtnKort, rdbtnKontant;
 	private JButton toggleButton, toggleButton_1, toggleButton_2, toggleButton_3, toggleButton_4, toggleButton_5, toggleButton_6, toggleButton_7;
 	private JButton toggleButton_8, tglbtnCola, tglbtnFanta, tglbtnUrge, tglbtnSprite, tglbtnFarris, tglbtnLol;
@@ -91,6 +91,11 @@ public class CopyOfStarter{
 	private JLabel lblBestillinger;
 	private JButton btnLeggTil_1;
 	private JButton btnFjernElement;
+	private JPanel Utgaende;
+	private JList list_2;
+	private JButton btnDel;
+	private JButton button_8;
+	private String sisteTrykteKnapp;
 	
 	/**
 	 * Launch the application.
@@ -122,46 +127,103 @@ public class CopyOfStarter{
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 621);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		frame.getContentPane().add(tabbedPane, BorderLayout.NORTH);
+		tabbedPane.setBounds(0, 0, 784, 583);
+		frame.getContentPane().add(tabbedPane);
+		
+		//---------------------Ny bestilling--------------------------------------
 		
 		bestilling = new JPanel();
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
+		///////////////////meny knapper////////////////////////////
+		
 		toggleButton = new JButton("Nr.1");
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.addElement(count + " x Pizza Margarita");
-				list = new JList(model);
+				sisteTrykteKnapp=menyKnappTrykk("Pizza Margaritha");
 //		 		kvittering.add(Product.retrieve(1).getId()); 			
-		 		count = 1;
+		 		
 			}
 		});
 		toggleButton.setBounds(16, 45, 75, 29);
 		bestilling.add(toggleButton);
 		
-		 toggleButton_1 = new JButton("Nr.2");
+		toggleButton_1 = new JButton("Nr.2");
 		toggleButton_1.setBounds(95, 45, 75, 29);
 		bestilling.add(toggleButton_1);
-		
+		toggleButton_1.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 		sisteTrykteKnapp=menyKnappTrykk("Pizza med cheesedoodles");
+		 	}
+		 });
+				
 		 toggleButton_2 = new JButton("Nr.3");
 		toggleButton_2.setBounds(178, 45, 75, 29);
 		bestilling.add(toggleButton_2);
+		toggleButton_2.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+		 		sisteTrykteKnapp=menyKnappTrykk("Pizza nr3");
+		 	}
+		 });
+		
 		
 		 toggleButton_3 = new JButton("Nr.4");
 		toggleButton_3.setBounds(16, 78, 75, 29);
 		bestilling.add(toggleButton_3);
+		toggleButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr4");
+	 	}
+	 });
 		
 		 toggleButton_4 = new JButton("Nr.5");
 		toggleButton_4.setBounds(95, 78, 75, 29);
 		bestilling.add(toggleButton_4);
+		toggleButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr5");
+	 	}
+	 });
 		
 		 toggleButton_5 = new JButton("Nr.6");
 		toggleButton_5.setBounds(178, 78, 75, 29);
 		bestilling.add(toggleButton_5);
+		toggleButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr6");
+	 	}
+	 });
+		toggleButton_6 = new JButton("Nr.7");
+		toggleButton_6.setBounds(16, 111, 75, 29);
+		bestilling.add(toggleButton_6);
+		toggleButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr7");
+	 	}
+	 });
 		
+		toggleButton_7 = new JButton("Nr.8");
+		toggleButton_7.setBounds(95, 111, 75, 29);
+		bestilling.add(toggleButton_7);
+		toggleButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr8");
+	 	}
+	 });
+		
+		toggleButton_8 = new JButton("Nr.9");
+		toggleButton_8.setBounds(178, 111, 75, 29);
+		bestilling.add(toggleButton_8);
+		toggleButton_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr9");
+	 	}
+	 });
+	 
 		 reciept = new JPanel();
 		reciept.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kvittering", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		reciept.setBounds(300, 23, 352, 436);
@@ -172,17 +234,17 @@ public class CopyOfStarter{
 		btnFjernAlt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kvittering.clear();
-				count = 1;
+				count = "0";
 				model.removeAllElements();
-				list = new JList(model);
+				
 			}
 		});
 		
 		btnFjernElement = new JButton("Fjern");
 		btnFjernElement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		 		int i = list.getSelectedIndex();
-		 		model.remove(i);
+		 		if (model.getSize()>0)
+		 			model.remove(model.getSize()-1);
 			}
 		});
 		btnFjernElement.setBounds(174, 0, 69, 23);
@@ -190,152 +252,195 @@ public class CopyOfStarter{
 		btnFjernAlt.setBounds(253, 0, 89, 23);
 		reciept.add(btnFjernAlt);
 		
-		 list = new JList(model);		 
-		list.setBounds(10, 21, 332, 404);
+		list = new JList(model);		 
+		list.setBounds(10, 23, 332, 402);
 		reciept.add(list);
 		
-		 toggleButton_6 = new JButton("Nr.7");
-		toggleButton_6.setBounds(16, 111, 75, 29);
-		bestilling.add(toggleButton_6);
 		
-		 toggleButton_7 = new JButton("Nr.8");
-		toggleButton_7.setBounds(95, 111, 75, 29);
-		bestilling.add(toggleButton_7);
+		///////////////////////Drikkeknapper/////////////////////////
 		
-		 toggleButton_8 = new JButton("Nr.9");
-		toggleButton_8.setBounds(178, 111, 75, 29);
-		bestilling.add(toggleButton_8);
-		
-		 tglbtnCola = new JButton("Cola");
+		tglbtnCola = new JButton("Cola");
 		tglbtnCola.setBounds(16, 213, 75, 29);
 		bestilling.add(tglbtnCola);
-		
-		 tglbtnFanta = new JButton("Fanta");
+		tglbtnCola.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Cola");
+	 	}
+	 });
+		tglbtnFanta = new JButton("Fanta");
 		tglbtnFanta.setBounds(95, 213, 78, 29);
 		bestilling.add(tglbtnFanta);
-		
-		 tglbtnSprite = new JButton("Sprite");
+		tglbtnFanta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Fanta");
+	 	}
+	 });
+		tglbtnSprite = new JButton("Sprite");
 		tglbtnSprite.setBounds(178, 213, 80, 29);
 		bestilling.add(tglbtnSprite);
-		
-		 tglbtnUrge = new JButton("Urge");
+		tglbtnSprite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Sprite");
+	 	}
+	 });
+		tglbtnUrge = new JButton("Urge");
 		tglbtnUrge.setBounds(16, 246, 75, 29);
 		bestilling.add(tglbtnUrge);
-		
-		 tglbtnFarris = new JButton("Farris");
+		tglbtnUrge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Urge");
+	 	}
+	 });
+		tglbtnFarris = new JButton("Farris");
 		tglbtnFarris.setBounds(95, 246, 79, 29);
 		bestilling.add(tglbtnFarris);
-		
-		 tglbtnLol = new JButton("Vann");
+		tglbtnFarris.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				sisteTrykteKnapp=menyKnappTrykk("Farris");
+	 	}
+	 });
+		tglbtnLol = new JButton("Vann");
 		tglbtnLol.setBounds(178, 246, 80, 29);
 		bestilling.add(tglbtnLol);
-		
-		 btnNeste = new JButton("Neste");
-		btnNeste.addActionListener(new ActionListener() {
+		tglbtnLol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				tabbedPane.setSelectedComponent(bestillingsInfo);
-				int[] temp = new int[kvittering.size()];
-				for(int i = 0; i<kvittering.size(); i++){
-					temp[i] = kvittering.get(i);
-				}
-				frame.repaint();
-			}
-			
-		});
-		btnNeste.setBounds(694, 486, 80, 29);
-		bestilling.add(btnNeste);
+				sisteTrykteKnapp=menyKnappTrykk("Vann");
+	 	}
+	 });
+		
+		
+		
+		//////////////////////"antall" kanpper///////////////////
 		
 		 button = new JButton("1");
 		 button.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 1;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("1");
 		 	}
 		 });
 		button.setBounds(16, 361, 75, 29);
 		bestilling.add(button);
 		
 		 button_1 = new JButton("2");
+		 button_1.setBounds(95, 361, 75, 29);
+		 bestilling.add(button_1);
 		 button_1.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 2;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("2");
 		 	}
 		 });
-		button_1.setBounds(95, 361, 75, 29);
-		bestilling.add(button_1);
 		
 		 btnNewButton = new JButton("3");
+		 btnNewButton.setActionCommand("2");
+		 btnNewButton.setBounds(177, 361, 80, 29);
+		 bestilling.add(btnNewButton);
 		 btnNewButton.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 3;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("3");
 		 	}
 		 });
-		btnNewButton.setActionCommand("2");
-		btnNewButton.setBounds(177, 361, 80, 29);
-		bestilling.add(btnNewButton);
 		
 		 button_2 = new JButton("4");
+		 button_2.setBounds(16, 394, 75, 29);
+		 bestilling.add(button_2);
 		 button_2.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 4;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("4");
 		 	}
 		 });
-		button_2.setBounds(16, 394, 75, 29);
-		bestilling.add(button_2);
 		
-		 button_3 = new JButton("7");
-		 button_3.addActionListener(new ActionListener() {
-		 	public void actionPerformed(ActionEvent e) {
-		 		count = 7;
-		 		label.setText("Antall x " + count);
-		 	}
-		 });
-		button_3.setBounds(16, 427, 75, 29);
-		bestilling.add(button_3);
 		
-		 button_4 = new JButton("5");
-		button_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				count = 5;
-				label.setText("Antall x " + count);
-			}
-		});
+		button_4 = new JButton("5");
 		button_4.setBounds(95, 394, 75, 29);
 		bestilling.add(button_4);
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nummerKnappTrykk("5");
+			}
+		});
 		
 		 button_5 = new JButton("6");
+		 button_5.setBounds(178, 394, 80, 29);
+		 bestilling.add(button_5);
 		 button_5.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 6;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("6");
 		 	}
 		 });
-		button_5.setBounds(178, 394, 80, 29);
-		bestilling.add(button_5);
+		 
+		 button_3 = new JButton("7");
+		 button_3.setBounds(16, 427, 75, 29);
+		 bestilling.add(button_3);
+		 button_3.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				nummerKnappTrykk("7");
+			 }
+		 });
 		
 		 button_6 = new JButton("8");
+		 button_6.setBounds(95, 427, 75, 29);
+		 bestilling.add(button_6);
 		 button_6.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 8;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("8");
 		 	}
 		 });
-		button_6.setBounds(95, 427, 75, 29);
-		bestilling.add(button_6);
 		
 		 btnNewButton_1 = new JButton("9");
+		 btnNewButton_1.setBounds(178, 427, 80, 29);
+		 bestilling.add(btnNewButton_1);
 		 btnNewButton_1.addActionListener(new ActionListener() {
 		 	public void actionPerformed(ActionEvent e) {
-		 		count = 9;
-		 		label.setText("Antall x " + count);
+		 		nummerKnappTrykk("9");
 		 	}
 		 });
-		btnNewButton_1.setBounds(178, 427, 80, 29);
-		bestilling.add(btnNewButton_1);
+		 
+		 button_8 = new JButton("0");
+		 button_8.setBounds(95, 460, 75, 29);
+		 bestilling.add(button_8);
+		 button_8.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent arg0) {
+				 nummerKnappTrykk("0");
+			 }
+		 });
+		 
+		 btnDel = new JButton("del");
+		 btnDel.setBounds(16, 460, 75, 29);
+		 bestilling.add(btnDel);
+		 btnDel.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 if(count.length()>1)
+					 count = count.substring(0, count.length()-1);
+				 label.setText("x " + count);
+				 model.remove(model.getSize()-1);
+				 model.addElement(count+" x " +sisteTrykteKnapp);
+			 }
+		 });
 		
+		 
+		 label = new JLabel("x "+ "1");
+		 if ( count == null)
+			 
+			 label.setBounds(24, 337, 229, 14);
+		 bestilling.add(label);
+		 
+		 
+		 btnNeste = new JButton("Neste");
+		 btnNeste.setBounds(694, 486, 80, 29);
+		 bestilling.add(btnNeste);
+		 btnNeste.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent arg0) {
+				 tabbedPane.setSelectedComponent(bestillingsInfo);
+				 int[] temp = new int[kvittering.size()];
+				 for(int i = 0; i<kvittering.size(); i++){
+					 temp[i] = kvittering.get(i);
+				 }
+				 frame.repaint();
+			 }
+		 });
+		 
+		 //---------------------------info---------------------------------
+		 
 		 bestillingsInfo = new JPanel();
 		bestillingsInfo.setPreferredSize(new Dimension(500, 550));
 		bestillingsInfo.setBackground(Color.PINK);
@@ -393,9 +498,8 @@ public class CopyOfStarter{
 		rdbtnKontant.setBounds(212, 259, 81, 23);
 		bestillingsInfo.add(rdbtnKontant);
 		
-		 list_1 = new JList(model);
+		list_1 = new JList(model);
 		 
-		
 		list_1.setBounds(336, 30, 265, 379);
 		bestillingsInfo.add(list_1);
 		
@@ -459,10 +563,20 @@ public class CopyOfStarter{
 		btnLeggTil_1.setBounds(16, 294, 89, 23);
 		bestillingsInfo.add(btnLeggTil_1);
 		
-		 outgoing = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.addTab("Utgående", null, outgoing, null);
+		//--------------------------Utgaaende/chef-----------------------------------------
 		
-		 Rediger = new JPanel();
+		 Utgaende = new JPanel();
+		 Utgaende.setBackground(Color.BLACK);
+		 tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
+		 Utgaende.setLayout(null);
+		 
+		 list_2 = new JList(model);
+		 list_2.setBounds(10, 11, 759, 533);
+		 Utgaende.add(list_2);
+		
+		 //------------------------Rediger-------------------------------------------------
+		 
+		Rediger = new JPanel();
 		Rediger.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Rediger", null, Rediger, null);
 		Rediger.setLayout(null);
@@ -542,7 +656,7 @@ public class CopyOfStarter{
 		btnHentNr.setBounds(171, 39, 89, 23);
 		Rediger.add(btnHentNr);
 		
-		//INCALL; SLÅR OPP I DATABASEN OG HENTER INFO OM MULIG
+		//INCALL; SLï¿½R OPP I DATABASEN OG HENTER INFO OM MULIG
 		 btnIncall = new JButton("Incall");
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -572,9 +686,8 @@ public class CopyOfStarter{
 		btnIncall.setBounds(680, 11, 89, 23);
 		bestilling.add(btnIncall);
 		
-		label = new JLabel("Antall x ");
-		label.setBounds(24, 337, 229, 14);
-		bestilling.add(label);
+		
+		
 		
 		 btnLeggTil = new JButton("Legg til");
 		btnLeggTil.addActionListener(new ActionListener() {
@@ -591,5 +704,25 @@ public class CopyOfStarter{
 		});
 		btnLeggTil.setBounds(10, 216, 89, 23);
 		Rediger.add(btnLeggTil);
+	}
+	private String menyKnappTrykk(String a) {
+	
+			count = null;
+			model.addElement("1" +" x "+a); 
+			label.setText("x "+"1");
+		return a;
+	}
+	private String nummerKnappTrykk(String nr){
+		 if (count == null)
+			 count = nr;
+		 else
+			 count += nr;
+		if(!model.isEmpty()){
+			model.remove(model.getSize()-1);
+			model.addElement(count+" x " +sisteTrykteKnapp);			
+		}
+		 label.setText("x " + count);
+		
+		return null;
 	}
 }
