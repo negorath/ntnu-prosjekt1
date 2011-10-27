@@ -11,12 +11,13 @@ import localData.ConfigSample;
 
 public class DatabaseConnector {
 
-    public static void main(String[] args) {
+	
+	private static Connection con;
+	
+    public static void initialize() {
 
-        Connection con = null;
-        Statement st = null;
-        ResultSet rs = null;
-
+       con = null;
+       
         
         String url = "jdbc:mysql:" + ConfigSample.DBHost + ":" + ConfigSample.DBport + "/" + ConfigSample.DBName;
         String user = ConfigSample.DBUsername;
@@ -24,33 +25,38 @@ public class DatabaseConnector {
 
         try {
             con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
-            rs = st.executeQuery("SELECT VERSION()");
-
-            if (rs.next()) {
-                System.out.println(rs.getString(1));
-            }
-
+//            st = con.createStatement();
+//            rs = st.executeQuery("SELECT VERSION()");
+//
+//            if (rs.next()) {
+//                System.out.println(rs.getString(1));
+            
         } catch (SQLException ex) {
-            Logger lgr = Logger.getLogger(Version.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+//            Logger lgr = Logger.getLogger(DatabaseConnector.class.getName());
+//            lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (st != null) {
-                    st.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-
-            } catch (SQLException ex) {
-                Logger lgr = Logger.getLogger(Version.class.getName());
-                lgr.log(Level.WARNING, ex.getMessage(), ex);
-            }
         }
+        
+    }
+    public static void closeConnection() {
+    	 try {
+             if (con != null) {
+                 con.close();
+             }
+//             if (rs != null) {
+//            	 rs.close();
+//             }
+//             if (st != null) {
+//            	 st.close();
+//             }
+
+         } catch (SQLException ex) {
+             Logger lgr = Logger.getLogger(DatabaseConnector.class.getName());
+             lgr.log(Level.WARNING, ex.getMessage(), ex);
+         }
+    }
+    
+    public Connection getConnection() {
+    	return con;
     }
 }
