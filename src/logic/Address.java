@@ -1,6 +1,16 @@
 package logic;
+import java.sql.Connection;
 
 public class Address {
+	
+	public static Connection con;
+	/**Connect to the given database Connection
+	 * 
+	 * @param c
+	 */
+	public static void setConnection(Connection c) {
+		con = c;
+	}
 	
 
 	public Address(String street, String houseNumber, String zipcode,String city) {

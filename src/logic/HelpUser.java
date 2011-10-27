@@ -1,4 +1,5 @@
 package logic;
+import java.sql.Connection;
 
 public class HelpUser {
 
