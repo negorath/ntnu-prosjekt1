@@ -9,14 +9,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import localData.ConfigSample;
 
+
+/** Klassen som setter opp koblingen til databasen
+ *  Bruk getConnection() for å få en kobling til databasen
+ */
 public class DatabaseConnector {
 
 	
 	private static Connection con;
 	
+	/**
+	 * Kall denne metoden for å koble til databasen som definert i localData/ConfigSample.java
+	 */
     public static void initialize() {
-
-       con = null;
+    	con = null;
        
         
         String url = "jdbc:mysql:" + ConfigSample.DBHost + ":" + ConfigSample.DBport + "/" + ConfigSample.DBName;
@@ -55,6 +61,10 @@ public class DatabaseConnector {
              lgr.log(Level.WARNING, ex.getMessage(), ex);
          }
     }
+    
+    /**Bruk dette objektet for å endre på databasen
+     *
+     **/
     
     public Connection getConnection() {
     	return con;
