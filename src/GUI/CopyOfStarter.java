@@ -110,6 +110,10 @@ public class CopyOfStarter{
 	private JLabel lblGatenavn_1;
 	private JLabel lblHusnummer;
 	private JTextField textField_2;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JLabel lblAddressNotFound;
+	private JButton btnRedigerAdresse;
 	
 	
 	/**
@@ -597,7 +601,9 @@ public class CopyOfStarter{
 				try{
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
-					e.printStackTrace();
+//					e.printStackTrace();
+					lblAddressNotFound.setVisible(true);
+					btnRedigerAdresse.setVisible(true);
 				}
 			}
 		});
@@ -615,21 +621,59 @@ public class CopyOfStarter{
 		 list_2.setBounds(10, 11, 229, 533);
 		 Utgaende.add(list_2);
 		 
+		 lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
+		 lblAddressNotFound.setForeground(new Color(255, 0, 0));
+		 lblAddressNotFound.setBounds(259, 72, 222, 14);
+		 Utgaende.add(lblAddressNotFound);
+		 lblAddressNotFound.setVisible(false);
+		 
+		 btnRedigerAdresse = new JButton("Rediger Adresse");
+		 btnRedigerAdresse.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent e) {
+		 		tabbedPane.setSelectedComponent(bestillingsInfo);
+				lblAddressNotFound.setVisible(false);
+				btnRedigerAdresse.setVisible(false);
+		 	}
+		 });
+		 btnRedigerAdresse.setBounds(249, 97, 137, 23);
+		 Utgaende.add(btnRedigerAdresse);
+		 btnRedigerAdresse.setVisible(false);
+		 
+		 JButton btnVisKart = new JButton("Vis Kart");
+		 btnVisKart.addActionListener(new ActionListener() {
+		 	public void actionPerformed(ActionEvent arg0) {
+				try{
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+				}catch(Exception e){
+//					e.printStackTrace();
+					lblAddressNotFound.setVisible(true);
+					btnRedigerAdresse.setVisible(true);
+				}
+		 	}
+		 });
+		 btnVisKart.setForeground(new Color(47, 79, 79));
+		 btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
+		 btnVisKart.setBounds(249, 11, 137, 50);
+		 Utgaende.add(btnVisKart);
+		 
+
+		 
 		
 		 //------------------------Rediger-------------------------------------------------
 		 
 		Rediger = new JPanel();
 		Rediger.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Rediger", null, Rediger, null);
-		Rediger.setLayout(null);
+		 Rediger.setLayout(null);
 		
 		 btnRediger = new JButton("Rediger");
+		 btnRediger.setBounds(141, 108, 119, 50);
 		 btnRediger.setForeground(new Color(47, 79, 79));
 		 btnRediger.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnRediger.setBounds(141, 108, 119, 50);
 		Rediger.add(btnRediger);
 		
 		 btnHentNr = new JButton("Hent");
+		 btnHentNr.setBounds(10, 42, 250, 55);
 		 btnHentNr.setForeground(new Color(47, 79, 79));
 		 btnHentNr.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnHentNr.addActionListener(new ActionListener() {
@@ -643,7 +687,6 @@ public class CopyOfStarter{
 				frame.repaint();
 			}
 		});
-		btnHentNr.setBounds(10, 42, 250, 55);
 		Rediger.add(btnHentNr);
 		
 		//INCALL; SL�R OPP I DATABASEN OG HENTER INFO OM MULIG
@@ -682,7 +725,7 @@ public class CopyOfStarter{
 		btnIncall.setBounds(848, 11, 121, 45);
 		bestilling.add(btnIncall);
 		
-		textField_2 = new JTextField("hei" + "hei");
+		textField_2 = new JTextField("denne inneholder info om rettene");
 		textField_2.setBounds(662, 67, 307, 477);
 		bestilling.add(textField_2);
 		textField_2.setColumns(10);
@@ -691,6 +734,7 @@ public class CopyOfStarter{
 		
 		
 		 btnLeggTil = new JButton("Legg til");
+		 btnLeggTil.setBounds(10, 108, 119, 50);
 		 btnLeggTil.setForeground(new Color(47, 79, 79));
 		 btnLeggTil.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnLeggTil.addActionListener(new ActionListener() {
@@ -704,7 +748,6 @@ public class CopyOfStarter{
 				frame.repaint();
 			}
 		});
-		btnLeggTil.setBounds(10, 108, 119, 50);
 		Rediger.add(btnLeggTil);
 		
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
@@ -795,14 +838,63 @@ public class CopyOfStarter{
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(211, 211, 211));
 		tabbedPane_1.addTab("Retter", null, panel_2, null);
+		panel_2.setLayout(null);
 		
-		JList list_3 = new JList();
-		list_3.setBounds(10, 169, 250, 454);
-		Rediger.add(list_3);
+		JLabel lblProduktetsNavn = new JLabel("Navn");
+		lblProduktetsNavn.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblProduktetsNavn.setBounds(20, 11, 198, 14);
+		panel_2.add(lblProduktetsNavn);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(20, 33, 280, 50);
+		panel_2.add(textField_3);
+		textField_3.setColumns(10);
+		
+		JLabel lblPris = new JLabel("Pris");
+		lblPris.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblPris.setBounds(20, 97, 131, 14);
+		panel_2.add(lblPris);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(20, 119, 150, 50);
+		panel_2.add(textField_4);
+		textField_4.setColumns(10);
+		
+		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
+		String[] boxComponents = {"Nr.1", "Nr.2", "Nr.3", "Nr.4", "Nr.5", "Nr.6", "Nr.7", "Nr.8", "Nr.9"};
+		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		JComboBox<String> comboBox = new JComboBox<String>();
+		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
+		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5)
+		;buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
+		for(int i = 0; i<buttons.size(); i++){
+			comboBox.addItem(boxComponents[i]);
+		}
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				if( e.getSource() == toggleButton && e.getStateChange() == ItemEvent.SELECTED ){
+					//kobler knappen med ny informasjon til databasen
+				}
+			}
+		});
+		comboBox.setSelectedIndex(0);
+		comboBox.setBounds(180, 119, 188, 50);
+		panel_2.add(comboBox);
+		//______COMBOBOX END
+		
+		
+		JLabel lblAssosierMedKnapp = new JLabel("Assosier med Knapp");
+		lblAssosierMedKnapp.setFont(new Font("Verdana", Font.BOLD, 16));
+		lblAssosierMedKnapp.setBounds(185, 97, 183, 21);
+		panel_2.add(lblAssosierMedKnapp);
 		
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(243, 169, 17, 454);
 		Rediger.add(scrollBar);
+		
+		JList list_3 = new JList();
+		list_3.setBounds(10, 169, 250, 454);
+		Rediger.add(list_3);
 	}
 	private String menyKnappTrykk(String a) {
 	
