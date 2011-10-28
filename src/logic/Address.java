@@ -3,7 +3,7 @@ package logic;
 public class Address {
 	
 
-	public Address(String street, String houseNumber, String zipcode,String city) {
+	public Address(String street, int houseNumber, String zipcode,String city) {
 		super();
 		this.street = street;
 		this.houseNumber = houseNumber;
