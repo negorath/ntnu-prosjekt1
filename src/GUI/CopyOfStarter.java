@@ -60,6 +60,7 @@ import javax.swing.event.ListSelectionListener;
 import Map.MapTesting;
 
 
+import database.People;
 import database.TemporaryUser;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
@@ -649,11 +650,16 @@ public class CopyOfStarter{
 		 btnIncall.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				People p = new People();
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
+<<<<<<< HEAD
+					TemporaryUser user = p.user(nr);						
+=======
 //					TemporaryUser user = database.getUser(nr);
 					User user = HelpUser.getBob();
+>>>>>>> 3665463079020fbabdd5f54ee8f5299c857e6fbc
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
