@@ -60,7 +60,7 @@ import javax.swing.event.ListSelectionListener;
 import Map.MapTesting;
 
 
-import database.People;
+//import database.People;
 import database.TemporaryUser;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
@@ -86,7 +86,7 @@ public class CopyOfStarter{
 	BufferedImage image;
 //	private logic.Product product;
 //	private logic.Address adress;
-//	private logic.User user;
+	private logic.User user;
 	
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
@@ -588,6 +588,8 @@ public class CopyOfStarter{
 		bestillingsInfo.add(btnLeggTil_1);
 		
 		JButton btnNeste_1 = new JButton("Neste");
+		btnNeste_1.setForeground(new Color(47, 79, 79));
+		btnNeste_1.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnNeste_1.setBackground(new Color(204, 255, 204));
 		btnNeste_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -650,16 +652,16 @@ public class CopyOfStarter{
 		 btnIncall.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				People p = new People();
+//				People p = new People();
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-<<<<<<< HEAD
-					TemporaryUser user = p.user(nr);						
-=======
+//<<<<<<< HEAD
+//					TemporaryUser user = p.user(nr);						
+//=======
 //					TemporaryUser user = database.getUser(nr);
 					User user = HelpUser.getBob();
->>>>>>> 3665463079020fbabdd5f54ee8f5299c857e6fbc
+//>>>>>>> 3665463079020fbabdd5f54ee8f5299c857e6fbc
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
