@@ -3,6 +3,7 @@ package GUI;
 import java.awt.EventQueue;
 import logic.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import java.awt.BorderLayout;
@@ -38,6 +39,7 @@ import logic.Address;
 import javax.swing.JTextArea;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -45,6 +47,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.image.BufferedImage;
+
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -52,6 +56,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.VetoableChangeListener;
 import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
+
+import Map.MapTesting;
 
 
 import database.People;
@@ -76,6 +82,7 @@ public class CopyOfStarter{
 	private JButton btnRediger, btnHentNr, btnLeggTil, btnIncall;
 	private JCheckBox chckbxLevering; 
 	JList list_1;
+	BufferedImage image;
 //	private logic.Product product;
 //	private logic.Address adress;
 //	private logic.User user;
@@ -83,7 +90,7 @@ public class CopyOfStarter{
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
 	DefaultListModel model = new DefaultListModel();
-	private JTextField textField;
+	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
 	private JLabel lblPoststed;
@@ -97,6 +104,8 @@ public class CopyOfStarter{
 	private JButton btnDel;
 	private JButton button_8;
 	private String sisteTrykteKnapp;
+	private MapTesting map = new MapTesting();
+	
 	
 	/**
 	 * Launch the application.
@@ -512,10 +521,10 @@ public class CopyOfStarter{
 		lblGatenavn.setBounds(16, 69, 111, 14);
 		bestillingsInfo.add(lblGatenavn);
 		
-		textField = new JTextField();
-		textField.setBounds(216, 83, 34, 28);
-		bestillingsInfo.add(textField);
-		textField.setColumns(10);
+		husnummer = new JTextField();
+		husnummer.setBounds(216, 83, 34, 28);
+		bestillingsInfo.add(husnummer);
+		husnummer.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
@@ -564,6 +573,20 @@ public class CopyOfStarter{
 		btnLeggTil_1.setBounds(16, 294, 89, 23);
 		bestillingsInfo.add(btnLeggTil_1);
 		
+		JButton btnNeste_1 = new JButton("Neste");
+		btnNeste_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				tabbedPane.setSelectedComponent(Utgaende);
+				try{
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+				}catch(Exception e){
+					e.printStackTrace();
+				}
+			}
+		});
+		btnNeste_1.setBounds(694, 486, 80, 29);
+		bestillingsInfo.add(btnNeste_1);
+		
 		//--------------------------Utgaaende/chef-----------------------------------------
 		
 		 Utgaende = new JPanel();
@@ -574,6 +597,7 @@ public class CopyOfStarter{
 		 list_2 = new JList(model);
 		 list_2.setBounds(10, 11, 759, 533);
 		 Utgaende.add(list_2);
+		 
 		
 		 //------------------------Rediger-------------------------------------------------
 		 
@@ -665,16 +689,19 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
+<<<<<<< HEAD
 					TemporaryUser user = p.user(nr);						
+=======
+//					TemporaryUser user = database.getUser(nr);
+					User user = HelpUser.getBob();
+>>>>>>> 3665463079020fbabdd5f54ee8f5299c857e6fbc
 					navn.setText(user.getName());
-					gatenavn.setText(user.getAddress().getStreet() + " " + user.getAddress().getHouseNumber());
+					gatenavn.setText(user.getAddress().getStreet());
+					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
 					//legger til houseletter hvis det finnes
-					if(user.getAddress().getHouseLetter() != null){
-						gatenavn.setText(gatenavn.getText() + user.getAddress().getHouseLetter());
-					}
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
-					kommentar.setText(user.getKommentar());
+//					kommentar.setText(user.getKommentar());
 				}catch(Exception ee){
 					navn.setText("");
 					gatenavn.setText("");
@@ -694,7 +721,7 @@ public class CopyOfStarter{
 		 btnLeggTil = new JButton("Legg til");
 		btnLeggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				logic.User.create(navn.getText(), redigerNummer.getText(), new Address(redigerGatenavn.getText(), redigerHusnr.getText(), redigerPostnummer.getText(), redigerPoststed.getText()));
+				logic.User.create(navn.getText(), redigerNummer.getText(), new Address(redigerGatenavn.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText()));
 				redigerNavn.setText("Navn");
 				redigerNummer.setText("Telefon nr");
 				redigerGatenavn.setText("Gatenavn");

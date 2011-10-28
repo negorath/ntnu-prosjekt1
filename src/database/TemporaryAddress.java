@@ -9,8 +9,6 @@ public class TemporaryAddress{
 		this.city = city;
 		this.country = country;
 	}
-	public TemporaryAddress(){
-	}
 	public String getStreet() {
 		return street;
 	}
