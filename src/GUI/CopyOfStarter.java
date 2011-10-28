@@ -145,12 +145,12 @@ public class CopyOfStarter{
 	private void initialize() {
 		frame = new JFrame();
 //		frame.setBounds(100, 100, 800, 621);
-		frame.setBounds(100, 100, 1000, 700);
+		frame.setBounds(100, 100, 1000, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 984, 662);
+		tabbedPane.setBounds(0, 0, 1000, 700);
 		frame.getContentPane().add(tabbedPane);
 		
 		//---------------------Ny bestilling--------------------------------------
@@ -269,7 +269,7 @@ public class CopyOfStarter{
 		btnFjernElement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 		 		if (model.getSize()>0)
-		 			model.remove(model.getSize()-1);
+		 			model.remove(list.getSelectedIndex());
 			}
 		});
 		btnFjernElement.setBounds(132, 0, 100, 23);
@@ -725,7 +725,7 @@ public class CopyOfStarter{
 		btnIncall.setBounds(848, 11, 121, 45);
 		bestilling.add(btnIncall);
 		
-		textField_2 = new JTextField("denne inneholder info om rettene");
+		textField_2 = new JTextField("#1: Pizza Margaritha: Tomat, ost" + "\n" + "#2:");
 		textField_2.setBounds(662, 67, 307, 477);
 		bestilling.add(textField_2);
 		textField_2.setColumns(10);
@@ -863,7 +863,7 @@ public class CopyOfStarter{
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
 		String[] boxComponents = {"Nr.1", "Nr.2", "Nr.3", "Nr.4", "Nr.5", "Nr.6", "Nr.7", "Nr.8", "Nr.9"};
 		ArrayList<JButton> buttons = new ArrayList<JButton>();
-		JComboBox<String> comboBox = new JComboBox<String>();
+		JComboBox comboBox = new JComboBox();
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5)
 		;buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
