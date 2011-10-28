@@ -54,6 +54,7 @@ import javax.swing.JList;
 import javax.swing.event.ListSelectionListener;
 
 
+import database.People;
 import database.TemporaryUser;
 
 public class CopyOfStarter{
@@ -660,10 +661,11 @@ public class CopyOfStarter{
 		 btnIncall = new JButton("Incall");
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				People p = new People();
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					TemporaryUser user = database.getUser(nr);						
+					TemporaryUser user = p.user(nr);						
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet() + " " + user.getAddress().getHouseNumber());
 					//legger til houseletter hvis det finnes
