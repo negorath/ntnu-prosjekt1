@@ -577,7 +577,7 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
 				try{
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false");					
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
 					e.printStackTrace();
 				}
@@ -594,7 +594,7 @@ public class CopyOfStarter{
 		 Utgaende.setLayout(null);
 		 
 		 list_2 = new JList(model);
-		 list_2.setBounds(10, 11, 378, 533);
+		 list_2.setBounds(10, 11, 759, 533);
 		 Utgaende.add(list_2);
 		 
 		
