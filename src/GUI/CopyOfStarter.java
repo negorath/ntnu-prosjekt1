@@ -83,6 +83,7 @@ public class CopyOfStarter{
 	private JButton btnRediger, btnHentNr, btnLeggTil, btnIncall;
 	private JCheckBox chckbxLevering; 
 	JList list_1;
+	ArrayList<UserArray> userArray = new ArrayList<UserArray>();
 	BufferedImage image;
 	//	private logic.Product product;
 	//	private logic.Address adress;
@@ -90,7 +91,7 @@ public class CopyOfStarter{
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
-	DefaultListModel model = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel();
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -101,7 +102,7 @@ public class CopyOfStarter{
 	private JButton btnLeggTil_1;
 	private JButton btnFjernElement;
 	private JPanel Utgaende;
-	private JList list_2;
+	private JList list_2, list_3;
 	private JButton btnDel;
 	private JButton button_8;
 	private String sisteTrykteKnapp;
@@ -116,6 +117,7 @@ public class CopyOfStarter{
 	private JButton btnRedigerAdresse;
 	JPanel Retter;
 	DatabaseConnector connector = new DatabaseConnector();
+	ArrayList<String> alleUsers = new ArrayList<String>();
 	/**
 	 * Launch the application.
 	 */
@@ -157,6 +159,7 @@ public class CopyOfStarter{
 
 		//---------------------Ny bestilling--------------------------------------
 
+		userArray.add(new UserArray(HelpUser.getBob().getName(), HelpUser.getBob().getPhone(), HelpUser.getBob().getAddress().getStreet(), HelpUser.getBob().getAddress().getZipcode(), HelpUser.getBob().getAddress().getCity(), HelpUser.getBob().getAddress().getHouseNumber()));
 		bestilling = new JPanel();
 		bestilling.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
@@ -667,6 +670,16 @@ public class CopyOfStarter{
 		Rediger.setLayout(null);
 
 		btnRediger = new JButton("Rediger");
+		btnRediger.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tabbedPane.getSelectedComponent() == Rediger){
+					//rediger elementer vha input til navn eller nummer
+				}
+				else if(tabbedPane.getSelectedComponent() == Retter){
+					//rediger rett vha navn eller knapp?
+				}
+			}
+		});
 		btnRediger.setBounds(141, 108, 119, 50);
 		btnRediger.setForeground(new Color(47, 79, 79));
 		btnRediger.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -689,6 +702,16 @@ public class CopyOfStarter{
 						redigerPoststed.setText(User.retrieve(0).getAddress().getCity());											
 					}catch(Exception t){
 						System.out.println("LOOL FUNKER IKKE");
+					}
+					for(int i = 0; i<m1.size(); i++){
+						if(list_3.getSelectedIndex() == i){
+							redigerNavn.setText(userArray.get(i).name);
+							redigerNummer.setText(userArray.get(i).phone);
+							redigerAdresse.setText(userArray.get(i).address);
+							redigerHusnr.setText(String.valueOf(userArray.get(i).nr));
+							redigerPostnummer.setText(userArray.get(i).zipcode);
+							redigerPoststed.setText(userArray.get(i).city);
+						}
 					}
 				}
 				
@@ -746,14 +769,21 @@ public class CopyOfStarter{
 		btnLeggTil.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnLeggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
 				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
 				if(tabbedPane.getSelectedComponent() == Rediger){
 					Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());
 					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
+					
+					m1.addElement(redigerNavn.getText() + " " + redigerNummer.getText());
+					list_3 = new JList(m1);
+					
+					userArray.add(new UserArray(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText())));
 				}
 				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER
 				else if(tabbedPane.getSelectedComponent() == Retter){	
-				}	
+				}
 				frame.repaint();
 			}
 		});
@@ -901,7 +931,8 @@ public class CopyOfStarter{
 		scrollBar.setBounds(243, 169, 17, 454);
 		Rediger.add(scrollBar);
 
-		JList list_3 = new JList();
+		m1.addElement(HelpUser.getBob().getName() + " " + HelpUser.getBob().getPhone());
+		list_3 = new JList(m1);
 		list_3.setBounds(10, 169, 250, 454);
 		Rediger.add(list_3);
 	}
@@ -925,4 +956,18 @@ public class CopyOfStarter{
 
 		return null;
 	}
+}
+class UserArray{
+	public String name, phone, address, zipcode, city;
+	public int nr;
+	
+	public UserArray(String name, String phone, String address, String zipcode, String city, int nr){
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.nr = nr;
+	}
+	
 }
