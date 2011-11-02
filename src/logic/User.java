@@ -1,7 +1,10 @@
 package logic;
+import java.sql.Connection;
 
 public class User {
-
+	
+	public static Connection con;
+	
 	static public User create(String name, String phone, Address address) {
 		
 		// TODO: Insert into database
@@ -13,7 +16,13 @@ public class User {
 		
 		return p;
 	}
-	
+	/**Connect to the given database Connection
+	 * 
+	 * @param c
+	 */
+	public static void setConnection(Connection c) {
+		con = c;
+	}
 	static public User retrieve(int id) {
 		int[] l = {id};
 		User[] list = retrieve(l);

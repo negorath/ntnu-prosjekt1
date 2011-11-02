@@ -1,6 +1,8 @@
 package logic;
+import java.sql.Connection;
 
 public class Product {
+	public static Connection con;
 
 	static public Product create(String name, String description, double price) {
 		
@@ -14,6 +16,9 @@ public class Product {
 		return p;
 	}
 	
+	public static void setConnection(Connection c) {
+		con = c;
+	}
 	static public Product retrieve(int id) {
 		int[] l = {id};
 		Product[] list = retrieve(l);
