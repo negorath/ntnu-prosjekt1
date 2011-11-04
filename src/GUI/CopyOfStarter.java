@@ -112,8 +112,6 @@ public class CopyOfStarter{
 	private JTextField redigerAdresse;
 	private JLabel lblGatenavn_1;
 	private JLabel lblHusnummer;
-	private JTextField textField_3;
-	private JTextField textField_4;
 	private JButton btnRedigerAdresse;
 
 
@@ -917,12 +915,6 @@ public class CopyOfStarter{
 		lblHusnummer.setBounds(433, 171, 52, 14);
 		panel_1.add(lblHusnummer);
 
-
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(211, 211, 211));
-		tabbedPane_1.addTab("Retter", null, panel_2, null);
-		panel_2.setLayout(null);
-
 		Retter = new JPanel();
 		Retter.setBackground(new Color(211, 211, 211));
 		tabbedPane_1.addTab("Retter", null, Retter, null);
@@ -932,12 +924,6 @@ public class CopyOfStarter{
 		JLabel lblProduktetsNavn = new JLabel("Navn");
 		lblProduktetsNavn.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblProduktetsNavn.setBounds(20, 11, 198, 14);
-//		panel_2.add(lblProduktetsNavn);
-
-		textField_3 = new JTextField();
-		textField_3.setBounds(20, 33, 280, 50);
-		panel_2.add(textField_3);
-		textField_3.setColumns(10);
 
 		Retter.add(lblProduktetsNavn);
 
@@ -949,12 +935,6 @@ public class CopyOfStarter{
 		JLabel lblPris = new JLabel("Pris");
 		lblPris.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblPris.setBounds(20, 97, 131, 14);
-//		panel_2.add(lblPris);
-
-		textField_4 = new JTextField();
-		textField_4.setBounds(20, 119, 150, 50);
-		panel_2.add(textField_4);
-		textField_4.setColumns(10);
 
 		Retter.add(lblPris);
 
