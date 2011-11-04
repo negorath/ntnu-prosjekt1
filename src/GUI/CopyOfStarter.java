@@ -61,9 +61,11 @@ import Map.MapTesting;
 
 
 //import database.People;
+import database.People;
 import database.TemporaryUser;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
+import javax.swing.UIManager;
 
 public class CopyOfStarter{
 	private TemporaryDatabase database = new TemporaryDatabase();
@@ -110,11 +112,13 @@ public class CopyOfStarter{
 	private JTextField redigerAdresse;
 	private JLabel lblGatenavn_1;
 	private JLabel lblHusnummer;
+	private JButton btnRedigerAdresse;
+
+
 	private JTextField textField_2;
 	private JTextField redigerProductName;
 	private JTextField RedigerProductPrice;
 	private JLabel lblAddressNotFound;
-	private JButton btnRedigerAdresse;
 	JPanel Retter;
 //	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
@@ -159,6 +163,7 @@ public class CopyOfStarter{
 		frame.getContentPane().add(tabbedPane);
 
 		//---------------------Ny bestilling--------------------------------------
+
 
 		userArray.add(new UserArray(HelpUser.getBob().getName(), HelpUser.getBob().getPhone(), HelpUser.getBob().getAddress().getStreet(), HelpUser.getBob().getAddress().getZipcode(), HelpUser.getBob().getAddress().getCity(), HelpUser.getBob().getAddress().getHouseNumber()));
 		bestilling = new JPanel();
@@ -663,6 +668,7 @@ public class CopyOfStarter{
 		Utgaende.add(btnVisKart);
 
 
+
 		//------------------------Rediger-------------------------------------------------
 
 		Rediger = new JPanel();
@@ -671,6 +677,7 @@ public class CopyOfStarter{
 		Rediger.setLayout(null);
 
 		btnRediger = new JButton("Rediger");
+
 		btnRediger.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tabbedPane.getSelectedComponent() == Rediger){
@@ -681,6 +688,7 @@ public class CopyOfStarter{
 				}
 			}
 		});
+
 		btnRediger.setBounds(141, 108, 119, 50);
 		btnRediger.setForeground(new Color(47, 79, 79));
 		btnRediger.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -692,6 +700,14 @@ public class CopyOfStarter{
 		btnHentNr.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnHentNr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				//				redigerNavn.setText(logic.User.retrieve(0).getName());
+				//				redigerGatenavn.setText(logic.User.retrieve(0).getAddress().getStreet());
+				//				redigerHusnr.setText(logic.User.retrieve(0).getAddress().getHouseNumber());
+				//				redigerPostnummer.setText(logic.User.retrieve(0).getAddress().getZipcode());
+				//				redigerPoststed.setText(logic.User.retrieve(0).getAddress().getCity());
+				//				
+
 			
 				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I REDIGER TABBEN
 				if(tabbedPane.getSelectedComponent() == Rediger){
@@ -720,6 +736,7 @@ public class CopyOfStarter{
 				else if(tabbedPane.getSelectedComponent() == Retter){
 					
 				}			
+
 				frame.repaint();
 			}
 		});
@@ -727,14 +744,17 @@ public class CopyOfStarter{
 
 		//INCALL; SLï¿½R OPP I DATABASEN OG HENTER INFO OM MULIG
 		btnIncall = new JButton("Incall");
+
+		btnIncall.setBackground(new Color(238, 238, 238));
 		btnIncall.setForeground(new Color(47, 79, 79));
 		btnIncall.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//				People p = new People();
+				People p = new People();
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
+<<<<<<< HEAD
 					User user = User.retrieve(Integer.parseInt(nr));
 					if(user == null){
 						user = new User();
@@ -746,6 +766,21 @@ public class CopyOfStarter{
 						postnummer.setText(user.getAddress().getZipcode());
 						poststed.setText(user.getAddress().getCity());
 					}
+=======
+					TemporaryUser user = p.user(nr);						
+	
+					TemporaryUser user1 = database.getUser(nr);
+
+					User user2 = HelpUser.getBob();
+
+					navn.setText(user.getName());
+					gatenavn.setText(user.getAddress().getStreet());
+					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					//legger til houseletter hvis det finnes
+					postnummer.setText(user.getAddress().getZipcode());
+					poststed.setText(user.getAddress().getCity());
+					//					kommentar.setText(user.getKommentar());
+>>>>>>> 1d2e3ba1861d69a806a98e57ae829e284bc14ffc
 				}catch(Exception ee){
 					navn.setText("");
 					gatenavn.setText("");
@@ -759,10 +794,11 @@ public class CopyOfStarter{
 		btnIncall.setBounds(848, 11, 121, 45);
 		bestilling.add(btnIncall);
 
-		textField_2 = new JTextField("<Html>#1: Pizza Margaritha: Tomat, ost" + "<br>" + "#2:</Html>");
-		textField_2.setBounds(662, 67, 307, 477);
-		bestilling.add(textField_2);
-		textField_2.setColumns(10);
+
+//		textField_2 = new JTextField("<Html>#1: Pizza Margaritha: Tomat, ost" + "<br>" + "#2:</Html>");
+//		textField_2.setBounds(662, 67, 307, 477);
+//		bestilling.add(textField_2);
+//		textField_2.setColumns(10);
 
 
 
@@ -773,6 +809,14 @@ public class CopyOfStarter{
 		btnLeggTil.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnLeggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
+				//				logic.User.create(navn.getText(), redigerNummer.getText(), new Address(Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText()));
+				redigerNavn.setText("Navn");
+				redigerNummer.setText("Telefon nr");
+				redigerHusnr.setText("Hus nr");
+				redigerPostnummer.setText("Postnummer");
+				redigerPoststed.setText("Poststed");
+
 				
 				
 				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
@@ -793,6 +837,7 @@ public class CopyOfStarter{
 				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER
 				else if(tabbedPane.getSelectedComponent() == Retter){	
 				}
+
 				frame.repaint();
 			}
 		});
@@ -867,11 +912,18 @@ public class CopyOfStarter{
 		redigerHusnr.setText("");
 		redigerHusnr.setColumns(10);
 
+		JTextField textField = new JTextField();
+		textField.setBackground(new Color(245, 245, 245));
+		textField.setBounds(20, 186, 393, 50);
+		panel_1.add(textField);
+		textField.setColumns(10);
+
 		redigerAdresse = new JTextField();
 		redigerAdresse.setBackground(new Color(245, 245, 245));
 		redigerAdresse.setBounds(20, 186, 393, 50);
 		panel_1.add(redigerAdresse);
 		redigerAdresse.setColumns(10);
+
 
 		lblGatenavn_1 = new JLabel("Adresse");
 		lblGatenavn_1.setFont(new Font("Verdana", Font.BOLD, 16));
@@ -888,9 +940,11 @@ public class CopyOfStarter{
 		tabbedPane_1.addTab("Retter", null, Retter, null);
 		Retter.setLayout(null);
 
+
 		JLabel lblProduktetsNavn = new JLabel("Navn");
 		lblProduktetsNavn.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblProduktetsNavn.setBounds(20, 11, 198, 14);
+
 		Retter.add(lblProduktetsNavn);
 
 		redigerProductName = new JTextField();
@@ -901,6 +955,7 @@ public class CopyOfStarter{
 		JLabel lblPris = new JLabel("Pris");
 		lblPris.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblPris.setBounds(20, 97, 131, 14);
+
 		Retter.add(lblPris);
 
 		RedigerProductPrice = new JTextField();
@@ -908,13 +963,20 @@ public class CopyOfStarter{
 		Retter.add(RedigerProductPrice);
 		RedigerProductPrice.setColumns(10);
 
+
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
 		String[] boxComponents = {"Nr.1", "Nr.2", "Nr.3", "Nr.4", "Nr.5", "Nr.6", "Nr.7", "Nr.8", "Nr.9"};
 		ArrayList<JButton> buttons = new ArrayList<JButton>();
 		JComboBox comboBox = new JComboBox();
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
-		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5)
-		;buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
+		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
+		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
+		
+		JLabel pizzaInfo = new JLabel("<html>1: Pizza maragaritha: Tomat, Ost. <br>2: Pizza Milano: Tomat, ost, pepperoni.</html>");
+		pizzaInfo.setBounds(700, 101, 269, 442);
+		bestilling.add(pizzaInfo);
+		
+		
 		for(int i = 0; i<buttons.size(); i++){
 			comboBox.addItem(boxComponents[i]);
 		}
@@ -934,14 +996,22 @@ public class CopyOfStarter{
 		JLabel lblAssosierMedKnapp = new JLabel("Assosier med Knapp");
 		lblAssosierMedKnapp.setFont(new Font("Verdana", Font.BOLD, 16));
 		lblAssosierMedKnapp.setBounds(185, 97, 183, 21);
+
+//		panel_2.add(lblAssosierMedKnapp);
+
 		Retter.add(lblAssosierMedKnapp);
+
 
 		JScrollBar scrollBar = new JScrollBar();
 		scrollBar.setBounds(243, 169, 17, 454);
 		Rediger.add(scrollBar);
 
+
+		JList list_3 = new JList();
+
 		m1.addElement(HelpUser.getBob().getName() + " " + HelpUser.getBob().getPhone());
 		list_3 = new JList(m1);
+
 		list_3.setBounds(10, 169, 250, 454);
 		Rediger.add(list_3);
 	}

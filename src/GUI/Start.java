@@ -24,6 +24,8 @@ public class Start extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		new Start();
 	}
+	
+	 
 	public Start() {
 		frame = new JFrame();
 //		frame.setPreferredSize(new Dimension(800, 500));
