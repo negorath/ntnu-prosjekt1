@@ -53,7 +53,18 @@ public class DatabaseConnector {
         	ex.printStackTrace();
 
         }
+        giveConnecetion();
         
+        
+        
+    }
+    
+    public static void giveConnecetion() {
+    	Address.setConnection(con);
+    	Order.setConnection(con);
+    	Product.setConnection(con);
+    	User.setConnection(con);
+    
     }
     public static void closeConnection() {
     	 try {

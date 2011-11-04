@@ -116,7 +116,7 @@ public class CopyOfStarter{
 	private JLabel lblAddressNotFound;
 	private JButton btnRedigerAdresse;
 	JPanel Retter;
-	DatabaseConnector connector = new DatabaseConnector();
+//	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	/**
 	 * Launch the application.
@@ -139,6 +139,7 @@ public class CopyOfStarter{
 	 */
 	public CopyOfStarter() {
 		initialize();
+		DatabaseConnector connector = new DatabaseConnector();
 		connector.initialize();
 		connector.getConnection();
 	}
@@ -734,14 +735,17 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					User user = HelpUser.getBob();
-					navn.setText(user.getName());
-					gatenavn.setText(user.getAddress().getStreet());
-					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
-					//legger til houseletter hvis det finnes
-					postnummer.setText(user.getAddress().getZipcode());
-					poststed.setText(user.getAddress().getCity());
-					//					kommentar.setText(user.getKommentar());
+					User user = User.retrieve(Integer.parseInt(nr));
+					if(user == null){
+						user = new User();
+					}
+					else{
+						navn.setText(user.getName());
+						gatenavn.setText(user.getAddress().getStreet());
+						husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
+						postnummer.setText(user.getAddress().getZipcode());
+						poststed.setText(user.getAddress().getCity());
+					}
 				}catch(Exception ee){
 					navn.setText("");
 					gatenavn.setText("");
@@ -774,12 +778,17 @@ public class CopyOfStarter{
 				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
 				if(tabbedPane.getSelectedComponent() == Rediger){
 					Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());
-					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
+//					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
 					
 					m1.addElement(redigerNavn.getText() + " " + redigerNummer.getText());
 					list_3 = new JList(m1);
 					
 					userArray.add(new UserArray(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText())));
+					
+					
+					User user = new User(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText()));
+					
+					
 				}
 				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER
 				else if(tabbedPane.getSelectedComponent() == Retter){	
