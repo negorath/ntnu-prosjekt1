@@ -16,9 +16,6 @@ public class User {
 //		
 //		return p;
 //	}
-	public User(){
-		
-	}
 	public void add(User user){
 		
 	}
