@@ -59,9 +59,6 @@ import javax.swing.event.ListSelectionListener;
 
 import Map.MapTesting;
 
-
-//import database.People;
-import database.People;
 import database.TemporaryUser;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
@@ -750,11 +747,9 @@ public class CopyOfStarter{
 		btnIncall.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				People p = new People();
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-<<<<<<< HEAD
 					User user = User.retrieve(Integer.parseInt(nr));
 					if(user == null){
 						user = new User();
@@ -766,9 +761,6 @@ public class CopyOfStarter{
 						postnummer.setText(user.getAddress().getZipcode());
 						poststed.setText(user.getAddress().getCity());
 					}
-=======
-					TemporaryUser user = p.user(nr);						
-	
 					TemporaryUser user1 = database.getUser(nr);
 
 					User user2 = HelpUser.getBob();
@@ -780,7 +772,6 @@ public class CopyOfStarter{
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
 					//					kommentar.setText(user.getKommentar());
->>>>>>> 1d2e3ba1861d69a806a98e57ae829e284bc14ffc
 				}catch(Exception ee){
 					navn.setText("");
 					gatenavn.setText("");
@@ -830,7 +821,7 @@ public class CopyOfStarter{
 					userArray.add(new UserArray(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText())));
 					
 					
-					User user = new User(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText()));
+//					User user = new User(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText()));
 					
 					
 				}
