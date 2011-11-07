@@ -697,43 +697,27 @@ public class CopyOfStarter{
 		btnHentNr.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnHentNr.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				//				redigerNavn.setText(logic.User.retrieve(0).getName());
-				//				redigerGatenavn.setText(logic.User.retrieve(0).getAddress().getStreet());
-				//				redigerHusnr.setText(logic.User.retrieve(0).getAddress().getHouseNumber());
-				//				redigerPostnummer.setText(logic.User.retrieve(0).getAddress().getZipcode());
-				//				redigerPoststed.setText(logic.User.retrieve(0).getAddress().getCity());
-				//				
-
-			
+				User user = new User();
 				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I REDIGER TABBEN
 				if(tabbedPane.getSelectedComponent() == Rediger){
+					
 					try{
-						redigerNavn.setText(User.retrieve(0).getName());
-						redigerAdresse.setText(User.retrieve(0).getAddress().getStreet());
-						redigerHusnr.setText(String.valueOf(User.retrieve(0).getAddress().getHouseNumber()));
-						redigerPostnummer.setText(User.retrieve(0).getAddress().getZipcode());
-						redigerPoststed.setText(User.retrieve(0).getAddress().getCity());											
+						user = User.retrieve(Integer.parseInt(redigerNummer.getText()));										
 					}catch(Exception t){
-						System.out.println("LOOL FUNKER IKKE");
-					}
-					for(int i = 0; i<m1.size(); i++){
-						if(list_3.getSelectedIndex() == i){
-							redigerNavn.setText(userArray.get(i).name);
-							redigerNummer.setText(userArray.get(i).phone);
-							redigerAdresse.setText(userArray.get(i).address);
-							redigerHusnr.setText(String.valueOf(userArray.get(i).nr));
-							redigerPostnummer.setText(userArray.get(i).zipcode);
-							redigerPoststed.setText(userArray.get(i).city);
-						}
-					}
+						t.printStackTrace();
+						user = (User)m1.getElementAt(list_3.getSelectedIndex());
+					}						
+					redigerNavn.setText(user.getName());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusnr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostnummer.setText(user.getAddress().getZipcode());
+					redigerPoststed.setText(user.getAddress().getCity());	
 				}
 				
 				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I RETTER TABBEN
 				else if(tabbedPane.getSelectedComponent() == Retter){
 					
 				}			
-
 				frame.repaint();
 			}
 		});
@@ -801,28 +785,18 @@ public class CopyOfStarter{
 		btnLeggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				//				logic.User.create(navn.getText(), redigerNummer.getText(), new Address(Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText()));
-				redigerNavn.setText("Navn");
-				redigerNummer.setText("Telefon nr");
-				redigerHusnr.setText("Hus nr");
-				redigerPostnummer.setText("Postnummer");
-				redigerPoststed.setText("Poststed");
-
-				
-				
 				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
 				if(tabbedPane.getSelectedComponent() == Rediger){
-					Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());
-//					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
+					Address address = new Address(	redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());	
+					User user = new User();
+					user.setAll(redigerNavn.getText(), redigerNummer.getText(), address);
+
 					
-					m1.addElement(redigerNavn.getText() + " " + redigerNummer.getText());
+					m1.addElement(user);
 					list_3 = new JList(m1);
 					
-					userArray.add(new UserArray(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText())));
-					
-					
-//					User user = new User(redigerNavn.getText(), redigerNummer.getText(), redigerAdresse.getText(), redigerPostnummer.getText(), redigerPoststed.getText(), Integer.parseInt(redigerNummer.getText()));
-					
+					//Oppretter ny bruker og legger den i databasen
+					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
 					
 				}
 				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER

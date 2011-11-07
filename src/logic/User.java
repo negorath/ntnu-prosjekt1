@@ -5,17 +5,17 @@ public class User {
 	
 	public static Connection con;
 	
-//	static public User create(String name, String phone, Address address) {
-//		
-//		// TODO: Insert into database
-//		
-//		User p = new User();
-//		p.name = name;
-//		p.phone = phone;
-//		p.address = address;
-//		
-//		return p;
-//	}
+	static public User create(String name, String phone, Address address) {
+		
+		// TODO: Insert into database
+		
+		User p = new User();
+		p.name = name;
+		p.phone = phone;
+		p.address = address;
+		
+		return p;
+	}
 	public void add(User user){
 		
 	}
@@ -39,7 +39,11 @@ public class User {
 		
 		return list;
 	}
-	
+	public void setAll(String name, String phone, Address address){
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+	}
 
 
 //	private int id;
