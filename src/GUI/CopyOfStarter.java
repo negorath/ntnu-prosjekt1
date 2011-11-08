@@ -627,7 +627,7 @@ public class CopyOfStarter{
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
 
-		list_2 = new JList(model);
+		list_2 = new JList();
 		list_2.setBounds(10, 11, 229, 533);
 		Utgaende.add(list_2);
 
