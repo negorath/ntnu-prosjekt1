@@ -30,19 +30,41 @@ public class DatabaseConnector {
         String password = ConfigSample.DBPassword;
 
         try {
+			Class.forName("com.mysql.jdbc.Driver");
+			System.out.println("Driver loaded");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        try {
+        	
             con = DriverManager.getConnection(url, user, password);
 //            st = con.createStatement();
 //            rs = st.executeQuery("SELECT VERSION()");
 //
 //            if (rs.next()) {
 //                System.out.println(rs.getString(1));
+            System.out.println("Connected to " + ConfigSample.DBName);
             
         } catch (SQLException ex) {
 //            Logger lgr = Logger.getLogger(DatabaseConnector.class.getName());
 //            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        	ex.printStackTrace();
 
         }
+        giveConnecetion();
         
+        
+        
+    }
+    
+    public static void giveConnecetion() {
+    	Address.setConnection(con);
+    	Order.setConnection(con);
+    	Product.setConnection(con);
+    	User.setConnection(con);
+    
     }
     public static void closeConnection() {
     	 try {

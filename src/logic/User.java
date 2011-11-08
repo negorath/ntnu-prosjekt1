@@ -16,6 +16,9 @@ public class User {
 		
 		return p;
 	}
+	public void add(User user){
+		
+	}
 	/**Connect to the given database Connection
 	 * 
 	 * @param c
@@ -23,23 +26,27 @@ public class User {
 	public static void setConnection(Connection c) {
 		con = c;
 	}
-	static public User retrieve(int id) {
-		int[] l = {id};
+	static public User retrieve(int phoneNumber) {
+		int[] l = {phoneNumber};
 		User[] list = retrieve(l);
 		return list[0];
 	}
 
-	static public User[] retrieve(int[] id) {
+	static public User[] retrieve(int[] phoneNumber) {
 		// TODO: Select from database
 		
 		User[] list = null;
 		
 		return list;
 	}
-	
+	public void setAll(String name, String phone, Address address){
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+	}
 
 
-	private int id;
+//	private int id;
 	private String name;
 	private String phone;
 	private Address address;
@@ -87,14 +94,4 @@ public class User {
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
-	
-
-	
 }

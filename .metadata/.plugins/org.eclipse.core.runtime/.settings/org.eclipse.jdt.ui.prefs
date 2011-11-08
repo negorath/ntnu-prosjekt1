@@ -1,13 +1,23 @@
+<<<<<<< HEAD
 #Fri Sep 23 12:27:18 CEST 2011
+=======
+#Fri Oct 14 12:39:40 CEST 2011
+>>>>>>> ec8b1af0c387ca85b8f85ffa288370dd2f66638e
 useQuickDiffPrefPage=true
 proposalOrderMigrated=true
 tabWidthPropagated=true
 content_assist_proposals_background=255,255,255
 org.eclipse.jdt.ui.javadoclocations.migrated=true
 useAnnotationsPrefPage=true
+<<<<<<< HEAD
 org.eclipse.jface.textfont=1|Monaco|11.0|0|COCOA|1|;
 org.eclipse.jdt.ui.editor.tab.width=
 org.eclipse.jdt.ui.formatterprofiles.version=11
+=======
+org.eclipse.jface.textfont=1|Consolas|10.0|0|WINDOWS|1|0|0|0|0|0|0|0|0|1|0|0|0|0|Consolas;
+org.eclipse.jdt.ui.editor.tab.width=
+org.eclipse.jdt.ui.formatterprofiles.version=12
+>>>>>>> ec8b1af0c387ca85b8f85ffa288370dd2f66638e
 spelling_locale_initialized=true
 eclipse.preferences.version=1
 content_assist_proposals_foreground=0,0,0

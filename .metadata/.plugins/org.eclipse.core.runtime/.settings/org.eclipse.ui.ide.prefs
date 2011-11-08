@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 #Fri Oct 28 12:45:38 CEST 2011
 eclipse.preferences.version=1
 tipsAndTricks=true
 platformState=1314703759414
+=======
+#Fri Oct 14 12:39:41 CEST 2011
+eclipse.preferences.version=1
+tipsAndTricks=true
+platformState=1317988000825
+>>>>>>> ec8b1af0c387ca85b8f85ffa288370dd2f66638e
 quickStart=false
 PROBLEMS_FILTERS_MIGRATE=true

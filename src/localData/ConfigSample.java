@@ -9,9 +9,9 @@ package localData;
 public class ConfigSample {
 
 	public static String DBHost = "//localhost";
-	public static String DBUsername = "prosjekt1";
+	public static String DBUsername = "root";
 	public static String DBport = "3306";
 	public static String DBPassword = "";
-	public static String DBName = "prosjekt1";
+	public static String DBName = "prosjekt";
 	
 }
