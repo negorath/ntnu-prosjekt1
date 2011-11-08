@@ -1,0 +1,2 @@
+INDEX VERSION 1.126+/Users/Magnus/Documents/ntnu-prosjekt1/.metadata/.plugins/org.eclipse.jdt.core
+2915769623.index

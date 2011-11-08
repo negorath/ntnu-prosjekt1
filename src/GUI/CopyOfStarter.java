@@ -90,7 +90,7 @@ public class CopyOfStarter{
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
-	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel();
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -101,7 +101,7 @@ public class CopyOfStarter{
 	private JButton btnLeggTil_1;
 	private JButton btnFjernElement;
 	private JPanel Utgaende;
-	private JList list_2, list_3;
+	private JList list_3;
 	private JButton btnDel;
 	private JButton button_8;
 	private String sisteTrykteKnapp;
@@ -612,6 +612,7 @@ public class CopyOfStarter{
 		btnNeste_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
+				list_2.addElement(createReceipt(list));
 				try{
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
@@ -631,9 +632,9 @@ public class CopyOfStarter{
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
 
-		list_2 = new JList(model);
-		list_2.setBounds(10, 11, 229, 533);
-		Utgaende.add(list_2);
+		list_3 = new JList(list_2);
+		list_3.setBounds(10, 11, 229, 533);
+		Utgaende.add(list_3);
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
@@ -990,6 +991,7 @@ public class CopyOfStarter{
 
 		return null;
 	}
+<<<<<<< HEAD
 	public void getProducts(){
 		
 	}
@@ -1003,6 +1005,13 @@ public class CopyOfStarter{
 	public void getAddresses(){
 		
 	}
+=======
+	public String createReceipt(JList l){
+		
+		return "lololol";
+	}
+	
+>>>>>>> c81a3ab7b43390afee6d08545d14d393f07b62c8
 }
 class UserArray{
 	public String name, phone, address, zipcode, city;
@@ -1016,5 +1025,5 @@ class UserArray{
 		this.city = city;
 		this.nr = nr;
 	}
-	
+
 }
