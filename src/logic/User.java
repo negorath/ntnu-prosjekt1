@@ -1,55 +1,31 @@
 package logic;
 import java.sql.Connection;
 
-public class User {
-	
-	public static Connection con;
-	
-	static public User create(String name, String phone, Address address) {
-		
-		// TODO: Insert into database
-		
-		User p = new User();
-		p.name = name;
-		p.phone = phone;
-		p.address = address;
-		
-		return p;
-	}
-	public void add(User user){
-		
-	}
-	/**Connect to the given database Connection
-	 * 
-	 * @param c
-	 */
-	public static void setConnection(Connection c) {
-		con = c;
-	}
-	static public User retrieve(int phoneNumber) {
-		int[] l = {phoneNumber};
-		User[] list = retrieve(l);
-		return list[0];
-	}
+import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.Statement;
 
-	static public User[] retrieve(int[] phoneNumber) {
-		// TODO: Select from database
-		
-		User[] list = null;
-		
-		return list;
-	}
-	public void setAll(String name, String phone, Address address){
+public class User{
+	
+	private String name;
+	private String phone;
+	private Address address;
+	private DatabaseConnector con;
+	public User(String name, String phone, Address address){
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
 	}
-
-
-//	private int id;
-	private String name;
-	private String phone;
-	private Address address;
+	public void add(User user){
+		
+	}
+	
+	public User retrieve(String phoneNumber) throws Exception{
+		int intPhoneNumber = Integer.parseInt(phoneNumber);
+		return con.getUser(intPhoneNumber);
+	}
+	public User retrive(int phoneNumber) throws Exception{
+		return con.getUser(phoneNumber);
+	}
 	
 	public User() { }
 

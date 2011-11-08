@@ -110,15 +110,16 @@ public class CopyOfStarter{
 	private JLabel lblGatenavn_1;
 	private JLabel lblHusnummer;
 	private JButton btnRedigerAdresse;
-
+	private ArrayList<Product> products = new ArrayList<Product>();
+	private ArrayList<User> users = new ArrayList<User>();
+	private ArrayList<Address> addresses = new ArrayList<Address>();
 
 	private JTextField textField_2;
 	private JTextField redigerProductName;
 	private JTextField RedigerProductPrice;
 	private JLabel lblAddressNotFound;
+	DatabaseConnector con = new DatabaseConnector();
 	JPanel Retter;
-//	DatabaseConnector connector = new DatabaseConnector();
-	ArrayList<String> alleUsers = new ArrayList<String>();
 	/**
 	 * Launch the application.
 	 */
@@ -129,7 +130,7 @@ public class CopyOfStarter{
 					CopyOfStarter window = new CopyOfStarter();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+//					e.printStackTrace();
 				}
 			}
 		});
@@ -140,9 +141,14 @@ public class CopyOfStarter{
 	 */
 	public CopyOfStarter() {
 		initialize();
-		DatabaseConnector connector = new DatabaseConnector();
-		connector.initialize();
-		connector.getConnection();
+		try{
+			con.getConnection();			
+		}catch(Exception e){
+			System.out.println("Could not connect to database");
+		}
+		getProducts();
+		getUsers();
+		getAddresses();
 	}
 
 	/**
@@ -699,21 +705,18 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent e) {
 				User user = new User();
 				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I REDIGER TABBEN
-				if(tabbedPane.getSelectedComponent() == Rediger){
-					
+				if(tabbedPane.getSelectedComponent() == Rediger){				
 					try{
-						user = User.retrieve(Integer.parseInt(redigerNummer.getText()));										
+						user = 	con.getUser(redigerNummer.getText());									
+						redigerNavn.setText(user.getName());
+						redigerAdresse.setText(user.getAddress().getStreet());
+						redigerHusnr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+						redigerPostnummer.setText(user.getAddress().getZipcode());
+						redigerPoststed.setText(user.getAddress().getCity());	
 					}catch(Exception t){
-						t.printStackTrace();
-						user = (User)m1.getElementAt(list_3.getSelectedIndex());
+						System.out.println("Kunden finnes ikke i databasen");
 					}						
-					redigerNavn.setText(user.getName());
-					redigerAdresse.setText(user.getAddress().getStreet());
-					redigerHusnr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-					redigerPostnummer.setText(user.getAddress().getZipcode());
-					redigerPoststed.setText(user.getAddress().getCity());	
-				}
-				
+				}				
 				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I RETTER TABBEN
 				else if(tabbedPane.getSelectedComponent() == Retter){
 					
@@ -734,7 +737,7 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					User user = User.retrieve(Integer.parseInt(nr));
+					User user = con.getUser(Integer.parseInt(nr));
 					if(user == null){
 						user = new User();
 					}
@@ -770,14 +773,6 @@ public class CopyOfStarter{
 		bestilling.add(btnIncall);
 
 
-//		textField_2 = new JTextField("<Html>#1: Pizza Margaritha: Tomat, ost" + "<br>" + "#2:</Html>");
-//		textField_2.setBounds(662, 67, 307, 477);
-//		bestilling.add(textField_2);
-//		textField_2.setColumns(10);
-
-
-
-
 		btnLeggTil = new JButton("Legg til");
 		btnLeggTil.setBounds(10, 108, 119, 50);
 		btnLeggTil.setForeground(new Color(47, 79, 79));
@@ -788,16 +783,10 @@ public class CopyOfStarter{
 				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
 				if(tabbedPane.getSelectedComponent() == Rediger){
 					Address address = new Address(	redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());	
-					User user = new User();
-					user.setAll(redigerNavn.getText(), redigerNummer.getText(), address);
+					User user = new User(redigerNavn.getText(), redigerNummer.getText(), address);
 
-					
 					m1.addElement(user);
 					list_3 = new JList(m1);
-					
-					//Oppretter ny bruker og legger den i databasen
-					User.create(redigerNavn.getText(), redigerNummer.getText(), address);
-					
 				}
 				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER
 				else if(tabbedPane.getSelectedComponent() == Retter){	
@@ -973,8 +962,9 @@ public class CopyOfStarter{
 
 
 		JList list_3 = new JList();
-
-		m1.addElement(HelpUser.getBob().getName() + " " + HelpUser.getBob().getPhone());
+		for(int i = 0; i<users.size(); i++){
+			m1.addElement(users.get(i).getPhone() + " " + users.get(i).getName());
+		}
 		list_3 = new JList(m1);
 
 		list_3.setBounds(10, 169, 250, 454);
@@ -999,6 +989,19 @@ public class CopyOfStarter{
 		label.setText("x " + count);
 
 		return null;
+	}
+	public void getProducts(){
+		
+	}
+	public void getUsers(){
+		try{
+			users = con.getUsers();			
+		}catch(Exception e){
+			System.out.println("Finner ingen kunder i databasen");
+		}
+	}
+	public void getAddresses(){
+		
 	}
 }
 class UserArray{
