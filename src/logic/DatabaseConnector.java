@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -83,17 +84,37 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static DefaultListModel getUsers() throws Exception{
-    	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	ResultSet address_rs = stmt.executeQuery("SELECT id, street, houseNumber, zipcode, city FROM addresses");
+    	address_rs.first();
+    	ArrayList<Address> addresses = new ArrayList<Address>();
     	DefaultListModel users = new DefaultListModel();
+    	do{
+    		String id = address_rs.getString(1);
+    		String street = address_rs.getString(2);
+    		String houseNumber = address_rs.getString(3);
+    		String zipcode = address_rs.getString(4);
+    		String city = address_rs.getString(5);
+    		Address address = new Address(street, Integer.parseInt(houseNumber), zipcode, city);
+    		address.setId(Integer.parseInt(id));
+    		addresses.add(address);
+    	}while(address_rs.next());
+    	address_rs.close();
+    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	users_rs.first();
+    	do{
+        	String name = users_rs.getString(1);
+        	String phone = users_rs.getString(2);
+        	String address_id = users_rs.getString(3); 
+        	//finding address from array with id equal to address_id
+        	for(int i = 0; i<addresses.size(); i++){
+        		if(addresses.get(i).getId() == Integer.parseInt(address_id)){
+//        			users.addElement(new User(name, phone, addresses.get(i)));    
+        			users.addElement(name + " " + phone);
+        			System.out.println(name + " " + phone);
+        		}
+        	}
+    	}while(users_rs.next());
 
-    	while(rs.next()){
-        	String name = rs.getString(1);
-        	String phone = rs.getString(2);
-        	String address_id = rs.getString(3);
-    		rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
-        	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
-        	users.addElement(new User(name, phone, address));
-    	}
     	return users;
     }
     /**
