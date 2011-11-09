@@ -172,6 +172,7 @@ public class CopyOfStarter{
 		getUsers();
 		getProducts();
 		getAddresses();
+		frame.repaint();
 	}
 
 	/**
@@ -803,7 +804,7 @@ public class CopyOfStarter{
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
 		
-		kunder_list = new JList();
+		kunder_list = new JList(m1);
 		kunder_list.setBounds(734, 105, 213, 468);
 		kunder.add(kunder_list);
 		
@@ -1007,9 +1008,17 @@ public class CopyOfStarter{
 			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
+	/**
+	 * Get or refresh all users
+	 */
 	public void getUsers(){
 		try{
-			m1 = DatabaseConnector.getUsers();		
+			m1 = DatabaseConnector.getUsers();				
+			//m1 inneholder objektene USERS, listmodelUsers inneholder user.toString();
+			DefaultListModel listmodelUsers = new DefaultListModel();
+			for(int i = 0; i<m1.size(); i++){
+				listmodelUsers.addElement(m1.getElementAt(i).toString());
+			}
 			kunder_list = new JList(m1);
 		}catch(Exception e){
 			e.printStackTrace();

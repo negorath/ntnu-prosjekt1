@@ -63,7 +63,11 @@ public class Product {
 	public int getId() {
 		return id;
 	}
-	
+	public String toString(){
+		String result;
+		result = getName() + ": " + getPrice();
+		return result;
+	}
 	
 	
 }

@@ -70,4 +70,10 @@ public class User{
 	public void setAddress(Address address) {
 		this.address = address;
 	}
+	
+	public String toString(){
+		String result;
+		result = getPhone() + ": " + getName();
+		return result;
+	}
 }

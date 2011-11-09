@@ -108,12 +108,12 @@ public class DatabaseConnector{
         	//finding address from array with id equal to address_id
         	for(int i = 0; i<addresses.size(); i++){
         		if(addresses.get(i).getId() == Integer.parseInt(address_id)){
-//        			users.addElement(new User(name, phone, addresses.get(i)));    
-        			users.addElement(name + " " + phone);
-        			System.out.println(name + " " + phone);
+        			User user = new User(name, phone, addresses.get(i));
+        			users.addElement(user);
         		}
         	}
     	}while(users_rs.next());
+    	address_rs.close();
 
     	return users;
     }
@@ -156,6 +156,30 @@ public class DatabaseConnector{
     	System.out.println("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
     	con.commit();
     	con.setAutoCommit(true);
+    }
+    public static DefaultListModel getOrders() throws Exception{
+    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered FROM orders");
+    	DefaultListModel orders = new DefaultListModel();
+    	do{
+    		String user_id = orders_rs.getString(1);
+    		String ordered = orders_rs.getString(2);
+    		String due = orders_rs.getString(3);
+    		String delivered = orders_rs.getString(4);
+    		orders.addElement(new Order(Integer.parseInt(user_id), ordered, due, delivered));
+    	}while(orders_rs.next());
+    	return orders;
+    }
+    
+    public static void newOrder(Order order){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("INSERT into orders VALUES()");
+    		con.commit();
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to insert new order into database");
+    		e.printStackTrace();
+    	}
     }
 
 }

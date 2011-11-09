@@ -6,15 +6,20 @@ class Order {
 	private int id;
 	private int userId;
 	private Product[] products;
-	
-	public static Connection con;
-	
-	/**Connect to the given database Connection
+	private String ordered, due, delivered;
+	/**
 	 * 
-	 * @param c
+	 * @param id
+	 * @param userId
+	 * @param ordered
+	 * @param due
+	 * @param delivered
 	 */
-	public static void setConnection(Connection c) {
-		con = c;
+	public Order(int userId, String ordered, String due, String delivered){
+		this.userId = userId;
+		this.ordered = ordered;
+		this.due = due;
+		this.delivered = delivered;
 	}
 	
 	
@@ -48,7 +53,6 @@ class Order {
 	public int getId() {
 		return id;
 	}
-	
 	
 	
 }
