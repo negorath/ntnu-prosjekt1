@@ -132,9 +132,9 @@ public class CopyOfStarter{
 	private JTextField redigerHusNr;
 	private JTextField redigerPostNummer;
 	private JTextField redigerPostSted;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_10;
+	private JTextField retterNavn;
+	private JTextField retterPris;
+	private JTextField retterKommentar;
 	private JLabel lblProduktnavn;
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
@@ -815,6 +815,7 @@ public class CopyOfStarter{
 					getUsers();
 				}catch(Exception et){
 					System.out.println("Kunne ikke legge til kunde");
+					et.printStackTrace();
 				}
 			}
 		});
@@ -828,6 +829,14 @@ public class CopyOfStarter{
 		Hent = new JButton("Hent");
 		Hent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int selectedIndex = kunder_list.getSelectedIndex();
+				User user = (User)m1.getElementAt(selectedIndex);
+				redigerNavn.setText(user.getName());
+				redigerNummer.setText(user.getPhone());
+				redigerAdresse.setText(user.getAddress().getStreet());
+				redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+				redigerPostNummer.setText(user.getAddress().getZipcode());
+				redigerPostSted.setText(user.getAddress().getCity());
 			}
 		});
 		Hent.setBounds(734, 11, 100, 41);
@@ -912,6 +921,14 @@ public class CopyOfStarter{
 		retter.add(retter_list);
 		
 		hent_retter = new JButton("Hent");
+		hent_retter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+				retterNavn.setText(product.getName());
+				retterPris.setText(String.valueOf(product.getPrice()));
+				retterKommentar.setText(product.getDescription());
+			}
+		});
 		hent_retter.setBounds(734, 11, 100, 41);
 		retter.add(hent_retter);
 		
@@ -927,23 +944,23 @@ public class CopyOfStarter{
 		leggTil_retter_1.setBounds(847, 64, 100, 41);
 		retter.add(leggTil_retter_1);
 		
-		textField_8 = new JTextField();
-		textField_8.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_8.setColumns(10);
-		textField_8.setBounds(10, 64, 408, 60);
-		retter.add(textField_8);
+		retterNavn = new JTextField();
+		retterNavn.setFont(new Font("Verdana", Font.PLAIN, 16));
+		retterNavn.setColumns(10);
+		retterNavn.setBounds(10, 64, 408, 60);
+		retter.add(retterNavn);
 		
-		textField_9 = new JTextField();
-		textField_9.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_9.setColumns(10);
-		textField_9.setBounds(453, 64, 156, 60);
-		retter.add(textField_9);
+		retterPris = new JTextField();
+		retterPris.setFont(new Font("Verdana", Font.PLAIN, 16));
+		retterPris.setColumns(10);
+		retterPris.setBounds(453, 64, 156, 60);
+		retter.add(retterPris);
 		
-		textField_10 = new JTextField();
-		textField_10.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_10.setColumns(10);
-		textField_10.setBounds(10, 199, 408, 202);
-		retter.add(textField_10);
+		retterKommentar = new JTextField();
+		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
+		retterKommentar.setColumns(10);
+		retterKommentar.setBounds(10, 199, 408, 202);
+		retter.add(retterKommentar);
 		
 		lblProduktnavn = new JLabel("Produktnavn");
 		lblProduktnavn.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -1001,6 +1018,7 @@ public class CopyOfStarter{
 		try{
 			//m2 inneholder Product objektene, mens listModelProducts inneholder Product.toString();
 			m2 = DatabaseConnector.getProducts();
+			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
 				listModelProducts.addElement(m2.getElementAt(i).toString());
 			}
@@ -1014,7 +1032,8 @@ public class CopyOfStarter{
 	 */
 	public void getUsers(){
 		try{
-			m1 = DatabaseConnector.getUsers();				
+			m1 = DatabaseConnector.getUsers();		
+			listmodelUsers.clear();
 			//m1 inneholder objektene USERS, listmodelUsers inneholder user.toString();
 			for(int i = 0; i<m1.size(); i++){
 				listmodelUsers.addElement(m1.getElementAt(i).toString());

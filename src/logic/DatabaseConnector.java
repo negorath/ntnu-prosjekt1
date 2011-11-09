@@ -150,15 +150,21 @@ public class DatabaseConnector{
     	
     	return products;
     }
+    
     public static void newUser(User user)throws Exception{
+    	ResultSet newUser_rs = stmt.executeQuery("SELECT COUNT(*) FROM addresses");
+    	newUser_rs.first();
+    	int address_id = Integer.parseInt(newUser_rs.getString(1)) + 1;
     	con.setAutoCommit(false);
-    	stmt.executeUpdate("INSERT into addresses VALUES(" + user.getAddress().getStreet() + "," + user.getAddress().getHouseNumber() + "," + user.getAddress().getZipcode() + "," + user.getAddress().getCity() + ")");
-    	String s = stmt.executeQuery("SELECT LAST_INSERT_ID() FROM addresses").getString(1);
-    	stmt.executeUpdate("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", "+s + ")");
-    	System.out.println("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
+    	int houseNumber = user.getAddress().getHouseNumber();
+    	String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
+    	stmt.executeUpdate("INSERT into addresses VALUES (" + address_id + ", '" +street +"', '"+ houseNumber +"', 'a', '"+ zipcode +"', '"+ city +"', 'NO')");
+       	stmt.executeUpdate("INSERT into users (id, name, phone, address_id) VALUES (" + address_id + ", '" + user.getName() + "', '" + user.getPhone() + "', '"+ address_id + "')");
     	con.commit();
     	con.setAutoCommit(true);
+    	newUser_rs.close();
     }
+    
     public static DefaultListModel getOrders() throws Exception{
     	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered FROM orders");
     	DefaultListModel orders = new DefaultListModel();
@@ -175,7 +181,7 @@ public class DatabaseConnector{
     public static void newOrder(Order order){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("INSERT into orders VALUES()");
+    		stmt.executeUpdate("INSERT into orders VALUES(now(), 0, 0)");
     		con.commit();
     		con.setAutoCommit(false);
     	}catch(Exception e){
