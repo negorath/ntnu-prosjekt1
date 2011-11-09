@@ -126,12 +126,12 @@ public class CopyOfStarter{
 	private JButton rediger_retter;
 	private JButton leggTil_retter;
 	private JButton leggTil_retter_1;
-	private JTextField textField;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JTextField textField_6;
-	private JTextField textField_7;
+	private JTextField redigerNavn;
+	private JTextField redigerNummer;
+	private JTextField redigerAdresse;
+	private JTextField redigerHusNr;
+	private JTextField redigerPostNummer;
+	private JTextField redigerPostSted;
 	private JTextField textField_8;
 	private JTextField textField_9;
 	private JTextField textField_10;
@@ -809,6 +809,13 @@ public class CopyOfStarter{
 		leggTil = new JButton("Legg Til");
 		leggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
+				try{
+					DatabaseConnector.newUser(new User(redigerNavn.getText(), redigerNummer.getText(), address));					
+					kunder_list = new JList(DatabaseConnector.getUsers());
+				}catch(Exception et){
+					System.out.println("Kunne ikke legge til kunde");
+				}
 			}
 		});
 		leggTil.setBounds(734, 64, 100, 41);
@@ -819,6 +826,10 @@ public class CopyOfStarter{
 		kunder.add(Slett);
 		
 		Hent = new JButton("Hent");
+		Hent.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		Hent.setBounds(734, 11, 100, 41);
 		kunder.add(Hent);
 		
@@ -826,41 +837,41 @@ public class CopyOfStarter{
 		Rediger_1.setBounds(847, 11, 100, 41);
 		kunder.add(Rediger_1);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField.setBounds(10, 64, 408, 60);
-		kunder.add(textField);
-		textField.setColumns(10);
+		redigerNavn = new JTextField();
+		redigerNavn.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerNavn.setBounds(10, 64, 408, 60);
+		kunder.add(redigerNavn);
+		redigerNavn.setColumns(10);
 		
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_3.setBounds(453, 64, 230, 60);
-		kunder.add(textField_3);
-		textField_3.setColumns(10);
+		redigerNummer = new JTextField();
+		redigerNummer.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerNummer.setBounds(453, 64, 230, 60);
+		kunder.add(redigerNummer);
+		redigerNummer.setColumns(10);
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_4.setBounds(10, 199, 480, 60);
-		kunder.add(textField_4);
-		textField_4.setColumns(10);
+		redigerAdresse = new JTextField();
+		redigerAdresse.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerAdresse.setBounds(10, 199, 480, 60);
+		kunder.add(redigerAdresse);
+		redigerAdresse.setColumns(10);
 		
-		textField_5 = new JTextField();
-		textField_5.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_5.setBounds(530, 199, 86, 60);
-		kunder.add(textField_5);
-		textField_5.setColumns(10);
+		redigerHusNr = new JTextField();
+		redigerHusNr.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerHusNr.setBounds(530, 199, 86, 60);
+		kunder.add(redigerHusNr);
+		redigerHusNr.setColumns(10);
 		
-		textField_6 = new JTextField();
-		textField_6.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_6.setBounds(10, 326, 130, 60);
-		kunder.add(textField_6);
-		textField_6.setColumns(10);
+		redigerPostNummer = new JTextField();
+		redigerPostNummer.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerPostNummer.setBounds(10, 326, 130, 60);
+		kunder.add(redigerPostNummer);
+		redigerPostNummer.setColumns(10);
 		
-		textField_7 = new JTextField();
-		textField_7.setFont(new Font("Verdana", Font.PLAIN, 16));
-		textField_7.setBounds(175, 326, 445, 60);
-		kunder.add(textField_7);
-		textField_7.setColumns(10);
+		redigerPostSted = new JTextField();
+		redigerPostSted.setFont(new Font("Verdana", Font.PLAIN, 16));
+		redigerPostSted.setBounds(175, 326, 445, 60);
+		kunder.add(redigerPostSted);
+		redigerPostSted.setColumns(10);
 		
 		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
 		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -992,6 +1003,7 @@ public class CopyOfStarter{
 			m2 = DatabaseConnector.getProducts();
 			retter_list = new JList(m2);
 		}catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
@@ -1000,6 +1012,7 @@ public class CopyOfStarter{
 			m1 = DatabaseConnector.getUsers();		
 			kunder_list = new JList(m1);
 		}catch(Exception e){
+			e.printStackTrace();
 			System.out.println("Finner ingen kunder i databasen");
 		}
 	}

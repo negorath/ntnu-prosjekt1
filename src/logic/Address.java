@@ -12,7 +12,13 @@ public class Address {
 		con = c;
 	}
 	
-
+	/**
+	 * 
+	 * @param street
+	 * @param houseNumber
+	 * @param zipcode
+	 * @param city
+	 */
 	public Address(String street, int houseNumber, String zipcode,String city) {
 		super();
 		this.street = street;
@@ -105,6 +111,9 @@ public class Address {
 	 */
 	public int getId() {
 		return id;
+	}
+	public void setId(int id){
+		this.id = id;
 	}
 	
 }
