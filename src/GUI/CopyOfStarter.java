@@ -87,12 +87,9 @@ public class CopyOfStarter{
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
-<<<<<<< HEAD
-	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
 	DefaultListModel m1 = new DefaultListModel(), m2 = new DefaultListModel();
-=======
-	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
+
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -117,7 +114,6 @@ public class CopyOfStarter{
 	private JTextField textField_2;
 	private JLabel lblAddressNotFound;
 	DatabaseConnector con = new DatabaseConnector();
-<<<<<<< HEAD
 	private JPanel kunder;
 	private JList kunder_list;
 	private JList retter_list;
@@ -141,14 +137,12 @@ public class CopyOfStarter{
 	private JLabel lblProduktnavn;
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
-=======
 	JPanel Retter;
 
 //	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
 
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	/**
 	 * Launch the application.
 	 */
@@ -942,13 +936,8 @@ public class CopyOfStarter{
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
-<<<<<<< HEAD
-
-		JLabel pizzaInfo = new JLabel("<html>1: Pizza maragaritha: Tomat, Ost. <br>2: Pizza Milano: Tomat, ost, pepperoni.</html>");
-=======
 		
 		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. <br><br>2: Vesuvio: Tomat, ost, skinke.<br><br>3: Milano: Tomat, ost, pepperoni.<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner.<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus.<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella.<br><br>7: Capriciosa: Tomat, ost, skinke, sopp.<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus.<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k.</html>");
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 		pizzaInfo.setBounds(700, 101, 269, 442);
 		bestilling.add(pizzaInfo);
 
@@ -978,14 +967,10 @@ public class CopyOfStarter{
 
 		return null;
 	}
-<<<<<<< HEAD
-=======
-
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	public void getProducts(){
 		try{
 			m2 = DatabaseConnector.getProducts();
-			list_3 = new JList(m2);
+			retter_list = new JList(m2);
 		}catch(Exception e){
 			System.out.println("Finner ingen produkter i databasen");
 		}
@@ -993,7 +978,7 @@ public class CopyOfStarter{
 	public void getUsers(){
 		try{
 			m1 = DatabaseConnector.getUsers();		
-			list_3 = new JList(m1);
+			kunder_list = new JList(m1);
 		}catch(Exception e){
 			System.out.println("Finner ingen kunder i databasen");
 		}
@@ -1001,12 +986,10 @@ public class CopyOfStarter{
 	public void getAddresses(){
 
 	}
-<<<<<<< HEAD
 	public String createReceipt(JList l){
 
 		return "lololol";
 	}
-=======
 	public String createReceipt(String a){
 		
 		String temp = "";
@@ -1033,19 +1016,4 @@ public class CopyOfStarter{
 		return lol;
 	}
 
-}
-class UserArray{
-	public String name, phone, address, zipcode, city;
-	public int nr;
-	
-	public UserArray(String name, String phone, String address, String zipcode, String city, int nr){
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.city = city;
-		this.nr = nr;
-	}
-
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 }

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="mysql-connector-java-3.0.17-ga-bin.jar"/>
-	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="forms-1.3.0.jar"/>
-=======
 	<classpathentry kind="lib" path="forms-1.3.0.jar"/>
 	<classpathentry kind="lib" path="miglayout15-swing.jar"/>
 	<classpathentry kind="lib" path="mysql-connector-java-3.0.17-ga-bin.jar"/>
->>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,12 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.DefaultListModel;
-
 import localData.ConfigSample;
 
 
@@ -85,10 +82,9 @@ public class DatabaseConnector{
      * @return arraylist med alle users fra database
      * @throws Exception
      */
-    public static DefaultListModel getUsers() throws Exception{
-//    	ArrayList<User> users = new ArrayList<User>();
+    public static DefaultListModel<User> getUsers() throws Exception{
     	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
-    	DefaultListModel users = new DefaultListModel();
+    	DefaultListModel<User> users = new DefaultListModel<User>();
 
     	while(rs.next()){
         	String name = rs.getString(1);
@@ -96,7 +92,6 @@ public class DatabaseConnector{
         	String address_id = rs.getString(3);
     		rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
         	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
-//        	users.add(new User(name, phone, address));
         	users.addElement(new User(name, phone, address));
     	}
     	return users;
@@ -119,15 +114,13 @@ public class DatabaseConnector{
      * @return alle produkter fra databasen
      * @throws Exception
      */
-    public static DefaultListModel getProducts() throws Exception{
-//    	ArrayList<Product> products = new ArrayList<Product>();
-    	DefaultListModel products = new DefaultListModel();
+    public static DefaultListModel<Product> getProducts() throws Exception{
+    	DefaultListModel<Product> products = new DefaultListModel<Product>();
     	rs = stmt.executeQuery("SELECT name, description, price FROM products");
     	while(rs.next()){
     		String name = rs.getString(1);
     		String description = rs.getString(2);
     		String price = rs.getString(3);
-//    		products.add(new Product(name, description, Double.parseDouble(price)));
     		products.addElement(new Product(name, description, Double.parseDouble(price)));
     	}
     	
@@ -137,9 +130,10 @@ public class DatabaseConnector{
     	con.setAutoCommit(false);
     	stmt.executeUpdate("INSERT into addresses VALUES(" + user.getAddress().getStreet() + "," + user.getAddress().getHouseNumber() + "," + user.getAddress().getZipcode() + "," + user.getAddress().getCity() + ")");
     	String s = stmt.executeQuery("SELECT LAST_INSERT_ID() FROM addresses").getString(1);
-    	stmt.executeUpdate("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
+    	stmt.executeUpdate("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", "+s + ")");
     	System.out.println("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
-    	
+    	con.commit();
+    	con.setAutoCommit(true);
     }
 
 }
