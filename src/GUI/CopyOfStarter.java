@@ -643,6 +643,7 @@ public class CopyOfStarter{
 				frame.repaint();
 				try{
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
 				}catch(Exception e){
 					//					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
@@ -968,7 +969,6 @@ public class CopyOfStarter{
 		}
 	}
 	private String menyKnappTrykk(String a) {
-
 		count = null;
 		model.addElement("1" +" x "+a); 
 		label.setText("x "+"1");
