@@ -125,6 +125,7 @@ public class CopyOfStarter{
 //	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
+	private JButton btnLevert;
 
 	/**
 	 * Launch the application.
@@ -497,38 +498,32 @@ public class CopyOfStarter{
 
 		navn = new JTextField();
 		navn.setBounds(16, 30, 278, 28);
-		navn.setText("Navn");
 		bestillingsInfo.add(navn);
 		navn.setColumns(10);
 
 		nummer = new JTextField();
 		nummer.setFont(new Font("Verdana", Font.BOLD, 20));
 		nummer.setBounds(835, 30, 134, 28);
-		nummer.setText("Nummer");
 		bestillingsInfo.add(nummer);
 		nummer.setColumns(10);
 
 		gatenavn = new JTextField();
 		gatenavn.setBounds(16, 83, 190, 28);
-		gatenavn.setText("Adresse");
 		bestillingsInfo.add(gatenavn);
 		gatenavn.setColumns(10);
 
 		postnummer = new JTextField();
 		postnummer.setBounds(16, 135, 133, 28);
-		postnummer.setText("Postnr.");
 		bestillingsInfo.add(postnummer);
 		postnummer.setColumns(10);
 
 		poststed = new JTextField();
 		poststed.setBounds(160, 135, 134, 28);
-		poststed.setText("Sted");
 		bestillingsInfo.add(poststed);
 		poststed.setColumns(10);
 
 		kommentar = new JTextField();
 		kommentar.setBounds(16, 190, 190, 93);
-		kommentar.setText("Kommentar");
 		bestillingsInfo.add(kommentar);
 		kommentar.setColumns(10);
 
@@ -619,6 +614,19 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
 				list_2.addElement(createOrder(list));
+				navn.setText("");
+				nummer.setText("");
+				gatenavn.setText("");
+				postnummer.setText("");
+				poststed.setText("");
+				kommentar.setText("");
+				husnummer.setText("");
+				textField_1.setText("");
+				chckbxLevering.setSelected(false);
+				rdbtnKort.setSelected(false);
+				rdbtnKontant.setSelected(false);
+				model.clear();
+				frame.repaint();
 				try{
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
@@ -657,6 +665,17 @@ public class CopyOfStarter{
 		list_4 = new JList(list_5);
 		list_4.setBounds(6, 22, 229, 487);
 		panel_3.add(list_4);
+		
+		btnLevert = new JButton("Levert");
+		btnLevert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(list_5.getSize()>0){
+					list_5.remove(list_4.getSelectedIndex());
+				}
+			}
+		});
+		btnLevert.setBounds(135, 0, 100, 23);
+		panel_3.add(btnLevert);
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
