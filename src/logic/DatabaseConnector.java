@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import localData.ConfigSample;
@@ -13,82 +14,86 @@ import localData.ConfigSample;
 /** Klassen som setter opp koblingen til databasen
  *  Bruk getConnection() for å få en kobling til databasen
  */
-public class DatabaseConnector {
+public class DatabaseConnector{	
+	
+	public DatabaseConnector(){
+		
+	}
+    private static Connection con = null; // connection object
+    private static Statement stmt = null; // statement object
+    private static ResultSet rs = null; // result set object
+    
+	public static Connection getConnection() throws Exception {
 
-	
-	private static Connection con;
-	
-	/**
-	 * Kall denne metoden for å koble til databasen som definert i localData/ConfigSample.java
-	 */
-    public static void initialize() {
-    	con = null;
-       
-        
         String url = "jdbc:mysql:" + ConfigSample.DBHost + ":" + ConfigSample.DBport + "/" + ConfigSample.DBName;
         String user = ConfigSample.DBUsername;
         String password = ConfigSample.DBPassword;
-
-        try {
-			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("Driver loaded");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	    // load the Oracle JDBC Driver
         
-        try {
-        	
-            con = DriverManager.getConnection(url, user, password);
-//            st = con.createStatement();
-//            rs = st.executeQuery("SELECT VERSION()");
-//
-//            if (rs.next()) {
-//                System.out.println(rs.getString(1));
-            System.out.println("Connected to " + ConfigSample.DBName);
-            
-        } catch (SQLException ex) {
-//            Logger lgr = Logger.getLogger(DatabaseConnector.class.getName());
-//            lgr.log(Level.SEVERE, ex.getMessage(), ex);
-        	ex.printStackTrace();
-
+        try{
+        	Class.forName("com.mysql.jdbc.Driver");
+        	System.out.println("Driver loaded");        	
+        }catch(Exception e){
+        	System.out.println("Kunne ikke laste inn driver");
         }
-        giveConnecetion();
-        
-        
-        
-    }
-    
-    public static void giveConnecetion() {
-    	Address.setConnection(con);
-    	Order.setConnection(con);
-    	Product.setConnection(con);
-    	User.setConnection(con);
-    
-    }
-    public static void closeConnection() {
+	    // define database connection parameters
+	    System.out.println("Connected to " + ConfigSample.DBName);
+	    
+		try {
+			con.createStatement();
+			con.commit();
+			con.setAutoCommit(true);
+		}catch(Exception e){
+			System.out.println("klarer ikke laste inn database");
+		}
+	    return DriverManager.getConnection(url, user, password);
+	  }
+    public void closeConnection() {
     	 try {
              if (con != null) {
                  con.close();
              }
-//             if (rs != null) {
-//            	 rs.close();
-//             }
-//             if (st != null) {
-//            	 st.close();
-//             }
-
          } catch (SQLException ex) {
              Logger lgr = Logger.getLogger(DatabaseConnector.class.getName());
              lgr.log(Level.WARNING, ex.getMessage(), ex);
          }
     }
     
-    /**Bruk dette objektet for å endre på databasen
-     *
-     **/
-    
-    public Connection getConnection() {
-    	return con;
+
+    /**
+     * 
+     * @param phoneNumber
+     * @return	User fra database med requested phoneNumber
+     * @throws Exception
+     */
+    public User getUser(int phoneNumber) throws Exception{
+    	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
+    	String name = rs.getString(1);
+    	String phone = rs.getString(2);
+    	String address_id = rs.getString(3);
+    	rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
+    	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
+    	return new User(name, phone, address);
+    }
+    public User getUser(String phoneNumber) throws Exception{
+    	return getUser(Integer.parseInt(phoneNumber));
+    }
+    /**
+     * 
+     * @return arraylist med alle users fra database
+     * @throws Exception
+     */
+    public ArrayList<User> getUsers() throws Exception{
+    	ArrayList<User> users = new ArrayList<User>();
+    	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	while(rs.next()){
+        	String name = rs.getString(1);
+        	String phone = rs.getString(2);
+        	String address_id = rs.getString(3);
+    		rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
+        	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
+        	users.add(new User(name, phone, address));
+    	}
+    	return users;
     }
 }
