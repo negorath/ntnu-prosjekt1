@@ -90,7 +90,7 @@ public class CopyOfStarter{
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
-	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -119,6 +119,7 @@ public class CopyOfStarter{
 	JPanel Retter;
 //	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
+	private JPanel panel_2;
 	/**
 	 * Launch the application.
 	 */
@@ -625,10 +626,16 @@ public class CopyOfStarter{
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBounds(4, 35, 241, 515);
+		Utgaende.add(panel_2);
+		panel_2.setLayout(null);
 
 		list_3 = new JList(list_2);
-		list_3.setBounds(10, 11, 229, 533);
-		Utgaende.add(list_3);
+		list_3.setBounds(6, 22, 229, 487);
+		panel_2.add(list_3);
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
@@ -664,6 +671,34 @@ public class CopyOfStarter{
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnVisKart.setBounds(249, 11, 137, 50);
 		Utgaende.add(btnVisKart);
+		
+		JButton btnLages = new JButton("Ikke ferdig");
+		btnLages.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+		btnLages.setBounds(269, 521, 117, 29);
+		Utgaende.add(btnLages);
+		
+		JButton btnFerdig = new JButton("Ferdig");
+		btnFerdig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+			}
+		});
+		btnFerdig.setBounds(269, 474, 117, 29);
+		Utgaende.add(btnFerdig);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(423, 35, 241, 515);
+		Utgaende.add(panel_3);
+		panel_3.setLayout(null);
+		
+		JList list_4 = new JList(list_5);
+		list_4.setBounds(6, 22, 229, 487);
+		panel_3.add(list_4);
 
 
 
@@ -1003,9 +1038,10 @@ public class CopyOfStarter{
 	}
 	public String createReceipt(JList l){
 		
-		return "lololol";
+		int temp = list_2.getSize() + 1;
+		String lol = "Ordre nr." + temp;
+		return lol;
 	}
-	
 }
 class UserArray{
 	public String name, phone, address, zipcode, city;
