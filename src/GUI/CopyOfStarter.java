@@ -88,8 +88,8 @@ public class CopyOfStarter{
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
 	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
-	DefaultListModel<User> m1 = new DefaultListModel<User>();
-	DefaultListModel<Product> m2 = new DefaultListModel<Product>();
+	DefaultListModel m1 = new DefaultListModel();
+	DefaultListModel m2 = new DefaultListModel();
 
 	private JTextField husnummer;
 	private JTextField textField_1;

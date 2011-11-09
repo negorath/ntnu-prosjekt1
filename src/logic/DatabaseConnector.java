@@ -82,9 +82,9 @@ public class DatabaseConnector{
      * @return arraylist med alle users fra database
      * @throws Exception
      */
-    public static DefaultListModel<User> getUsers() throws Exception{
+    public static DefaultListModel getUsers() throws Exception{
     	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
-    	DefaultListModel<User> users = new DefaultListModel<User>();
+    	DefaultListModel users = new DefaultListModel();
 
     	while(rs.next()){
         	String name = rs.getString(1);
@@ -114,8 +114,8 @@ public class DatabaseConnector{
      * @return alle produkter fra databasen
      * @throws Exception
      */
-    public static DefaultListModel<Product> getProducts() throws Exception{
-    	DefaultListModel<Product> products = new DefaultListModel<Product>();
+    public static DefaultListModel getProducts() throws Exception{
+    	DefaultListModel products = new DefaultListModel();
     	rs = stmt.executeQuery("SELECT name, description, price FROM products");
     	while(rs.next()){
     		String name = rs.getString(1);
