@@ -2,43 +2,16 @@ package logic;
 import java.sql.Connection;
 
 public class Product {
-	public static Connection con;
-
-	static public Product create(String name, String description, double price) {
-		
-		// TODO: Insert into database
-		
-		Product p = new Product();
-		p.name = name;
-		p.description = description;
-		p.price = price;
-		
-		return p;
-	}
-	
-	public static void setConnection(Connection c) {
-		con = c;
-	}
-	static public Product retrieve(int id) {
-		int[] l = {id};
-		Product[] list = retrieve(l);
-		return list[0];
-	}
-
-	static public Product[] retrieve(int[] id) {
-		// TODO: Select from database
-		
-		Product[] list = null;
-		
-		return list;
-	}
-	
-
-
 	private int id;
 	private String name;
 	private String description;
 	private double price;
+	
+	public Product(String name, String description, double price){
+		this.name = name;
+		this.description = description;
+		this.price = price;
+	}
 	
 	private Product() { }
 

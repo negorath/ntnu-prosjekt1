@@ -8,6 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.DefaultListModel;
+
 import localData.ConfigSample;
 
 
@@ -23,12 +26,21 @@ public class DatabaseConnector{
     private static Statement stmt = null; // statement object
     private static ResultSet rs = null; // result set object
     
+    public static void initialize(){
+		try {
+			con = getConnection();
+			stmt = con.createStatement();
+			con.setAutoCommit(true);
+			System.out.println("Connected to " + ConfigSample.DBName);
+		}catch(Exception e){
+			System.out.println("klarer ikke laste inn databasen");
+		}
+    }
 	public static Connection getConnection() throws Exception {
 
         String url = "jdbc:mysql:" + ConfigSample.DBHost + ":" + ConfigSample.DBport + "/" + ConfigSample.DBName;
         String user = ConfigSample.DBUsername;
         String password = ConfigSample.DBPassword;
-	    // load the Oracle JDBC Driver
         
         try{
         	Class.forName("com.mysql.jdbc.Driver");
@@ -36,16 +48,6 @@ public class DatabaseConnector{
         }catch(Exception e){
         	System.out.println("Kunne ikke laste inn driver");
         }
-	    // define database connection parameters
-	    System.out.println("Connected to " + ConfigSample.DBName);
-	    
-		try {
-			con.createStatement();
-			con.commit();
-			con.setAutoCommit(true);
-		}catch(Exception e){
-			System.out.println("klarer ikke laste inn database");
-		}
 	    return DriverManager.getConnection(url, user, password);
 	  }
     public void closeConnection() {
@@ -66,7 +68,7 @@ public class DatabaseConnector{
      * @return	User fra database med requested phoneNumber
      * @throws Exception
      */
-    public User getUser(int phoneNumber) throws Exception{
+    public static User getUser(int phoneNumber) throws Exception{
     	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
     	String name = rs.getString(1);
     	String phone = rs.getString(2);
@@ -75,7 +77,7 @@ public class DatabaseConnector{
     	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
     	return new User(name, phone, address);
     }
-    public User getUser(String phoneNumber) throws Exception{
+    public static User getUser(String phoneNumber) throws Exception{
     	return getUser(Integer.parseInt(phoneNumber));
     }
     /**
@@ -83,17 +85,61 @@ public class DatabaseConnector{
      * @return arraylist med alle users fra database
      * @throws Exception
      */
-    public ArrayList<User> getUsers() throws Exception{
-    	ArrayList<User> users = new ArrayList<User>();
+    public static DefaultListModel getUsers() throws Exception{
+//    	ArrayList<User> users = new ArrayList<User>();
     	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	DefaultListModel users = new DefaultListModel();
+
     	while(rs.next()){
         	String name = rs.getString(1);
         	String phone = rs.getString(2);
         	String address_id = rs.getString(3);
     		rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
         	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
-        	users.add(new User(name, phone, address));
+//        	users.add(new User(name, phone, address));
+        	users.addElement(new User(name, phone, address));
     	}
     	return users;
     }
+    /**
+     * 
+     * @param id
+     * @return productet med angitt id i databasen
+     * @throws Exception
+     */
+    public static Product getProduct(String id) throws Exception{
+    	rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE name='"+id+"'");
+    	String name = rs.getString(1);
+    	String description = rs.getString(2);
+    	String price = rs.getString(3);
+    	return new Product(name, description, Double.parseDouble(price));
+    }
+    /**
+     * 
+     * @return alle produkter fra databasen
+     * @throws Exception
+     */
+    public static DefaultListModel getProducts() throws Exception{
+//    	ArrayList<Product> products = new ArrayList<Product>();
+    	DefaultListModel products = new DefaultListModel();
+    	rs = stmt.executeQuery("SELECT name, description, price FROM products");
+    	while(rs.next()){
+    		String name = rs.getString(1);
+    		String description = rs.getString(2);
+    		String price = rs.getString(3);
+//    		products.add(new Product(name, description, Double.parseDouble(price)));
+    		products.addElement(new Product(name, description, Double.parseDouble(price)));
+    	}
+    	
+    	return products;
+    }
+    public static void newUser(User user)throws Exception{
+    	con.setAutoCommit(false);
+    	stmt.executeUpdate("INSERT into addresses VALUES(" + user.getAddress().getStreet() + "," + user.getAddress().getHouseNumber() + "," + user.getAddress().getZipcode() + "," + user.getAddress().getCity() + ")");
+    	String s = stmt.executeQuery("SELECT LAST_INSERT_ID() FROM addresses").getString(1);
+    	stmt.executeUpdate("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
+    	System.out.println("INSERT into users VALUES(" + user.getName()+ "," + user.getPhone() + ", s)");
+    	
+    }
+
 }

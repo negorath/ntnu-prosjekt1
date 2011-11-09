@@ -67,8 +67,8 @@ import javax.swing.UIManager;
 public class CopyOfStarter{
 	private TemporaryDatabase database = new TemporaryDatabase();
 	private JFrame frame;
-	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar, redigerNavn, redigerNummer;
-	private JTextField redigerHusnr, redigerPostnummer, redigerPoststed, husNr, husBokstav, land;
+	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar;
+	private JTextField husNr, husBokstav, land;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
@@ -79,18 +79,16 @@ public class CopyOfStarter{
 	private JButton toggleButton_8, tglbtnCola, tglbtnFanta, tglbtnUrge, tglbtnSprite, tglbtnFarris, tglbtnLol;
 	private StringBuilder pizzaStreng = new StringBuilder();
 	private JButton button, button_1, button_2, button_3, button_4, button_5, button_6, btnNewButton_1, btnNewButton, btnNeste;
-	private JButton btnRediger, btnHentNr, btnLeggTil, btnIncall;
+	private JButton btnIncall;
 	private JCheckBox chckbxLevering; 
 	JList list_1;
-	ArrayList<UserArray> userArray = new ArrayList<UserArray>();
 	BufferedImage image;
-	//	private logic.Product product;
-	//	private logic.Address adress;
 	private logic.User user;
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
-	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel();
+	DefaultListModel m1 = new DefaultListModel(), m2 = new DefaultListModel();
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -106,20 +104,37 @@ public class CopyOfStarter{
 	private JButton button_8;
 	private String sisteTrykteKnapp;
 	private MapTesting map = new MapTesting();
-	private JTextField redigerAdresse;
-	private JLabel lblGatenavn_1;
-	private JLabel lblHusnummer;
 	private JButton btnRedigerAdresse;
 	private ArrayList<Product> products = new ArrayList<Product>();
 	private ArrayList<User> users = new ArrayList<User>();
 	private ArrayList<Address> addresses = new ArrayList<Address>();
 
 	private JTextField textField_2;
-	private JTextField redigerProductName;
-	private JTextField RedigerProductPrice;
 	private JLabel lblAddressNotFound;
 	DatabaseConnector con = new DatabaseConnector();
-	JPanel Retter;
+	private JPanel kunder;
+	private JList kunder_list;
+	private JList retter_list;
+	private JButton leggTil;
+	private JButton Slett;
+	private JButton Hent;
+	private JButton Rediger_1;
+	private JButton hent_retter;
+	private JButton rediger_retter;
+	private JButton leggTil_retter;
+	private JButton leggTil_retter_1;
+	private JTextField textField;
+	private JTextField textField_3;
+	private JTextField textField_4;
+	private JTextField textField_5;
+	private JTextField textField_6;
+	private JTextField textField_7;
+	private JTextField textField_8;
+	private JTextField textField_9;
+	private JTextField textField_10;
+	private JLabel lblProduktnavn;
+	private JLabel lblPris;
+	private JLabel lblBeskrivelse;
 	/**
 	 * Launch the application.
 	 */
@@ -129,9 +144,7 @@ public class CopyOfStarter{
 				try {
 					CopyOfStarter window = new CopyOfStarter();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
-//					e.printStackTrace();
-				}
+				} catch (Exception e) {	}
 			}
 		});
 	}
@@ -142,12 +155,12 @@ public class CopyOfStarter{
 	public CopyOfStarter() {
 		initialize();
 		try{
-			con.getConnection();			
+			DatabaseConnector.initialize();			
 		}catch(Exception e){
 			System.out.println("Could not connect to database");
 		}
-		getProducts();
 		getUsers();
+		getProducts();
 		getAddresses();
 	}
 
@@ -167,8 +180,6 @@ public class CopyOfStarter{
 
 		//---------------------Ny bestilling--------------------------------------
 
-
-		userArray.add(new UserArray(HelpUser.getBob().getName(), HelpUser.getBob().getPhone(), HelpUser.getBob().getAddress().getStreet(), HelpUser.getBob().getAddress().getZipcode(), HelpUser.getBob().getAddress().getCity(), HelpUser.getBob().getAddress().getHouseNumber()));
 		bestilling = new JPanel();
 		bestilling.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
@@ -680,54 +691,6 @@ public class CopyOfStarter{
 		tabbedPane.addTab("Rediger", null, Rediger, null);
 		Rediger.setLayout(null);
 
-		btnRediger = new JButton("Rediger");
-
-		btnRediger.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(tabbedPane.getSelectedComponent() == Rediger){
-					//rediger elementer vha input til navn eller nummer
-				}
-				else if(tabbedPane.getSelectedComponent() == Retter){
-					//rediger rett vha navn eller knapp?
-				}
-			}
-		});
-
-		btnRediger.setBounds(141, 108, 119, 50);
-		btnRediger.setForeground(new Color(47, 79, 79));
-		btnRediger.setFont(new Font("Verdana", Font.BOLD, 16));
-		Rediger.add(btnRediger);
-
-		btnHentNr = new JButton("Hent");
-		btnHentNr.setBounds(10, 42, 250, 55);
-		btnHentNr.setForeground(new Color(47, 79, 79));
-		btnHentNr.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnHentNr.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				User user = new User();
-				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I REDIGER TABBEN
-				if(tabbedPane.getSelectedComponent() == Rediger){				
-					try{
-						user = 	con.getUser(redigerNummer.getText());									
-						redigerNavn.setText(user.getName());
-						redigerAdresse.setText(user.getAddress().getStreet());
-						redigerHusnr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-						redigerPostnummer.setText(user.getAddress().getZipcode());
-						redigerPoststed.setText(user.getAddress().getCity());	
-					}catch(Exception t){
-						System.out.println("Kunden finnes ikke i databasen");
-					}						
-				}				
-				//FUNKSJONALITET HVIS DU TRYKKER PÅ HENT I RETTER TABBEN
-				else if(tabbedPane.getSelectedComponent() == Retter){
-					
-				}			
-				frame.repaint();
-			}
-		});
-		Rediger.add(btnHentNr);
-
-		//INCALL; SLï¿½R OPP I DATABASEN OG HENTER INFO OM MULIG
 		btnIncall = new JButton("Incall");
 
 		btnIncall.setBackground(new Color(238, 238, 238));
@@ -738,238 +701,192 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					User user = con.getUser(Integer.parseInt(nr));
-					if(user == null){
-						user = new User();
-					}
-					else{
-						navn.setText(user.getName());
-						gatenavn.setText(user.getAddress().getStreet());
-						husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
-						postnummer.setText(user.getAddress().getZipcode());
-						poststed.setText(user.getAddress().getCity());
-					}
-					TemporaryUser user1 = database.getUser(nr);
-
-					User user2 = HelpUser.getBob();
-
+					User user = DatabaseConnector.getUser(Integer.parseInt(nr));
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
-					//legger til houseletter hvis det finnes
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
-					//					kommentar.setText(user.getKommentar());
-				}catch(Exception ee){
-					navn.setText("");
-					gatenavn.setText("");
-					postnummer.setText("");
-					poststed.setText("");
-					kommentar.setText("");
-				}
-				frame.repaint();
+				}catch(Exception ee){	}
 			}
 		});
 		btnIncall.setBounds(848, 11, 121, 45);
 		bestilling.add(btnIncall);
 
-
-		btnLeggTil = new JButton("Legg til");
-		btnLeggTil.setBounds(10, 108, 119, 50);
-		btnLeggTil.setForeground(new Color(47, 79, 79));
-		btnLeggTil.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnLeggTil.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				//HVIS DU TRYKKER LEGG TIL I PANELET REDIGER
-				if(tabbedPane.getSelectedComponent() == Rediger){
-					Address address = new Address(	redigerAdresse.getText(), Integer.parseInt(redigerHusnr.getText()), redigerPostnummer.getText(), redigerPoststed.getText());	
-					User user = new User(redigerNavn.getText(), redigerNummer.getText(), address);
-
-					m1.addElement(user);
-					list_3 = new JList(m1);
-				}
-				//HVIS DU TRYKKER LEGG TIL I PANELET RETTER
-				else if(tabbedPane.getSelectedComponent() == Retter){	
-				}
-
-				frame.repaint();
+		
+		//REDIGER TABBEN
+		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.setBounds(10, 11, 962, 612);
+		Rediger.add(tabbedPane_1);
+		
+		kunder = new JPanel();
+		tabbedPane_1.addTab("Kunder", null, kunder, null);
+		kunder.setLayout(null);
+		
+		kunder_list = new JList();
+		kunder_list.setBounds(734, 105, 213, 468);
+		kunder.add(kunder_list);
+		
+		leggTil = new JButton("Legg Til");
+		leggTil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		Rediger.add(btnLeggTil);
-
-		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane_1.setBounds(270, 11, 699, 612);
-		Rediger.add(tabbedPane_1);
-
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(211, 211, 211));
-		tabbedPane_1.addTab("Kunder", null, panel_1, null);
-		panel_1.setLayout(null);
-
-		redigerNummer = new JTextField();
-		redigerNummer.setBounds(20, 33, 245, 50);
-		panel_1.add(redigerNummer);
-		redigerNummer.setBackground(new Color(245, 245, 245));
-		redigerNummer.setFont(new Font("Verdana", Font.BOLD, 18));
-		redigerNummer.setText("");
-		redigerNummer.setColumns(10);
-
-		redigerNavn = new JTextField();
-		redigerNavn.setBounds(20, 110, 393, 50);
-		panel_1.add(redigerNavn);
-		redigerNavn.setFont(new Font("Verdana", Font.PLAIN, 11));
-		redigerNavn.setBackground(new Color(245, 245, 245));
-		redigerNavn.setText("");
-		redigerNavn.setColumns(10);
-
-		JLabel lblTelefonNummer = new JLabel("Telefon nummer");
-		lblTelefonNummer.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblTelefonNummer.setBounds(20, 11, 245, 23);
-		panel_1.add(lblTelefonNummer);
-
-		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
-		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblFulltNavn_1.setBounds(20, 94, 393, 14);
-		panel_1.add(lblFulltNavn_1);
-
-		redigerPostnummer = new JTextField();
-		redigerPostnummer.setBounds(20, 263, 155, 50);
-		panel_1.add(redigerPostnummer);
-		redigerPostnummer.setFont(new Font("Verdana", Font.PLAIN, 11));
-		redigerPostnummer.setBackground(new Color(245, 245, 245));
-		redigerPostnummer.setText("");
-		redigerPostnummer.setColumns(10);
-
-		redigerPoststed = new JTextField();
-		redigerPoststed.setBounds(197, 263, 286, 50);
-		panel_1.add(redigerPoststed);
-		redigerPoststed.setFont(new Font("Verdana", Font.PLAIN, 11));
-		redigerPoststed.setBackground(new Color(245, 245, 245));
-		redigerPoststed.setText("");
-		redigerPoststed.setColumns(10);
-
-		JLabel lblPostnummer_1 = new JLabel("Postnummer");
-		lblPostnummer_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblPostnummer_1.setBounds(20, 247, 155, 14);
-		panel_1.add(lblPostnummer_1);
-
-		JLabel lblPoststed_1 = new JLabel("Poststed");
-		lblPoststed_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblPoststed_1.setBounds(197, 249, 286, 14);
-		panel_1.add(lblPoststed_1);
-
-		redigerHusnr = new JTextField();
-		redigerHusnr.setBounds(433, 186, 50, 50);
-		panel_1.add(redigerHusnr);
-		redigerHusnr.setFont(new Font("Verdana", Font.PLAIN, 11));
-		redigerHusnr.setBackground(new Color(245, 245, 245));
-		redigerHusnr.setText("");
-		redigerHusnr.setColumns(10);
-
-		JTextField textField = new JTextField();
-		textField.setBackground(new Color(245, 245, 245));
-		textField.setBounds(20, 186, 393, 50);
-		panel_1.add(textField);
+		leggTil.setBounds(734, 64, 100, 41);
+		kunder.add(leggTil);
+		
+		Slett = new JButton("Slett");
+		Slett.setBounds(847, 64, 100, 41);
+		kunder.add(Slett);
+		
+		Hent = new JButton("Hent");
+		Hent.setBounds(734, 11, 100, 41);
+		kunder.add(Hent);
+		
+		Rediger_1 = new JButton("Rediger");
+		Rediger_1.setBounds(847, 11, 100, 41);
+		kunder.add(Rediger_1);
+		
+		textField = new JTextField();
+		textField.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField.setBounds(10, 64, 408, 60);
+		kunder.add(textField);
 		textField.setColumns(10);
-
-		redigerAdresse = new JTextField();
-		redigerAdresse.setBackground(new Color(245, 245, 245));
-		redigerAdresse.setBounds(20, 186, 393, 50);
-		panel_1.add(redigerAdresse);
-		redigerAdresse.setColumns(10);
-
-
-		lblGatenavn_1 = new JLabel("Adresse");
-		lblGatenavn_1.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblGatenavn_1.setBounds(20, 171, 393, 14);
-		panel_1.add(lblGatenavn_1);
-
-		lblHusnummer = new JLabel("Nr");
-		lblHusnummer.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblHusnummer.setBounds(433, 171, 52, 14);
-		panel_1.add(lblHusnummer);
-
-		Retter = new JPanel();
-		Retter.setBackground(new Color(211, 211, 211));
-		tabbedPane_1.addTab("Retter", null, Retter, null);
-		Retter.setLayout(null);
-
-
-		JLabel lblProduktetsNavn = new JLabel("Navn");
-		lblProduktetsNavn.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblProduktetsNavn.setBounds(20, 11, 198, 14);
-
-		Retter.add(lblProduktetsNavn);
-
-		redigerProductName = new JTextField();
-		redigerProductName.setBounds(20, 33, 280, 50);
-		Retter.add(redigerProductName);
-		redigerProductName.setColumns(10);
-
-		JLabel lblPris = new JLabel("Pris");
-		lblPris.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblPris.setBounds(20, 97, 131, 14);
-
-		Retter.add(lblPris);
-
-		RedigerProductPrice = new JTextField();
-		RedigerProductPrice.setBounds(20, 119, 150, 50);
-		Retter.add(RedigerProductPrice);
-		RedigerProductPrice.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_3.setBounds(453, 64, 230, 60);
+		kunder.add(textField_3);
+		textField_3.setColumns(10);
+		
+		textField_4 = new JTextField();
+		textField_4.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_4.setBounds(10, 199, 480, 60);
+		kunder.add(textField_4);
+		textField_4.setColumns(10);
+		
+		textField_5 = new JTextField();
+		textField_5.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_5.setBounds(530, 199, 86, 60);
+		kunder.add(textField_5);
+		textField_5.setColumns(10);
+		
+		textField_6 = new JTextField();
+		textField_6.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_6.setBounds(10, 326, 130, 60);
+		kunder.add(textField_6);
+		textField_6.setColumns(10);
+		
+		textField_7 = new JTextField();
+		textField_7.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_7.setBounds(175, 326, 445, 60);
+		kunder.add(textField_7);
+		textField_7.setColumns(10);
+		
+		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
+		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblFulltNavn_1.setBounds(10, 24, 408, 28);
+		kunder.add(lblFulltNavn_1);
+		
+		JLabel lblTelefonNummer = new JLabel("Telefon Nummer");
+		lblTelefonNummer.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblTelefonNummer.setBounds(453, 24, 230, 28);
+		kunder.add(lblTelefonNummer);
+		
+		JLabel lblAdresse = new JLabel("Adresse");
+		lblAdresse.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblAdresse.setBounds(10, 156, 480, 32);
+		kunder.add(lblAdresse);
+		
+		JLabel lblNr = new JLabel("Nr");
+		lblNr.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblNr.setBounds(530, 156, 86, 32);
+		kunder.add(lblNr);
+		
+		JLabel redigerPostNummerlbl = new JLabel("Postnummer");
+		redigerPostNummerlbl.setFont(new Font("Verdana", Font.BOLD, 14));
+		redigerPostNummerlbl.setBounds(10, 283, 130, 32);
+		kunder.add(redigerPostNummerlbl);
+		
+		JLabel lblPoststed_1 = new JLabel("Poststed");
+		lblPoststed_1.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblPoststed_1.setBounds(175, 283, 441, 32);
+		kunder.add(lblPoststed_1);
+		
+		JPanel retter = new JPanel();
+		tabbedPane_1.addTab("Retter", null, retter, null);
+		retter.setLayout(null);
+		
+		retter_list = new JList();
+		retter_list.setBounds(734, 105, 213, 468);
+		retter.add(retter_list);
+		
+		hent_retter = new JButton("Hent");
+		hent_retter.setBounds(734, 11, 100, 41);
+		retter.add(hent_retter);
+		
+		rediger_retter = new JButton("Rediger");
+		rediger_retter.setBounds(847, 11, 100, 41);
+		retter.add(rediger_retter);
+		
+		leggTil_retter = new JButton("Legg Til");
+		leggTil_retter.setBounds(734, 64, 100, 41);
+		retter.add(leggTil_retter);
+		
+		leggTil_retter_1 = new JButton("Slett");
+		leggTil_retter_1.setBounds(847, 64, 100, 41);
+		retter.add(leggTil_retter_1);
+		
+		textField_8 = new JTextField();
+		textField_8.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_8.setColumns(10);
+		textField_8.setBounds(10, 64, 408, 60);
+		retter.add(textField_8);
+		
+		textField_9 = new JTextField();
+		textField_9.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_9.setColumns(10);
+		textField_9.setBounds(453, 64, 156, 60);
+		retter.add(textField_9);
+		
+		textField_10 = new JTextField();
+		textField_10.setFont(new Font("Verdana", Font.PLAIN, 16));
+		textField_10.setColumns(10);
+		textField_10.setBounds(10, 199, 408, 202);
+		retter.add(textField_10);
+		
+		lblProduktnavn = new JLabel("Produktnavn");
+		lblProduktnavn.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblProduktnavn.setBounds(10, 24, 408, 28);
+		retter.add(lblProduktnavn);
+		
+		lblPris = new JLabel("Pris");
+		lblPris.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblPris.setBounds(453, 24, 156, 28);
+		retter.add(lblPris);
+		
+		lblBeskrivelse = new JLabel("Kommentar");
+		lblBeskrivelse.setFont(new Font("Verdana", Font.BOLD, 14));
+		lblBeskrivelse.setBounds(10, 158, 408, 30);
+		retter.add(lblBeskrivelse);
 
 
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
 		String[] boxComponents = {"Nr.1", "Nr.2", "Nr.3", "Nr.4", "Nr.5", "Nr.6", "Nr.7", "Nr.8", "Nr.9"};
 		ArrayList<JButton> buttons = new ArrayList<JButton>();
-		JComboBox comboBox = new JComboBox();
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
-		
+
 		JLabel pizzaInfo = new JLabel("<html>1: Pizza maragaritha: Tomat, Ost. <br>2: Pizza Milano: Tomat, ost, pepperoni.</html>");
 		pizzaInfo.setBounds(700, 101, 269, 442);
 		bestilling.add(pizzaInfo);
-		
-		
-		for(int i = 0; i<buttons.size(); i++){
-			comboBox.addItem(boxComponents[i]);
-		}
-		comboBox.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				if( e.getSource() == toggleButton && e.getStateChange() == ItemEvent.SELECTED ){
-					//kobler knappen med ny informasjon til databasen
-				}
-			}
-		});
-		comboBox.setSelectedIndex(0);
-		comboBox.setBounds(180, 119, 188, 50);
-		Retter.add(comboBox);
-		//______COMBOBOX END
-
-
-		JLabel lblAssosierMedKnapp = new JLabel("Assosier med Knapp");
-		lblAssosierMedKnapp.setFont(new Font("Verdana", Font.BOLD, 16));
-		lblAssosierMedKnapp.setBounds(185, 97, 183, 21);
-
-//		panel_2.add(lblAssosierMedKnapp);
-
-		Retter.add(lblAssosierMedKnapp);
-
-
-		JScrollBar scrollBar = new JScrollBar();
-		scrollBar.setBounds(243, 169, 17, 454);
-		Rediger.add(scrollBar);
 
 
 		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
-			m1.addElement(users.get(i).getPhone() + " " + users.get(i).getName());
+			m1.addElement(users.get(i));
 		}
-		list_3 = new JList(m1);
-
-		list_3.setBounds(10, 169, 250, 454);
-		Rediger.add(list_3);
 	}
 	private String menyKnappTrykk(String a) {
 
@@ -991,39 +908,27 @@ public class CopyOfStarter{
 
 		return null;
 	}
-<<<<<<< HEAD
 	public void getProducts(){
-		
+		try{
+			m2 = DatabaseConnector.getProducts();
+			list_3 = new JList(m2);
+		}catch(Exception e){
+			System.out.println("Finner ingen produkter i databasen");
+		}
 	}
 	public void getUsers(){
 		try{
-			users = con.getUsers();			
+			m1 = DatabaseConnector.getUsers();		
+			list_3 = new JList(m1);
 		}catch(Exception e){
 			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
 	public void getAddresses(){
-		
+
 	}
-=======
 	public String createReceipt(JList l){
-		
+
 		return "lololol";
 	}
-	
->>>>>>> c81a3ab7b43390afee6d08545d14d393f07b62c8
-}
-class UserArray{
-	public String name, phone, address, zipcode, city;
-	public int nr;
-	
-	public UserArray(String name, String phone, String address, String zipcode, String city, int nr){
-		this.name = name;
-		this.phone = phone;
-		this.address = address;
-		this.zipcode = zipcode;
-		this.city = city;
-		this.nr = nr;
-	}
-
 }
