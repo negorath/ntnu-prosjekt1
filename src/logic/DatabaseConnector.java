@@ -128,6 +128,7 @@ public class DatabaseConnector{
     	String name = rs.getString(1);
     	String description = rs.getString(2);
     	String price = rs.getString(3);
+    	System.out.println(name + description + price);
     	return new Product(name, description, Double.parseDouble(price));
     }
     /**
