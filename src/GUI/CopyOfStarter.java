@@ -87,8 +87,12 @@ public class CopyOfStarter{
 
 	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
 	JList list;
+<<<<<<< HEAD
 	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel();
 	DefaultListModel m1 = new DefaultListModel(), m2 = new DefaultListModel();
+=======
+	DefaultListModel model = new DefaultListModel(), m1 = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
+>>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -100,6 +104,7 @@ public class CopyOfStarter{
 	private JButton btnFjernElement;
 	private JPanel Utgaende;
 	private JList list_3;
+	private JList list_4;
 	private JButton btnDel;
 	private JButton button_8;
 	private String sisteTrykteKnapp;
@@ -112,6 +117,7 @@ public class CopyOfStarter{
 	private JTextField textField_2;
 	private JLabel lblAddressNotFound;
 	DatabaseConnector con = new DatabaseConnector();
+<<<<<<< HEAD
 	private JPanel kunder;
 	private JList kunder_list;
 	private JList retter_list;
@@ -135,6 +141,14 @@ public class CopyOfStarter{
 	private JLabel lblProduktnavn;
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
+=======
+	JPanel Retter;
+
+//	DatabaseConnector connector = new DatabaseConnector();
+	ArrayList<String> alleUsers = new ArrayList<String>();
+	private JPanel panel_2;
+
+>>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	/**
 	 * Launch the application.
 	 */
@@ -190,7 +204,7 @@ public class CopyOfStarter{
 		toggleButton = new JButton("Nr.1");
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza Margaritha");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");
 				//		 		kvittering.add(Product.retrieve(1).getId()); 			
 
 			}
@@ -203,7 +217,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_1);
 		toggleButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza med cheesedoodles");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.2");
 			}
 		});
 
@@ -212,7 +226,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_2);
 		toggleButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr3");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.3");
 			}
 		});
 
@@ -222,7 +236,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_3);
 		toggleButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr4");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.4");
 			}
 		});
 
@@ -231,7 +245,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_4);
 		toggleButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr5");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.5");
 			}
 		});
 
@@ -240,7 +254,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_5);
 		toggleButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr6");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.6");
 			}
 		});
 		toggleButton_6 = new JButton("Nr.7");
@@ -248,7 +262,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_6);
 		toggleButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr7");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.7");
 			}
 		});
 
@@ -257,7 +271,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_7);
 		toggleButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr8");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.8");
 			}
 		});
 
@@ -266,7 +280,7 @@ public class CopyOfStarter{
 		bestilling.add(toggleButton_8);
 		toggleButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr9");
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.9");
 			}
 		});
 
@@ -616,14 +630,14 @@ public class CopyOfStarter{
 		btnLeggTil_1.setBounds(16, 294, 89, 23);
 		bestillingsInfo.add(btnLeggTil_1);
 
-		JButton btnNeste_1 = new JButton("Neste");
+		JButton btnNeste_1 = new JButton("Send");
 		btnNeste_1.setForeground(new Color(47, 79, 79));
 		btnNeste_1.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnNeste_1.setBackground(new Color(204, 255, 204));
 		btnNeste_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
-				list_2.addElement(createReceipt(list));
+				list_2.addElement(createOrder(list));
 				try{
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
@@ -642,10 +656,26 @@ public class CopyOfStarter{
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
+		
+		panel_2 = new JPanel();
+		panel_2.setBorder(new TitledBorder(null, "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_2.setBounds(4, 35, 241, 515);
+		Utgaende.add(panel_2);
+		panel_2.setLayout(null);
 
 		list_3 = new JList(list_2);
-		list_3.setBounds(10, 11, 229, 533);
-		Utgaende.add(list_3);
+		list_3.setBounds(6, 22, 229, 487);
+		panel_2.add(list_3);
+		
+		JPanel panel_3 = new JPanel();
+		panel_3.setBorder(new TitledBorder(null, "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_3.setBounds(423, 35, 241, 515);
+		Utgaende.add(panel_3);
+		panel_3.setLayout(null);
+		
+		list_4 = new JList(list_5);
+		list_4.setBounds(6, 22, 229, 487);
+		panel_3.add(list_4);
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
@@ -661,7 +691,7 @@ public class CopyOfStarter{
 				btnRedigerAdresse.setVisible(false);
 			}
 		});
-		btnRedigerAdresse.setBounds(249, 97, 137, 23);
+		btnRedigerAdresse.setBounds(269, 97, 137, 23);
 		Utgaende.add(btnRedigerAdresse);
 		btnRedigerAdresse.setVisible(false);
 
@@ -679,8 +709,43 @@ public class CopyOfStarter{
 		});
 		btnVisKart.setForeground(new Color(47, 79, 79));
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnVisKart.setBounds(249, 11, 137, 50);
+		btnVisKart.setBounds(269, 18, 137, 50);
 		Utgaende.add(btnVisKart);
+		
+		JButton btnLages = new JButton("Ikke ferdig");
+		btnLages.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					if(list_5.getSize()>0){
+						list_2.addElement(list_4.getSelectedValue());
+						list_5.remove(list_4.getSelectedIndex());
+					}
+				}
+				catch(Exception e){
+					System.out.println("Listen er tom");
+				}
+			}
+		});
+		btnLages.setBounds(269, 521, 117, 29);
+		Utgaende.add(btnLages);
+		
+		JButton btnFerdig = new JButton("Ferdig");
+		btnFerdig.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try{
+					if(list_2.getSize()>0){
+						list_5.addElement(list_3.getSelectedValue());
+						list_2.remove(list_3.getSelectedIndex());
+					}
+				}
+				catch(Exception e){
+					System.out.println("Listen er tom");
+				}
+			}
+		});
+		btnFerdig.setBounds(269, 474, 117, 29);
+		Utgaende.add(btnFerdig);
+		
 
 
 
@@ -877,8 +942,13 @@ public class CopyOfStarter{
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
+<<<<<<< HEAD
 
 		JLabel pizzaInfo = new JLabel("<html>1: Pizza maragaritha: Tomat, Ost. <br>2: Pizza Milano: Tomat, ost, pepperoni.</html>");
+=======
+		
+		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. <br><br>2: Vesuvio: Tomat, ost, skinke.<br><br>3: Milano: Tomat, ost, pepperoni.<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner.<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus.<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella.<br><br>7: Capriciosa: Tomat, ost, skinke, sopp.<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus.<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k.</html>");
+>>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 		pizzaInfo.setBounds(700, 101, 269, 442);
 		bestilling.add(pizzaInfo);
 
@@ -908,6 +978,10 @@ public class CopyOfStarter{
 
 		return null;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 	public void getProducts(){
 		try{
 			m2 = DatabaseConnector.getProducts();
@@ -927,8 +1001,51 @@ public class CopyOfStarter{
 	public void getAddresses(){
 
 	}
+<<<<<<< HEAD
 	public String createReceipt(JList l){
 
 		return "lololol";
 	}
+=======
+	public String createReceipt(String a){
+		
+		String temp = "";
+	
+		switch (a.charAt(9)) {
+		case 1: temp = "x 1 Margarita" + "\t" + "110,-";
+		case 2: temp = "x 1 Vesuvio" + "\t" + "110,-";
+		case 3: temp = "x 1 Milano" + "\t" + "110,-";
+		case 4: temp = "x 1 Gabagol" + "\t" + "220,-";
+		case 5: temp = "x 1 Trondheim spesial" + "\t" + "110,-";	
+		case 6: temp = "x 1 Calzone" + "\t" + "120,-";
+		case 7: temp = "x 1 Capriciosa" + "\t" + "120,-";
+		case 8: temp = "x 1 Maffioso" + "\t" + "120,-";
+		case 9: temp = "x 1 Grozzo" + "\t" + "130,-";
+		}
+		
+		return temp;
+	}
+
+	public String createOrder(JList l){
+		
+		int temp = list_2.getSize() + 1;
+		String lol = "Ordre nr." + temp;
+		return lol;
+	}
+
+}
+class UserArray{
+	public String name, phone, address, zipcode, city;
+	public int nr;
+	
+	public UserArray(String name, String phone, String address, String zipcode, String city, int nr){
+		this.name = name;
+		this.phone = phone;
+		this.address = address;
+		this.zipcode = zipcode;
+		this.city = city;
+		this.nr = nr;
+	}
+
+>>>>>>> c9994c0979caa7895e854b388d3805b7c8271317
 }
