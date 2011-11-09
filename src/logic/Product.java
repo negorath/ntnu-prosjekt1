@@ -65,7 +65,7 @@ public class Product {
 	}
 	public String toString(){
 		String result;
-		result = getName() + ": " + getPrice();
+		result = getName() + ": " + getPrice() + " NOK";
 		return result;
 	}
 	

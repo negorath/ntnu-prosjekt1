@@ -139,8 +139,9 @@ public class CopyOfStarter{
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
 	JPanel Retter;
+	DefaultListModel listmodelUsers = new DefaultListModel();
+	DefaultListModel listModelProducts = new DefaultListModel();
 
-//	DatabaseConnector connector = new DatabaseConnector();
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
 	private JButton btnLevert;
@@ -180,7 +181,6 @@ public class CopyOfStarter{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		//		frame.setBounds(100, 100, 800, 621);
 		frame.setBounds(100, 100, 1000, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -201,9 +201,7 @@ public class CopyOfStarter{
 		toggleButton = new JButton("Nr.1");
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");
-				//		 		kvittering.add(Product.retrieve(1).getId()); 			
-
+				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");		
 			}
 		});
 		toggleButton.setBounds(16, 45, 75, 45);
@@ -804,7 +802,7 @@ public class CopyOfStarter{
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
 		
-		kunder_list = new JList(m1);
+		kunder_list = new JList(listmodelUsers);
 		kunder_list.setBounds(734, 105, 213, 468);
 		kunder.add(kunder_list);
 		
@@ -814,7 +812,7 @@ public class CopyOfStarter{
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
 				try{
 					DatabaseConnector.newUser(new User(redigerNavn.getText(), redigerNummer.getText(), address));					
-					kunder_list = new JList(DatabaseConnector.getUsers());
+					getUsers();
 				}catch(Exception et){
 					System.out.println("Kunne ikke legge til kunde");
 				}
@@ -909,7 +907,7 @@ public class CopyOfStarter{
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
 		
-		retter_list = new JList();
+		retter_list = new JList(listModelProducts);
 		retter_list.setBounds(734, 105, 213, 468);
 		retter.add(retter_list);
 		
@@ -1001,8 +999,11 @@ public class CopyOfStarter{
 	}
 	public void getProducts(){
 		try{
+			//m2 inneholder Product objektene, mens listModelProducts inneholder Product.toString();
 			m2 = DatabaseConnector.getProducts();
-			retter_list = new JList(m2);
+			for(int i = 0; i<m2.size(); i++){
+				listModelProducts.addElement(m2.getElementAt(i).toString());
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Finner ingen produkter i databasen");
@@ -1015,11 +1016,9 @@ public class CopyOfStarter{
 		try{
 			m1 = DatabaseConnector.getUsers();				
 			//m1 inneholder objektene USERS, listmodelUsers inneholder user.toString();
-			DefaultListModel listmodelUsers = new DefaultListModel();
 			for(int i = 0; i<m1.size(); i++){
 				listmodelUsers.addElement(m1.getElementAt(i).toString());
 			}
-			kunder_list = new JList(m1);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Finner ingen kunder i databasen");

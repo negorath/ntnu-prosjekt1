@@ -138,13 +138,15 @@ public class DatabaseConnector{
      */
     public static DefaultListModel getProducts() throws Exception{
     	DefaultListModel products = new DefaultListModel();
-    	rs = stmt.executeQuery("SELECT name, description, price FROM products");
-    	while(rs.next()){
-    		String name = rs.getString(1);
-    		String description = rs.getString(2);
-    		String price = rs.getString(3);
+    	ResultSet products_rs = stmt.executeQuery("SELECT name, description, price FROM products");
+    	products_rs.first();
+    	do{
+    		String name = products_rs.getString(1);
+    		String description = products_rs.getString(2);
+    		String price = products_rs.getString(3);
     		products.addElement(new Product(name, description, Double.parseDouble(price)));
-    	}
+    	}while(products_rs.next());
+    	products_rs.close();
     	
     	return products;
     }
