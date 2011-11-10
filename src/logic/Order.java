@@ -54,7 +54,8 @@ class Order {
 		return id;
 	}
 	public String toString(){
-		String s = getUserId() + " " + getOrdered();
+		String s = getUserId() + " " + this.ordered;
+		return s;
 	}
 	
 }
