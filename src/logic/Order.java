@@ -53,6 +53,9 @@ class Order {
 	public int getId() {
 		return id;
 	}
-	
+	public String toString(){
+		String s = getUserId() + " " + this.ordered;
+		return s;
+	}
 	
 }
