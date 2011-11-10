@@ -80,9 +80,22 @@ public class DatabaseConnector{
     	getAddress_rs.close();
     	return new User(name, phone, address);
     }
-    public static User getUser(int phoneNumber) throws Exception{
-    	return getUser(String.valueOf(phoneNumber));
+    /**
+     * 
+     * @param Userid from database
+     * @return user from database
+     * @throws Exception
+     */
+    public static User getUser(int id) throws Exception{
+    	System.out.println("lolp¿¾");
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT phone FROM users WHERE id='" + id + "'");
+    	getUser_rs.first();
+    	String s = getUser_rs.getString(1);
+    	getUser_rs.close();
+    	User u = getUser(s);
+    	return u;
     }
+
     /**
      * 
      * @return arraylist med alle users fra database
@@ -144,13 +157,16 @@ public class DatabaseConnector{
      */
     public static DefaultListModel getProducts() throws Exception{
     	DefaultListModel products = new DefaultListModel();
-    	ResultSet products_rs = stmt.executeQuery("SELECT name, description, price FROM products");
+    	ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id FROM products");
     	products_rs.first();
     	do{
     		String name = products_rs.getString(1);
     		String description = products_rs.getString(2);
     		String price = products_rs.getString(3);
-    		products.addElement(new Product(name, description, Double.parseDouble(price)));
+    		String id = products_rs.getString(4);
+    		Product p = new Product(name, description, Double.parseDouble(price));
+    		p.setId(id);
+    		products.addElement(p);
     	}while(products_rs.next());
     	products_rs.close();
     	
@@ -171,15 +187,20 @@ public class DatabaseConnector{
     }
     
     public static DefaultListModel getOrders() throws Exception{
-    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered FROM orders");
+    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered, id FROM orders");
     	DefaultListModel orders = new DefaultListModel();
+    	orders_rs.first();
     	do{
     		String user_id = orders_rs.getString(1);
     		String ordered = orders_rs.getString(2);
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
-    		orders.addElement(new Order(Integer.parseInt(user_id), ordered, due, delivered));
+    		String id = orders_rs.getString(5);
+    		Order o =  new Order(user_id, ordered, due, delivered);
+    		o.setId(id);
+    		orders.addElement(o);
     	}while(orders_rs.next());
+    	orders_rs.close();
     	return orders;
     }
     

@@ -2,7 +2,7 @@ package logic;
 import java.sql.Connection;
 
 public class Product {
-	private int id;
+	private String id;
 	private String name;
 	private String description;
 	private double price;
@@ -60,8 +60,11 @@ public class Product {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
+	}
+	public void setId(String id){
+		this.id = id;
 	}
 	public String toString(){
 		String result;

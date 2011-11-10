@@ -1,11 +1,11 @@
 package logic;
 import java.sql.Connection;
 
-class Order {
+public class Order {
 	
-	private int id;
-	private int userId;
-	private Product[] products;
+	private String id;
+	private String userId;
+	private String products;
 	private String ordered, due, delivered;
 	/**
 	 * 
@@ -15,7 +15,7 @@ class Order {
 	 * @param due
 	 * @param delivered
 	 */
-	public Order(int userId, String ordered, String due, String delivered){
+	public Order(String userId, String ordered, String due, String delivered){
 		this.userId = userId;
 		this.ordered = ordered;
 		this.due = due;
@@ -26,36 +26,78 @@ class Order {
 	/**
 	 * @return the userId
 	 */
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	/**
 	 * @return the products
 	 */
-	public Product[] getProducts() {
+	public String getProducts() {
 		return products;
 	}
+	//2:15-3:2-4:7
+	public void createFoodList(String s){
+		int teller = 0;
+		for(int i = 0; i<s.length(); i++){
+			if(s.charAt(i) == '-'){
+				teller++;
+			}
+		}
+		teller = 0;
+		int[][] liste = new int[2][teller];
+		String element = "";
+		for(int i = 0; i<s.length(); i++){
+			if(s.charAt(i) != ':' && s.charAt(i) != '-'){
+				element += s.charAt(i);
+			}
+			else if(s.charAt(i) == ':'){
+				liste[0][teller] = Integer.parseInt(element);
+				element = "";
+			}
+			else if(s.charAt(i) == '-'){
+				liste[1][teller] = Integer.parseInt(element);
+				element = "";
+				teller++;
+			}
+		}
+		for (int i = 0; i < liste.length; i++) {
+			for (int j = 0; j < liste.length; j++) {
+				System.out.println(liste[i][j]);
+			}
+			System.out.println();
+		}
+	}
+	
 	/**
 	 * @param products the products to set
 	 */
-	public void setProducts(Product[] products) {
+	public void setProducts(String products) {
 		this.products = products;
 	}
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public String toString(){
-		String s = getUserId() + " " + this.ordered;
-		return s;
+	public void setId(String a){
+		this.id = a;
 	}
+//	public String toString(){
+//		String s = getId() + " ";
+//		try {
+//			s += DatabaseConnector.getUser(getUserId()).getName();
+//		} catch (Exception e) {
+//			System.out.println("egendeffinert lol");
+//			e.printStackTrace();
+//		}
+//		return s;
+//	}
 	
 }

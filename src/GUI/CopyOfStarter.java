@@ -684,7 +684,7 @@ public class CopyOfStarter{
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
 		//list_3 = new JList(list_2);
-		list_3 = new JList(m3);
+		list_3 = new JList(listModelOrders);
 		list_3.setBounds(6, 22, 229, 487);
 		panel_2.add(list_3);
 		
@@ -1050,7 +1050,7 @@ public class CopyOfStarter{
 		bestilling.add(pizzaInfo);
 
 
-		JList list_3 = new JList();
+//		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
 			m1.addElement(users.get(i));
 		}
@@ -1061,7 +1061,7 @@ public class CopyOfStarter{
 			String pizzaListe = "<html>";
 			for (int j = 0; j < m2.size(); j++) {
 				Product p = (Product)m2.getElementAt(j);
-				pizzaListe += "#" + (j+1) + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+				pizzaListe += "#" + p.getId() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
@@ -1108,7 +1108,8 @@ public class CopyOfStarter{
 			m2 = DatabaseConnector.getProducts();
 			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
-				listModelProducts.addElement("#" + (i+1) + " " + m2.getElementAt(i).toString());
+				Product pr = (Product)m2.getElementAt(i);
+				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 //			e.printStackTrace();
@@ -1137,10 +1138,14 @@ public class CopyOfStarter{
 			m3 = DatabaseConnector.getOrders();
 			listModelOrders.clear();
 			for(int i = 0; i<m3.size(); i++){
-				listModelOrders.addElement(m3.getElementAt(i).toString());
+				Order o = (Order)m3.getElementAt(i);
+				listModelOrders.addElement(o.getId() + " " + o.getUserId());
+//				System.out.println(o.getId() + " " + o.getUserId());
 			}
+			System.out.println("sucessfully added orders");
 		}catch(Exception e){
 			System.out.println("Finner ingen orders i databasen");
+			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){
