@@ -145,6 +145,7 @@ public class CopyOfStarter{
 	private JPanel panel_2;
 	private JButton btnLevert;
 	private JPanel panel_1;
+	private JLabel pizzaInfo = new JLabel();
 
 	/**
 	 * Launch the application.
@@ -173,6 +174,7 @@ public class CopyOfStarter{
 		getUsers();
 		getProducts();
 		getAddresses();
+		lagListe();
 		frame.repaint();
 	}
 
@@ -492,7 +494,7 @@ public class CopyOfStarter{
 		btnNeste.setForeground(new Color(47, 79, 79));
 		btnNeste.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnNeste.setBackground(new Color(204, 255, 204));
-		btnNeste.setBounds(831, 555, 138, 68);
+		btnNeste.setBounds(831, 567, 138, 68);
 		bestilling.add(btnNeste);
 		btnNeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1033,23 +1035,28 @@ public class CopyOfStarter{
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
 		
-		JLabel pizzaInfo = new JLabel();
-		for (int i = 0; i < 10; i++) {
-			try{
-				Product p = DatabaseConnector.getProduct(String.valueOf(i));
-				pizzaInfo.setText(p.toString());
-			}catch(Exception eee){
-				eee.printStackTrace();
-				System.out.println("Noe gikk galt, hmmm?");
-			}
-		}
-		pizzaInfo.setBounds(700, 101, 269, 442);
+		
+		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
 
 
 		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
 			m1.addElement(users.get(i));
+		}
+	}
+	public void lagListe(){
+		try{
+			getProducts();
+			String pizzaListe = "<html>";
+			for (int j = 0; j < m2.size(); j++) {
+				Product p = (Product)m2.getElementAt(j);
+				pizzaListe += "#" + (j+1) + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+			}
+			pizzaInfo.setText(pizzaListe + "</html>");
+		}catch(Exception eee){
+			eee.printStackTrace();
+			System.out.println("Noe gikk galt, hmmm?");
 		}
 	}
 	private String menyKnappTrykk(String a) {
@@ -1091,7 +1098,7 @@ public class CopyOfStarter{
 			m2 = DatabaseConnector.getProducts();
 			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
-				listModelProducts.addElement(m2.getElementAt(i).toString());
+				listModelProducts.addElement("#" + (i+1) + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 //			e.printStackTrace();
