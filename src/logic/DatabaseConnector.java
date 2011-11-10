@@ -315,7 +315,12 @@ public class DatabaseConnector{
     }
     
     public static void edit(Order order){
-    	
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("UPDATE orders SET due=now()");
+    	}catch(Exception e){
+    		System.out.println("Failed to edit order in database");
+    	}
     }
 
 }

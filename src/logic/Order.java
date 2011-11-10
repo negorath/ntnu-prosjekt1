@@ -101,4 +101,7 @@ public class Order {
 		return s;
 	}
 	
+	public void setDueDateToNow(){
+		this.due = "now()";
+	}
 }

@@ -643,15 +643,15 @@ public class CopyOfStarter{
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
+					User user = DatabaseConnector.getUser(nummer.getText());
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
-					if (gatenavn.getText().contains(" ")) {
-						tmp = gatenavn.getText() ;
+					tmp = user.getAddress().getStreet();
+					if (user.getAddress().getStreet().contains(" ")) {
 						tmp = tmp.replace(' ' , '+');
-						System.out.println(tmp);
 					}
 					try{
 						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());										
@@ -755,8 +755,10 @@ public class CopyOfStarter{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					//					Order order = DatabaseConnector.getOrder((Order)m3.getElementAt(list3.getSelectedIndex()));
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+					User u = (User)m3.getElementAt(list_3.getSelectedIndex());
+					String url = u.getAddress().getStreet() + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
+					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);					
 				}catch(Exception e){
 					//					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
@@ -790,6 +792,10 @@ public class CopyOfStarter{
 		btnFerdig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
+					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+					String id = o.getUserId();
+					o.setDueDateToNow();
+					DatabaseConnector.edit(o);
 					if(list_2.getSize()>0){
 						list_5.addElement(list_3.getSelectedValue());
 						listModelOrders.remove(list_3.getSelectedIndex());
@@ -798,6 +804,7 @@ public class CopyOfStarter{
 				catch(Exception e){
 					System.out.println("Listen er tom");
 				}
+				getOrders();
 			}
 		});
 		btnFerdig.setBounds(269, 474, 117, 29);
