@@ -189,5 +189,37 @@ public class DatabaseConnector{
     		e.printStackTrace();
     	}
     }
+    
+    public static void edit(User oldUser, User newUser){
+    	try{
+    		String address_id, id;
+    		ResultSet edit_rs = stmt.executeQuery("SELECT address_id FROM users WHERE name='" + oldUser.getName() + "', phone='" + oldUser.getPhone() + "'");
+    		edit_rs.first();
+    		address_id = edit_rs.getString(1);
+    		edit_rs = stmt.executeQuery("SELECT id FROM users WHERE name='" + oldUser.getName() + "'. phone ='" + oldUser.getPhone() + "'");
+    		edit_rs.first();
+    		id = edit_rs.getString(1);
+    		edit_rs.close();
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("UPDATE users SET");
+    		con.commit();
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to edit User");
+    		e.printStackTrace();
+    	}
+    }
+    
+    public static void edit(Product product){
+    	
+    }
+    
+    public static void edit(Address address){
+    	
+    }
+    
+    public static void edit(Order order){
+    	
+    }
 
 }

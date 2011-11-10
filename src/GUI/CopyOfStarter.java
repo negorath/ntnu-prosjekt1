@@ -823,6 +823,11 @@ public class CopyOfStarter{
 		kunder.add(leggTil);
 		
 		Slett = new JButton("Slett");
+		Slett.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		Slett.setBounds(847, 64, 100, 41);
 		kunder.add(Slett);
 		
@@ -843,6 +848,14 @@ public class CopyOfStarter{
 		kunder.add(Hent);
 		
 		Rediger_1 = new JButton("Rediger");
+		Rediger_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
+				User newUser = new User(redigerNavn.getText(), redigerNummer.getText(), address);
+				User oldUser = (User)m1.getElementAt(kunder_list.getSelectedIndex());
+				DatabaseConnector.edit(oldUser, newUser);
+			}
+		});
 		Rediger_1.setBounds(847, 11, 100, 41);
 		kunder.add(Rediger_1);
 		
