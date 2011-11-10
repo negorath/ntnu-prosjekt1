@@ -636,6 +636,20 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
 				list_2.addElement(createOrder(list));
+				String tmp = "";
+				try{
+					if (gatenavn.getText().contains(" ")) {
+						tmp = gatenavn.getText() ;
+						tmp = tmp.replace(' ' , '+');
+						System.out.println(tmp);
+					}
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
+				}catch(Exception e){
+					//					e.printStackTrace();
+					lblAddressNotFound.setVisible(true);
+					btnRedigerAdresse.setVisible(true);
+				}
 				navn.setText("");
 				nummer.setText("");
 				gatenavn.setText("");
@@ -649,14 +663,6 @@ public class CopyOfStarter{
 				rdbtnKontant.setSelected(false);
 				model.clear();
 				frame.repaint();
-				try{
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
-//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
-				}catch(Exception e){
-					//					e.printStackTrace();
-					lblAddressNotFound.setVisible(true);
-					btnRedigerAdresse.setVisible(true);
-				}
 			}
 		});
 		btnNeste_1.setBounds(831, 555, 138, 68);
