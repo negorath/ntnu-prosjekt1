@@ -150,6 +150,8 @@ public class CopyOfStarter{
 	private JLabel pizzaInfo = new JLabel();
 	private JButton button_7;
 
+	private int[] temp;
+
 	/**
 	 * Launch the application.
 	 */
@@ -313,7 +315,7 @@ public class CopyOfStarter{
 					}catch(Exception t){
 						System.out.println("Ingenting er valgt");
 					}
-				}
+			}
 		});
 		btnFjernElement.setBounds(132, 0, 100, 23);
 		reciept.add(btnFjernElement);
@@ -502,7 +504,7 @@ public class CopyOfStarter{
 		btnNeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(bestillingsInfo);
-				int[] temp = new int[kvittering.size()];
+				temp = new int[kvittering.size()];
 				for(int i = 0; i<kvittering.size(); i++){
 					temp[i] = kvittering.get(i);
 				}
@@ -562,7 +564,7 @@ public class CopyOfStarter{
 		buttonGroup.add(rdbtnKontant);
 		rdbtnKontant.setBounds(212, 259, 81, 23);
 		bestillingsInfo.add(rdbtnKontant);
-		
+
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(335, 30, 277, 407);
@@ -572,15 +574,15 @@ public class CopyOfStarter{
 		list_1 = new JList(model);
 		list_1.setBounds(6, 22, 265, 379);
 		panel_1.add(list_1);
-		
-				JButton btnRediger_1 = new JButton("Rediger");
-				btnRediger_1.setBounds(182, 0, 89, 23);
-				panel_1.add(btnRediger_1);
-				btnRediger_1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						tabbedPane.setSelectedComponent(bestilling);
-					}
-				});
+
+		JButton btnRediger_1 = new JButton("Rediger");
+		btnRediger_1.setBounds(182, 0, 89, 23);
+		panel_1.add(btnRediger_1);
+		btnRediger_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				tabbedPane.setSelectedComponent(bestilling);
+			}
+		});
 
 		JLabel lblFulltNavn = new JLabel("Fullt Navn");
 		lblFulltNavn.setBounds(16, 12, 133, 14);
@@ -621,15 +623,15 @@ public class CopyOfStarter{
 		bestillingsInfo.add(lblRingendeNummer);
 
 		//Denne skal FJERNES!!!?		
-		
-//		btnLeggTil_1 = new JButton("Legg til");
-//		btnLeggTil_1.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
-//			}
-//		});
-//		btnLeggTil_1.setBounds(16, 294, 89, 23);
-//		bestillingsInfo.add(btnLeggTil_1);
+
+		//		btnLeggTil_1 = new JButton("Legg til");
+		//		btnLeggTil_1.addActionListener(new ActionListener() {
+		//			public void actionPerformed(ActionEvent e) {
+		//				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
+		//			}
+		//		});
+		//		btnLeggTil_1.setBounds(16, 294, 89, 23);
+		//		bestillingsInfo.add(btnLeggTil_1);
 
 		JButton btnNeste_1 = new JButton("Send");
 		btnNeste_1.setForeground(new Color(47, 79, 79));
@@ -642,6 +644,8 @@ public class CopyOfStarter{
 				String tmp = "";
 				try{
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
+					order.setProducts(temp);
+					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
 					if (gatenavn.getText().contains(" ")) {
@@ -649,12 +653,27 @@ public class CopyOfStarter{
 						tmp = tmp.replace(' ' , '+');
 						System.out.println(tmp);
 					}
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
-//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
+					try{
+						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());										
+					}catch(Exception haha){
+						lblAddressNotFound.setVisible(true);
+						btnRedigerAdresse.setVisible(true);						
+					}
 				}catch(Exception e){
-					//					e.printStackTrace();
-					lblAddressNotFound.setVisible(true);
-					btnRedigerAdresse.setVisible(true);
+					try{
+						Address a = new Address(gatenavn.getText(), Integer.parseInt(husnummer.getText()), postnummer.getText(), poststed.getText());
+						User u = new User(navn.getText(), nummer.getText(), a);
+						DatabaseConnector.newUser(u);
+						getUsers();
+						//This time the user have been created and is in the database
+						Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
+						order.setProducts(temp);
+						temp=null;
+						DatabaseConnector.newOrder(order);
+						getOrders();
+					}catch(Exception j){
+						System.out.println("Failed to create new User");
+					}
 				}
 				navn.setText("");
 				nummer.setText("");
@@ -675,12 +694,12 @@ public class CopyOfStarter{
 		bestillingsInfo.add(btnNeste_1);
 
 		//--------------------------Utgaaende/chef-----------------------------------------
-		
+
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
-		
+
 		panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setBounds(4, 35, 241, 515);
@@ -690,22 +709,24 @@ public class CopyOfStarter{
 		list_3 = new JList(listModelOrders);
 		list_3.setBounds(6, 22, 229, 487);
 		panel_2.add(list_3);
-		
+
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new TitledBorder(null, "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_3.setBounds(423, 35, 241, 515);
 		Utgaende.add(panel_3);
 		panel_3.setLayout(null);
-		
+
 		list_4 = new JList(list_5);
 		list_4.setBounds(6, 22, 229, 487);
 		panel_3.add(list_4);
-		
+
 		btnLevert = new JButton("Levert");
 		btnLevert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(list_5.getSize()>0){
+					DatabaseConnector.deleteOrder((Order)m3.getElementAt((list_4.getSelectedIndex())));
 					list_5.remove(list_4.getSelectedIndex());
+					getOrders();
 				}
 			}
 		});
@@ -734,7 +755,7 @@ public class CopyOfStarter{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-//					Order order = DatabaseConnector.getOrder((Order)m3.getElementAt(list3.getSelectedIndex()));
+					//					Order order = DatabaseConnector.getOrder((Order)m3.getElementAt(list3.getSelectedIndex()));
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
 					//					e.printStackTrace();
@@ -747,7 +768,7 @@ public class CopyOfStarter{
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnVisKart.setBounds(269, 18, 137, 50);
 		Utgaende.add(btnVisKart);
-		
+
 		JButton btnLages = new JButton("Ikke ferdig");
 		btnLages.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -764,14 +785,14 @@ public class CopyOfStarter{
 		});
 		btnLages.setBounds(269, 521, 117, 29);
 		Utgaende.add(btnLages);
-		
+
 		JButton btnFerdig = new JButton("Ferdig");
 		btnFerdig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					if(list_2.getSize()>0){
 						list_5.addElement(list_3.getSelectedValue());
-						list_2.remove(list_3.getSelectedIndex());
+						listModelOrders.remove(list_3.getSelectedIndex());
 					}
 				}
 				catch(Exception e){
@@ -781,7 +802,7 @@ public class CopyOfStarter{
 		});
 		btnFerdig.setBounds(269, 474, 117, 29);
 		Utgaende.add(btnFerdig);
-		
+
 
 
 
@@ -810,23 +831,23 @@ public class CopyOfStarter{
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
 				}catch(Exception ee){
-					ee.printStackTrace();
+					System.out.println("New Customer");
 				}
 			}
 		});
 		btnIncall.setBounds(848, 11, 121, 45);
 		bestilling.add(btnIncall);
 
-		
+
 		//REDIGER TABBEN
 		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane_1.setBounds(10, 11, 962, 612);
 		Rediger.add(tabbedPane_1);
-		
+
 		kunder = new JPanel();
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
-		
+
 		kunder_list = new JList(listmodelUsers);
 		kunder_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -855,7 +876,7 @@ public class CopyOfStarter{
 		});
 		kunder_list.setBounds(734, 105, 213, 468);
 		kunder.add(kunder_list);
-		
+
 		leggTil = new JButton("Legg Til");
 		leggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -877,7 +898,7 @@ public class CopyOfStarter{
 		});
 		leggTil.setBounds(734, 64, 100, 41);
 		kunder.add(leggTil);
-		
+
 		Slett = new JButton("Slett");
 		Slett.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -889,7 +910,7 @@ public class CopyOfStarter{
 		});
 		Slett.setBounds(847, 64, 100, 41);
 		kunder.add(Slett);
-		
+
 		Hent = new JButton("Hent");
 		Hent.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -905,7 +926,7 @@ public class CopyOfStarter{
 		});
 		Hent.setBounds(734, 11, 100, 41);
 		kunder.add(Hent);
-		
+
 		Rediger_1 = new JButton("Rediger");
 		Rediger_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -918,73 +939,73 @@ public class CopyOfStarter{
 		});
 		Rediger_1.setBounds(847, 11, 100, 41);
 		kunder.add(Rediger_1);
-		
+
 		redigerNavn = new JTextField();
 		redigerNavn.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerNavn.setBounds(10, 64, 408, 60);
 		kunder.add(redigerNavn);
 		redigerNavn.setColumns(10);
-		
+
 		redigerNummer = new JTextField();
 		redigerNummer.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerNummer.setBounds(453, 64, 230, 60);
 		kunder.add(redigerNummer);
 		redigerNummer.setColumns(10);
-		
+
 		redigerAdresse = new JTextField();
 		redigerAdresse.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerAdresse.setBounds(10, 199, 480, 60);
 		kunder.add(redigerAdresse);
 		redigerAdresse.setColumns(10);
-		
+
 		redigerHusNr = new JTextField();
 		redigerHusNr.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerHusNr.setBounds(530, 199, 86, 60);
 		kunder.add(redigerHusNr);
 		redigerHusNr.setColumns(10);
-		
+
 		redigerPostNummer = new JTextField();
 		redigerPostNummer.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerPostNummer.setBounds(10, 326, 130, 60);
 		kunder.add(redigerPostNummer);
 		redigerPostNummer.setColumns(10);
-		
+
 		redigerPostSted = new JTextField();
 		redigerPostSted.setFont(new Font("Verdana", Font.PLAIN, 16));
 		redigerPostSted.setBounds(175, 326, 445, 60);
 		kunder.add(redigerPostSted);
 		redigerPostSted.setColumns(10);
-		
+
 		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
 		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblFulltNavn_1.setBounds(10, 24, 408, 28);
 		kunder.add(lblFulltNavn_1);
-		
+
 		JLabel lblTelefonNummer = new JLabel("Telefon Nummer");
 		lblTelefonNummer.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblTelefonNummer.setBounds(453, 24, 230, 28);
 		kunder.add(lblTelefonNummer);
-		
+
 		JLabel lblAdresse = new JLabel("Adresse");
 		lblAdresse.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblAdresse.setBounds(10, 156, 480, 32);
 		kunder.add(lblAdresse);
-		
+
 		JLabel lblNr = new JLabel("Nr");
 		lblNr.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblNr.setBounds(530, 156, 86, 32);
 		kunder.add(lblNr);
-		
+
 		JLabel redigerPostNummerlbl = new JLabel("Postnummer");
 		redigerPostNummerlbl.setFont(new Font("Verdana", Font.BOLD, 14));
 		redigerPostNummerlbl.setBounds(10, 283, 130, 32);
 		kunder.add(redigerPostNummerlbl);
-		
+
 		JLabel lblPoststed_1 = new JLabel("Poststed");
 		lblPoststed_1.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblPoststed_1.setBounds(175, 283, 441, 32);
 		kunder.add(lblPoststed_1);
-		
+
 		button_7 = new JButton("T\u00F8m Felter");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -998,11 +1019,11 @@ public class CopyOfStarter{
 		});
 		button_7.setBounds(10, 416, 110, 41);
 		kunder.add(button_7);
-		
+
 		JPanel retter = new JPanel();
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
-		
+
 		retter_list = new JList(listModelProducts);
 		retter_list.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1025,7 +1046,7 @@ public class CopyOfStarter{
 		});
 		retter_list.setBounds(734, 105, 213, 468);
 		retter.add(retter_list);
-		
+
 		hent_retter = new JButton("Hent");
 		hent_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1037,7 +1058,7 @@ public class CopyOfStarter{
 		});
 		hent_retter.setBounds(734, 11, 100, 41);
 		retter.add(hent_retter);
-		
+
 		rediger_retter = new JButton("Rediger");
 		rediger_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1049,7 +1070,7 @@ public class CopyOfStarter{
 		});
 		rediger_retter.setBounds(847, 11, 100, 41);
 		retter.add(rediger_retter);
-		
+
 		leggTil_retter = new JButton("Legg Til");
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1067,7 +1088,7 @@ public class CopyOfStarter{
 		});
 		leggTil_retter.setBounds(734, 64, 100, 41);
 		retter.add(leggTil_retter);
-		
+
 		leggTil_retter_1 = new JButton("Slett");
 		leggTil_retter_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1077,40 +1098,40 @@ public class CopyOfStarter{
 		});
 		leggTil_retter_1.setBounds(847, 64, 100, 41);
 		retter.add(leggTil_retter_1);
-		
+
 		retterNavn = new JTextField();
 		retterNavn.setFont(new Font("Verdana", Font.PLAIN, 16));
 		retterNavn.setColumns(10);
 		retterNavn.setBounds(10, 64, 408, 60);
 		retter.add(retterNavn);
-		
+
 		retterPris = new JTextField();
 		retterPris.setFont(new Font("Verdana", Font.PLAIN, 16));
 		retterPris.setColumns(10);
 		retterPris.setBounds(453, 64, 156, 60);
 		retter.add(retterPris);
-		
+
 		retterKommentar = new JTextField();
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
 		retterKommentar.setColumns(10);
 		retterKommentar.setBounds(10, 199, 408, 202);
 		retter.add(retterKommentar);
-		
+
 		lblProduktnavn = new JLabel("Produktnavn");
 		lblProduktnavn.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblProduktnavn.setBounds(10, 24, 408, 28);
 		retter.add(lblProduktnavn);
-		
+
 		lblPris = new JLabel("Pris");
 		lblPris.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblPris.setBounds(453, 24, 156, 28);
 		retter.add(lblPris);
-		
+
 		lblBeskrivelse = new JLabel("Kommentar");
 		lblBeskrivelse.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblBeskrivelse.setBounds(10, 158, 408, 30);
 		retter.add(lblBeskrivelse);
-		
+
 		JButton btnTmFelter = new JButton("T\u00F8m Felter");
 		btnTmFelter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1129,13 +1150,13 @@ public class CopyOfStarter{
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
-		
-		
+
+
 		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
 
 
-//		JList list_3 = new JList();
+		//		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
 			m1.addElement(users.get(i));
 		}
@@ -1195,7 +1216,7 @@ public class CopyOfStarter{
 				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-//			e.printStackTrace();
+			//			e.printStackTrace();
 			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
@@ -1233,9 +1254,9 @@ public class CopyOfStarter{
 		return "lololol";
 	}
 	public String createReceipt(String a){
-		
+
 		String temp = "";
-	
+
 		switch (a.charAt(9)) {
 		case 1: temp = "x 1 Margarita" + "\t" + "110,-";
 		case 2: temp = "x 1 Vesuvio" + "\t" + "110,-";
@@ -1247,12 +1268,12 @@ public class CopyOfStarter{
 		case 8: temp = "x 1 Maffioso" + "\t" + "120,-";
 		case 9: temp = "x 1 Grozzo" + "\t" + "130,-";
 		}
-		
+
 		return temp;
 	}
 
 	public String createOrder(JList l){
-		
+
 		int temp = list_2.getSize() + 1;
 		String lol = "Ordre nr." + temp;
 		return lol;

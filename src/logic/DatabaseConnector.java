@@ -67,18 +67,21 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static User getUser(String phoneNumber) throws Exception{
-    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users WHERE phone='" + phoneNumber + "'");
     	getUser_rs.first();
     	String name = getUser_rs.getString(1);
     	String phone = getUser_rs.getString(2);
     	String address_id = getUser_rs.getString(3);
+    	String id = getUser_rs.getString(4);
     	getUser_rs.close();
     	
     	ResultSet getAddress_rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addresses WHERE id='"+address_id+"'");
     	getAddress_rs.first();
     	Address address = new Address(getAddress_rs.getString(1), Integer.parseInt(getAddress_rs.getString(2)), getAddress_rs.getString(3), getAddress_rs.getString(4));
     	getAddress_rs.close();
-    	return new User(name, phone, address);
+    	User user = new User(name, phone, address);
+    	user.setUserId(id);
+    	return user;
     }
     /**
      * 
@@ -205,9 +208,12 @@ public class DatabaseConnector{
     public static void newOrder(Order order){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("INSERT into orders (user_id, ordered, due, delivered, products) VALUES("+order.getUserId() + "', now(), 0, 0, " + order.getProducts() + "')");
-    		con.commit();
+    		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
+    		newOrder_rs.first();
+    		int id = Integer.parseInt(newOrder_rs.getString(1) + 1);
+    		stmt.executeUpdate("INSERT into orders VALUES(" + id + ", '" + order.getUserId() + "', now(), NULL, NULL, '" + order.getProducts() + "')");
     		con.setAutoCommit(false);
+    		newOrder_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
     		e.printStackTrace();
@@ -222,6 +228,7 @@ public class DatabaseConnector{
     		int id = Integer.parseInt(newProduct_rs.getString(1)) + 1;
     		stmt.executeUpdate("INSERT INTO products VALUES (" + id + ", '" + product.getName() + "', '" + product.getDescription() + "', '" + product.getPrice() + "')");
 			con.setAutoCommit(false);
+			newProduct_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new Product into database");
     		e.printStackTrace();
@@ -257,6 +264,16 @@ public class DatabaseConnector{
     	}catch(Exception e){
     		System.out.println("Failed to delete Product from database");
     		e.printStackTrace();
+    	}
+    }
+    
+    public static void deleteOrder(Order order){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("DELETE from orders WHERE id='" + order.getId() + "'");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to delete Order from database");
     	}
     }
     

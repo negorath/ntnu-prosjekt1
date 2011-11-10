@@ -24,7 +24,7 @@ public class Order {
 	 * @return the userId
 	 */
 	public String getUserId() {
-		return userId;
+		return userId;			
 	}
 	/**
 	 * @param userId the userId to set
@@ -38,8 +38,10 @@ public class Order {
 	public String getProducts() {
 		return products;
 	}
-	public void setProducts(int[][] produkter){
-		//lager en string av produkter fra bestillings-tabben
+	public void setProducts(int[] produkter){
+		for(int i = 0; i<produkter.length; i++){
+			System.out.println(produkter[i]);
+		}
 	}
 	//2:15-3:2-4:7
 	public void createFoodList(String s){
