@@ -193,16 +193,18 @@ public class DatabaseConnector{
     public static void edit(User oldUser, User newUser){
     	try{
     		String address_id, id;
-    		ResultSet edit_rs = stmt.executeQuery("SELECT address_id FROM users WHERE name='" + oldUser.getName() + "', phone='" + oldUser.getPhone() + "'");
+    		ResultSet edit_rs = stmt.executeQuery("SELECT address_id FROM users WHERE name='" + oldUser.getName() + "' AND phone='" + oldUser.getPhone() + "'");
     		edit_rs.first();
     		address_id = edit_rs.getString(1);
-    		edit_rs = stmt.executeQuery("SELECT id FROM users WHERE name='" + oldUser.getName() + "'. phone ='" + oldUser.getPhone() + "'");
+    		edit_rs = stmt.executeQuery("SELECT id FROM users WHERE name='" + oldUser.getName() + "'AND phone ='" + oldUser.getPhone() + "'");
     		edit_rs.first();
     		id = edit_rs.getString(1);
     		edit_rs.close();
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("UPDATE users SET");
-    		con.commit();
+    		//oppdaterer addressen til address_id
+    		stmt.executeUpdate("UPDATE addresses SET street='" + newUser.getAddress().getStreet() + "', houseNumber='" + newUser.getAddress().getHouseNumber() + "', zipcode='" + newUser.getAddress().getZipcode() + "', city='" + newUser.getAddress().getCity() + "' WHERE id='" + address_id + "'");
+    		//Oppdaterer user
+    		stmt.executeUpdate("UPDATE users SET name='" + newUser.getName() + "', phone='" + newUser.getPhone() + "' WHERE id='" + id + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to edit User");

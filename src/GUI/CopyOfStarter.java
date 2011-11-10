@@ -854,6 +854,7 @@ public class CopyOfStarter{
 				User newUser = new User(redigerNavn.getText(), redigerNummer.getText(), address);
 				User oldUser = (User)m1.getElementAt(kunder_list.getSelectedIndex());
 				DatabaseConnector.edit(oldUser, newUser);
+				getUsers();
 			}
 		});
 		Rediger_1.setBounds(847, 11, 100, 41);
