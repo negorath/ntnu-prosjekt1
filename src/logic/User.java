@@ -20,13 +20,6 @@ public class User{
 		
 	}
 	
-	public User retrieve(String phoneNumber) throws Exception{
-		int intPhoneNumber = Integer.parseInt(phoneNumber);
-		return con.getUser(intPhoneNumber);
-	}
-	public User retrive(int phoneNumber) throws Exception{
-		return con.getUser(phoneNumber);
-	}
 	
 	public void setUserId(String id){
 		this.userID = id;

@@ -640,7 +640,9 @@ public class CopyOfStarter{
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
-//					Order order = new Order();
+					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
+					DatabaseConnector.newOrder(order);
+					getOrders();
 					if (gatenavn.getText().contains(" ")) {
 						tmp = gatenavn.getText() ;
 						tmp = tmp.replace(' ' , '+');
@@ -1139,10 +1141,8 @@ public class CopyOfStarter{
 			listModelOrders.clear();
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);
-				listModelOrders.addElement(o.getId() + " " + o.getUserId());
-//				System.out.println(o.getId() + " " + o.getUserId());
+				listModelOrders.addElement(o.toString());
 			}
-			System.out.println("sucessfully added orders");
 		}catch(Exception e){
 			System.out.println("Finner ingen orders i databasen");
 			e.printStackTrace();

@@ -86,14 +86,12 @@ public class DatabaseConnector{
      * @return user from database
      * @throws Exception
      */
-    public static User getUser(int id) throws Exception{
-    	System.out.println("lolp¿¾");
-    	ResultSet getUser_rs = stmt.executeQuery("SELECT phone FROM users WHERE id='" + id + "'");
+    public static String getUser(int id) throws Exception{
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT name FROM users WHERE id='" + id + "'");
     	getUser_rs.first();
     	String s = getUser_rs.getString(1);
     	getUser_rs.close();
-    	User u = getUser(s);
-    	return u;
+    	return s;
     }
 
     /**
@@ -196,7 +194,7 @@ public class DatabaseConnector{
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
     		String id = orders_rs.getString(5);
-    		Order o =  new Order(user_id, ordered, due, delivered);
+    		Order o =  new Order(user_id);
     		o.setId(id);
     		orders.addElement(o);
     	}while(orders_rs.next());
@@ -207,7 +205,7 @@ public class DatabaseConnector{
     public static void newOrder(Order order){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("INSERT into orders VALUES(now(), 0, 0)");
+    		stmt.executeUpdate("INSERT into orders (user_id, ordered, due, delivered, products) VALUES("+order.getUserId() + "', now(), 0, 0, " + order.getProducts() + "')");
     		con.commit();
     		con.setAutoCommit(false);
     	}catch(Exception e){

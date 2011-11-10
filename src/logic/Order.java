@@ -15,11 +15,8 @@ public class Order {
 	 * @param due
 	 * @param delivered
 	 */
-	public Order(String userId, String ordered, String due, String delivered){
+	public Order(String userId){
 		this.userId = userId;
-		this.ordered = ordered;
-		this.due = due;
-		this.delivered = delivered;
 	}
 	
 	
@@ -40,6 +37,9 @@ public class Order {
 	 */
 	public String getProducts() {
 		return products;
+	}
+	public void setProducts(int[][] produkter){
+		//lager en string av produkter fra bestillings-tabben
 	}
 	//2:15-3:2-4:7
 	public void createFoodList(String s){
@@ -89,15 +89,14 @@ public class Order {
 	public void setId(String a){
 		this.id = a;
 	}
-//	public String toString(){
-//		String s = getId() + " ";
-//		try {
-//			s += DatabaseConnector.getUser(getUserId()).getName();
-//		} catch (Exception e) {
-//			System.out.println("egendeffinert lol");
-//			e.printStackTrace();
-//		}
-//		return s;
-//	}
+	public String toString(){
+		String s = getId() + " ";
+		try {
+			s += DatabaseConnector.getUser(Integer.parseInt(userId));
+		} catch (Exception e) {
+			System.out.println("Failed to make toString in class Order");
+		}
+		return s;
+	}
 	
 }
