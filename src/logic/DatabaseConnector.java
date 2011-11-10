@@ -66,17 +66,22 @@ public class DatabaseConnector{
      * @return	User fra database med requested phoneNumber
      * @throws Exception
      */
-    public static User getUser(int phoneNumber) throws Exception{
-    	rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
-    	String name = rs.getString(1);
-    	String phone = rs.getString(2);
-    	String address_id = rs.getString(3);
-    	rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addressess WHERE id='"+address_id+"'");
-    	Address address = new Address(rs.getString(1), Integer.parseInt(rs.getString(2)), rs.getString(3), rs.getString(4));
+    public static User getUser(String phoneNumber) throws Exception{
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
+    	getUser_rs.first();
+    	String name = getUser_rs.getString(1);
+    	String phone = getUser_rs.getString(2);
+    	String address_id = getUser_rs.getString(3);
+    	getUser_rs.close();
+    	
+    	ResultSet getAddress_rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addresses WHERE id='"+address_id+"'");
+    	getAddress_rs.first();
+    	Address address = new Address(getAddress_rs.getString(1), Integer.parseInt(getAddress_rs.getString(2)), getAddress_rs.getString(3), getAddress_rs.getString(4));
+    	getAddress_rs.close();
     	return new User(name, phone, address);
     }
-    public static User getUser(String phoneNumber) throws Exception{
-    	return getUser(Integer.parseInt(phoneNumber));
+    public static User getUser(int phoneNumber) throws Exception{
+    	return getUser(String.valueOf(phoneNumber));
     }
     /**
      * 

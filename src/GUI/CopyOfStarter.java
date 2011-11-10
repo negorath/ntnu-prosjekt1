@@ -303,8 +303,12 @@ public class CopyOfStarter{
 		btnFjernElement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (model.getSize()>0)
-					model.remove(list.getSelectedIndex());
-			}
+					try{
+						model.remove(list.getSelectedIndex());
+					}catch(Exception t){
+						System.out.println("Ingenting er valgt");
+					}
+				}
 		});
 		btnFjernElement.setBounds(132, 0, 100, 23);
 		reciept.add(btnFjernElement);
@@ -610,14 +614,16 @@ public class CopyOfStarter{
 		btnRediger_1.setBounds(512, 8, 89, 23);
 		bestillingsInfo.add(btnRediger_1);
 
-		btnLeggTil_1 = new JButton("Legg til");
-		btnLeggTil_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
-			}
-		});
-		btnLeggTil_1.setBounds(16, 294, 89, 23);
-		bestillingsInfo.add(btnLeggTil_1);
+		//Denne skal FJERNES!!!?		
+		
+//		btnLeggTil_1 = new JButton("Legg til");
+//		btnLeggTil_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
+//			}
+//		});
+//		btnLeggTil_1.setBounds(16, 294, 89, 23);
+//		bestillingsInfo.add(btnLeggTil_1);
 
 		JButton btnNeste_1 = new JButton("Send");
 		btnNeste_1.setForeground(new Color(47, 79, 79));
@@ -780,13 +786,16 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					User user = DatabaseConnector.getUser(Integer.parseInt(nr));
+					User user = (User)DatabaseConnector.getUser(nr);
+					System.out.println(user.getName());
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
-				}catch(Exception ee){	}
+				}catch(Exception ee){
+					ee.printStackTrace();
+				}
 			}
 		});
 		btnIncall.setBounds(848, 11, 121, 45);
@@ -1009,7 +1018,7 @@ public class CopyOfStarter{
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
 		
-		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. <br><br>2: Vesuvio: Tomat, ost, skinke.<br><br>3: Milano: Tomat, ost, pepperoni.<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner.<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus.<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella.<br><br>7: Capriciosa: Tomat, ost, skinke, sopp.<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus.<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k.</html>");
+		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. 110,-<br><br>2: Vesuvio: Tomat, ost, skinke. 110,-<br><br>3: Milano: Tomat, ost, pepperoni. 110,-<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner. 220,-<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus. 110,-<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella. 120,-<br><br>7: Capriciosa: Tomat, ost, skinke, sopp. 120,-<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus. 120,-<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k. 130,-</html>");
 		pizzaInfo.setBounds(700, 101, 269, 442);
 		bestilling.add(pizzaInfo);
 
