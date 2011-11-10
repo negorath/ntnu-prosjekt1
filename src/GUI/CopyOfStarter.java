@@ -669,7 +669,7 @@ public class CopyOfStarter{
 		bestillingsInfo.add(btnNeste_1);
 
 		//--------------------------Utgaaende/chef-----------------------------------------
-
+		
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
