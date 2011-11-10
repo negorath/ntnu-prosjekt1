@@ -197,8 +197,11 @@ public class DatabaseConnector{
     public static void newProduct(Product product){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("INSERT into products (name, description, price) VALUES (name='" + product.getName() + "', description='" + product.getDescription() + "', price='" + product.getPrice() + "')");
-    		con.setAutoCommit(false);
+    		ResultSet newProduct_rs = stmt.executeQuery("SELECT COUNT(*) FROM products");
+    		newProduct_rs.first();
+    		int id = Integer.parseInt(newProduct_rs.getString(1)) + 1;
+    		stmt.executeUpdate("INSERT INTO products VALUES (" + id + ", '" + product.getName() + "', '" + product.getDescription() + "', '" + product.getPrice() + "')");
+			con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to insert new Product into database");
     		e.printStackTrace();
@@ -216,6 +219,21 @@ public class DatabaseConnector{
     		deleteUser_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to delete User from database");
+    		e.printStackTrace();
+    	}
+    }
+    
+    public static void deleteProduct(Product product){
+    	try{
+    		ResultSet deleteProduct_rs = stmt.executeQuery("SELECT id from products WHERE name='" + product.getName() + "' AND description='" + product.getDescription() + "' AND price='" + product.getPrice() + "'");
+    		deleteProduct_rs.first();
+    		String id = deleteProduct_rs.getString(1);
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("DELETE from users WHERE id='" + id + "'");
+    		con.setAutoCommit(false);
+    		deleteProduct_rs.close();
+    	}catch(Exception e){
+    		System.out.println("Failed to delete Product from database");
     		e.printStackTrace();
     	}
     }
