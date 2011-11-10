@@ -90,6 +90,7 @@ public class CopyOfStarter{
 	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
+	DefaultListModel m3 = new DefaultListModel();
 
 	private JTextField husnummer;
 	private JTextField textField_1;
@@ -140,6 +141,7 @@ public class CopyOfStarter{
 	JPanel Retter;
 	DefaultListModel listmodelUsers = new DefaultListModel();
 	DefaultListModel listModelProducts = new DefaultListModel();
+	DefaultListModel listModelOrders = new DefaultListModel();
 
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
@@ -172,7 +174,7 @@ public class CopyOfStarter{
 		}
 		getUsers();
 		getProducts();
-		getAddresses();
+		getOrders();
 		frame.repaint();
 	}
 
@@ -672,8 +674,8 @@ public class CopyOfStarter{
 		panel_2.setBounds(4, 35, 241, 515);
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
-
-		list_3 = new JList(list_2);
+		//list_3 = new JList(list_2);
+		list_3 = new JList(m3);
 		list_3.setBounds(6, 22, 229, 487);
 		panel_2.add(list_3);
 		
@@ -720,6 +722,7 @@ public class CopyOfStarter{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
+//					Order order = DatabaseConnector.getOrder((Order)m3.getElementAt(list3.getSelectedIndex()));
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
 				}catch(Exception e){
 					//					e.printStackTrace();
@@ -1105,8 +1108,16 @@ public class CopyOfStarter{
 			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
-	public void getAddresses(){
-
+	public void getOrders(){
+		try{
+			m3 = DatabaseConnector.getOrders();
+			listModelOrders.clear();
+			for(int i = 0; i<m3.size(); i++){
+				listModelOrders.addElement(m3.getElementAt(i).toString());
+			}
+		}catch(Exception e){
+			System.out.println("Finner ingen orders i databasen");
+		}
 	}
 	public String createReceipt(JList l){
 
