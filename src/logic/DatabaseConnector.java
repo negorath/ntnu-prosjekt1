@@ -104,16 +104,18 @@ public class DatabaseConnector{
     		addresses.add(address);
     	}while(address_rs.next());
     	address_rs.close();
-    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users");
     	users_rs.first();
     	do{
         	String name = users_rs.getString(1);
         	String phone = users_rs.getString(2);
-        	String address_id = users_rs.getString(3); 
+        	String address_id = users_rs.getString(3);
+        	String id = users_rs.getString(4);
         	//finding address from array with id equal to address_id
         	for(int i = 0; i<addresses.size(); i++){
         		if(addresses.get(i).getId() == Integer.parseInt(address_id)){
         			User user = new User(name, phone, addresses.get(i));
+        			user.setUserId(id);
         			users.addElement(user);
         		}
         	}

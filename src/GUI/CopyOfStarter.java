@@ -640,6 +640,7 @@ public class CopyOfStarter{
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
+//					Order order = new Order();
 					if (gatenavn.getText().contains(" ")) {
 						tmp = gatenavn.getText() ;
 						tmp = tmp.replace(' ' , '+');
@@ -1123,7 +1124,8 @@ public class CopyOfStarter{
 			listmodelUsers.clear();
 			//m1 inneholder objektene USERS, listmodelUsers inneholder user.toString();
 			for(int i = 0; i<m1.size(); i++){
-				listmodelUsers.addElement(m1.getElementAt(i).toString());
+				User user = (User)m1.getElementAt(i);
+				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 			e.printStackTrace();

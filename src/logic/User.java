@@ -9,6 +9,7 @@ public class User{
 	private String name;
 	private String phone;
 	private Address address;
+	private String userID;
 	private DatabaseConnector con;
 	public User(String name, String phone, Address address){
 		this.name = name;
@@ -27,6 +28,12 @@ public class User{
 		return con.getUser(phoneNumber);
 	}
 	
+	public void setUserId(String id){
+		this.userID = id;
+	}
+	public String getId(){
+		return this.userID;
+	}
 	public User() { }
 
 	/**
