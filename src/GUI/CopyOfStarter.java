@@ -148,6 +148,7 @@ public class CopyOfStarter{
 	private JButton btnLevert;
 	private JPanel panel_1;
 	private JLabel pizzaInfo = new JLabel();
+	private JButton button_7;
 
 	/**
 	 * Launch the application.
@@ -827,6 +828,31 @@ public class CopyOfStarter{
 		kunder.setLayout(null);
 		
 		kunder_list = new JList(listmodelUsers);
+		kunder_list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 2){
+					int selectedIndex = kunder_list.getSelectedIndex();
+					User user = (User)m1.getElementAt(selectedIndex);
+					redigerNavn.setText(user.getName());
+					redigerNummer.setText(user.getPhone());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostNummer.setText(user.getAddress().getZipcode());
+					redigerPostSted.setText(user.getAddress().getCity());
+				}
+				else if(arg0.getButton() == arg0.BUTTON3){
+					try{
+						int id = kunder_list.getSelectedIndex();
+						User user = (User)m1.getElementAt(id);
+						DatabaseConnector.deleteUser(user);
+						getUsers();						
+					}catch(Exception e){
+						System.out.println("Klarte ikke slette bruker");
+					}
+				}
+			}
+		});
 		kunder_list.setBounds(734, 105, 213, 468);
 		kunder.add(kunder_list);
 		
@@ -837,6 +863,12 @@ public class CopyOfStarter{
 				try{
 					DatabaseConnector.newUser(new User(redigerNavn.getText(), redigerNummer.getText(), address));					
 					getUsers();
+					redigerNummer.setText("");
+					redigerNavn.setText("");
+					redigerHusNr.setText("");
+					redigerAdresse.setText("");
+					redigerPostNummer.setText("");
+					redigerPostSted.setText("");
 				}catch(Exception et){
 					System.out.println("Kunne ikke legge til kunde");
 					et.printStackTrace();
@@ -953,11 +985,44 @@ public class CopyOfStarter{
 		lblPoststed_1.setBounds(175, 283, 441, 32);
 		kunder.add(lblPoststed_1);
 		
+		button_7 = new JButton("T\u00F8m Felter");
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				redigerNummer.setText("");
+				redigerNavn.setText("");
+				redigerHusNr.setText("");
+				redigerAdresse.setText("");
+				redigerPostNummer.setText("");
+				redigerPostSted.setText("");
+			}
+		});
+		button_7.setBounds(10, 416, 110, 41);
+		kunder.add(button_7);
+		
 		JPanel retter = new JPanel();
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
 		
 		retter_list = new JList(listModelProducts);
+		retter_list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 2){
+					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					retterNavn.setText(product.getName());
+					retterPris.setText(String.valueOf(product.getPrice()));
+					retterKommentar.setText(product.getDescription());
+				}
+				else if(e.getButton() == e.BUTTON3){
+					try{
+						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+						getProducts();						
+					}catch(Exception hehe){
+						System.out.println("Klarte ikke slette produkt");
+					}
+				}
+			}
+		});
 		retter_list.setBounds(734, 105, 213, 468);
 		retter.add(retter_list);
 		
@@ -988,9 +1053,16 @@ public class CopyOfStarter{
 		leggTil_retter = new JButton("Legg Til");
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
-				DatabaseConnector.newProduct(product);
-				getProducts();
+				try{
+					Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					DatabaseConnector.newProduct(product);
+					getProducts();
+					retterNavn.setText("");
+					retterKommentar.setText("");
+					retterPris.setText("");
+				}catch(Exception e){
+					System.out.println("Failed to add new User into database");
+				}
 			}
 		});
 		leggTil_retter.setBounds(734, 64, 100, 41);
@@ -1038,6 +1110,17 @@ public class CopyOfStarter{
 		lblBeskrivelse.setFont(new Font("Verdana", Font.BOLD, 14));
 		lblBeskrivelse.setBounds(10, 158, 408, 30);
 		retter.add(lblBeskrivelse);
+		
+		JButton btnTmFelter = new JButton("T\u00F8m Felter");
+		btnTmFelter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				retterKommentar.setText("");
+				retterNavn.setText("");
+				retterPris.setText("");
+			}
+		});
+		btnTmFelter.setBounds(10, 412, 110, 41);
+		retter.add(btnTmFelter);
 
 
 		//____COMBOBOX FOR ASSOSIATING DISHES TO BUTTONS
@@ -1073,9 +1156,7 @@ public class CopyOfStarter{
 	}
 	private String menyKnappTrykk(String a) {
 		for (int i = 0; i < model.getSize(); i++) {
-			System.out.println("lol");
 			if (model.get(i).toString().equals(a)) {
-				System.out.println("lol");
 				nummerKnappTrykk("1");
 			}
 		}
@@ -1145,7 +1226,6 @@ public class CopyOfStarter{
 			}
 		}catch(Exception e){
 			System.out.println("Finner ingen orders i databasen");
-			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){
@@ -1177,5 +1257,4 @@ public class CopyOfStarter{
 		String lol = "Ordre nr." + temp;
 		return lol;
 	}
-
 }

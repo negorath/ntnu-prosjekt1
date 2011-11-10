@@ -230,11 +230,13 @@ public class DatabaseConnector{
     
     public static void deleteUser(User user){
     	try{
-    		ResultSet deleteUser_rs = stmt.executeQuery("SELECT id from users WHERE name='" + user.getName() + "' AND phone='" + user.getPhone() + "'");
+    		ResultSet deleteUser_rs = stmt.executeQuery("SELECT id, address_id from users WHERE name='" + user.getName() + "' AND phone='" + user.getPhone() + "'");
     		deleteUser_rs.first();
     		String id = deleteUser_rs.getString(1);
+    		String address_id = deleteUser_rs.getString(2);
     		con.setAutoCommit(true);
     		stmt.executeUpdate("DELETE from users WHERE id='" + id + "'");
+    		stmt.executeUpdate("DELETE from addresses WHERE id='" + address_id + "'");
     		con.setAutoCommit(false);
     		deleteUser_rs.close();
     	}catch(Exception e){
