@@ -129,11 +129,10 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static Product getProduct(String id) throws Exception{
-    	rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE name='"+id+"'");
+    	rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE id='"+id+"'");
     	String name = rs.getString(1);
     	String description = rs.getString(2);
     	String price = rs.getString(3);
-    	System.out.println(name + description + price);
     	return new Product(name, description, Double.parseDouble(price));
     }
     /**
@@ -227,9 +226,9 @@ public class DatabaseConnector{
     	try{
     		ResultSet deleteProduct_rs = stmt.executeQuery("SELECT id from products WHERE name='" + product.getName() + "' AND description='" + product.getDescription() + "' AND price='" + product.getPrice() + "'");
     		deleteProduct_rs.first();
-    		String id = deleteProduct_rs.getString(1);
+    		int id = Integer.parseInt(deleteProduct_rs.getString(1));
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("DELETE from users WHERE id='" + id + "'");
+    		stmt.executeUpdate("DELETE from products WHERE id='" + id + "'");
     		con.setAutoCommit(false);
     		deleteProduct_rs.close();
     	}catch(Exception e){
@@ -260,12 +259,19 @@ public class DatabaseConnector{
     	}
     }
     
-    public static void edit(Product product){
-    	
-    }
-    
-    public static void edit(Address address){
-    	
+    public static void edit(Product oldProduct, Product newProduct){
+    	try{
+    		ResultSet edit = stmt.executeQuery("SELECT id from products WHERE name='" + oldProduct.getName() + "' AND description='" + oldProduct.getDescription() + "' AND price='" + oldProduct.getPrice() + "'");
+    		edit.first();
+    		String id = edit.getString(1);
+    		edit.close();
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("UPDATE products SET name='" + newProduct.getName() + "', description='" + newProduct.getDescription() + "', price='" + newProduct.getPrice() + "' WHERE id='" + id  + "'");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to edit Product");
+    		e.printStackTrace();
+    	}
     }
     
     public static void edit(Order order){
