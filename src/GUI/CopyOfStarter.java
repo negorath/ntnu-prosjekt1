@@ -614,14 +614,16 @@ public class CopyOfStarter{
 		btnRediger_1.setBounds(512, 8, 89, 23);
 		bestillingsInfo.add(btnRediger_1);
 
-		btnLeggTil_1 = new JButton("Legg til");
-		btnLeggTil_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
-			}
-		});
-		btnLeggTil_1.setBounds(16, 294, 89, 23);
-		bestillingsInfo.add(btnLeggTil_1);
+		//Denne skal FJERNES!!!?		
+		
+//		btnLeggTil_1 = new JButton("Legg til");
+//		btnLeggTil_1.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
+//			}
+//		});
+//		btnLeggTil_1.setBounds(16, 294, 89, 23);
+//		bestillingsInfo.add(btnLeggTil_1);
 
 		JButton btnNeste_1 = new JButton("Send");
 		btnNeste_1.setForeground(new Color(47, 79, 79));
@@ -784,13 +786,16 @@ public class CopyOfStarter{
 				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
 				nummer.setText(nr);
 				try{
-					User user = DatabaseConnector.getUser(Integer.parseInt(nr));
+					User user = (User)DatabaseConnector.getUser(nr);
+					System.out.println(user.getName());
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
-				}catch(Exception ee){	}
+				}catch(Exception ee){
+					ee.printStackTrace();
+				}
 			}
 		});
 		btnIncall.setBounds(848, 11, 121, 45);
