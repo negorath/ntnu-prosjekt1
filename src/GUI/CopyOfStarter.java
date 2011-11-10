@@ -975,6 +975,12 @@ public class CopyOfStarter{
 		retter.add(leggTil_retter);
 		
 		leggTil_retter_1 = new JButton("Slett");
+		leggTil_retter_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+				getProducts();
+			}
+		});
 		leggTil_retter_1.setBounds(847, 64, 100, 41);
 		retter.add(leggTil_retter_1);
 		
