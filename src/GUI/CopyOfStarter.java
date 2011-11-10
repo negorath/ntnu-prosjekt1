@@ -959,6 +959,14 @@ public class CopyOfStarter{
 		retter.add(hent_retter);
 		
 		rediger_retter = new JButton("Rediger");
+		rediger_retter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+				Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+				DatabaseConnector.edit(oldProduct, newProduct);
+				getProducts();
+			}
+		});
 		rediger_retter.setBounds(847, 11, 100, 41);
 		retter.add(rediger_retter);
 		
