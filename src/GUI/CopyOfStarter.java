@@ -147,6 +147,7 @@ public class CopyOfStarter{
 	private JPanel panel_2;
 	private JButton btnLevert;
 	private JPanel panel_1;
+	private JLabel pizzaInfo = new JLabel();
 
 	/**
 	 * Launch the application.
@@ -174,7 +175,12 @@ public class CopyOfStarter{
 		}
 		getUsers();
 		getProducts();
+<<<<<<< HEAD
 		getOrders();
+=======
+		getAddresses();
+		lagListe();
+>>>>>>> 2bd4110a70bd3c28e0cada6019f0ce70f653bb8f
 		frame.repaint();
 	}
 
@@ -494,7 +500,7 @@ public class CopyOfStarter{
 		btnNeste.setForeground(new Color(47, 79, 79));
 		btnNeste.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnNeste.setBackground(new Color(204, 255, 204));
-		btnNeste.setBounds(831, 555, 138, 68);
+		btnNeste.setBounds(831, 567, 138, 68);
 		bestilling.add(btnNeste);
 		btnNeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -636,6 +642,20 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(Utgaende);
 				list_2.addElement(createOrder(list));
+				String tmp = "";
+				try{
+					if (gatenavn.getText().contains(" ")) {
+						tmp = gatenavn.getText() ;
+						tmp = tmp.replace(' ' , '+');
+						System.out.println(tmp);
+					}
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
+//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
+				}catch(Exception e){
+					//					e.printStackTrace();
+					lblAddressNotFound.setVisible(true);
+					btnRedigerAdresse.setVisible(true);
+				}
 				navn.setText("");
 				nummer.setText("");
 				gatenavn.setText("");
@@ -649,14 +669,6 @@ public class CopyOfStarter{
 				rdbtnKontant.setSelected(false);
 				model.clear();
 				frame.repaint();
-				try{
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + gatenavn.getText() + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", gatenavn.getText() + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());					
-//					map.call("http://maps.googleapis.com/maps/api/staticmap?center=" + gatenavn.getText() + "," + poststed.getText() + "&zoom=14&size=512x512", "lol");
-				}catch(Exception e){
-					//					e.printStackTrace();
-					lblAddressNotFound.setVisible(true);
-					btnRedigerAdresse.setVisible(true);
-				}
 			}
 		});
 		btnNeste_1.setBounds(831, 555, 138, 68);
@@ -1036,14 +1048,28 @@ public class CopyOfStarter{
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
 		
-		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. 110,-<br><br>2: Vesuvio: Tomat, ost, skinke. 110,-<br><br>3: Milano: Tomat, ost, pepperoni. 110,-<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner. 220,-<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus. 110,-<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella. 120,-<br><br>7: Capriciosa: Tomat, ost, skinke, sopp. 120,-<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus. 120,-<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k. 130,-</html>");
-		pizzaInfo.setBounds(700, 101, 269, 442);
+		
+		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
 
 
 		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
 			m1.addElement(users.get(i));
+		}
+	}
+	public void lagListe(){
+		try{
+			getProducts();
+			String pizzaListe = "<html>";
+			for (int j = 0; j < m2.size(); j++) {
+				Product p = (Product)m2.getElementAt(j);
+				pizzaListe += "#" + (j+1) + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
+			}
+			pizzaInfo.setText(pizzaListe + "</html>");
+		}catch(Exception eee){
+			eee.printStackTrace();
+			System.out.println("Noe gikk galt, hmmm?");
 		}
 	}
 	private String menyKnappTrykk(String a) {
@@ -1085,7 +1111,7 @@ public class CopyOfStarter{
 			m2 = DatabaseConnector.getProducts();
 			listModelProducts.clear();
 			for(int i = 0; i<m2.size(); i++){
-				listModelProducts.addElement(m2.getElementAt(i).toString());
+				listModelProducts.addElement("#" + (i+1) + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
 //			e.printStackTrace();
