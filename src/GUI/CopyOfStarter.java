@@ -303,8 +303,12 @@ public class CopyOfStarter{
 		btnFjernElement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (model.getSize()>0)
-					model.remove(list.getSelectedIndex());
-			}
+					try{
+						model.remove(list.getSelectedIndex());
+					}catch(Exception t){
+						System.out.println("Ingenting er valgt");
+					}
+				}
 		});
 		btnFjernElement.setBounds(132, 0, 100, 23);
 		reciept.add(btnFjernElement);
