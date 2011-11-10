@@ -776,7 +776,7 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					if(list_5.getSize()>0){
-						list_2.addElement(list_4.getSelectedValue());
+						m3.addElement(list_4.getSelectedValue());
 						list_5.remove(list_4.getSelectedIndex());
 					}
 				}
@@ -795,10 +795,11 @@ public class CopyOfStarter{
 					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 					String id = o.getUserId();
 					o.setDueDateToNow();
-					DatabaseConnector.edit(o);
-					if(list_2.getSize()>0){
+					DatabaseConnector.edit(id);
+					if(listModelOrders.getSize()>0){
 						list_5.addElement(list_3.getSelectedValue());
 						listModelOrders.remove(list_3.getSelectedIndex());
+						m3.remove(list_3.getSelectedIndex());
 					}
 				}
 				catch(Exception e){
@@ -1250,7 +1251,12 @@ public class CopyOfStarter{
 			listModelOrders.clear();
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);
-				listModelOrders.addElement(o.toString());
+				if(o.getDue() == null){
+					listModelOrders.addElement(o.toString());					
+				}
+				else{
+					list_5.addElement(o.toString());
+				}
 			}
 		}catch(Exception e){
 			System.out.println("Finner ingen orders i databasen");

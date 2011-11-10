@@ -6,7 +6,7 @@ public class Order {
 	private String id;
 	private String userId;
 	private String products;
-	private String ordered, due, delivered;
+	private String ordered, due = null, delivered;
 	/**
 	 * 
 	 * @param id
@@ -101,6 +101,9 @@ public class Order {
 		return s;
 	}
 	
+	public String getDue(){
+		return this.due;
+	}
 	public void setDueDateToNow(){
 		this.due = "now()";
 	}

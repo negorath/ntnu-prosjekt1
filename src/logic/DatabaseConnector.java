@@ -314,10 +314,11 @@ public class DatabaseConnector{
     	}
     }
     
-    public static void edit(Order order){
+    public static void edit(String id){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("UPDATE orders SET due=now()");
+    		stmt.executeUpdate("UPDATE orders SET due=now() WHERE id='" + id + "'");
+    		con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to edit order in database");
     	}
