@@ -154,15 +154,14 @@ public class DatabaseConnector{
     public static void newUser(User user)throws Exception{
     	ResultSet newUser_rs = stmt.executeQuery("SELECT COUNT(*) FROM addresses");
     	newUser_rs.first();
+    	con.setAutoCommit(true);
     	int address_id = Integer.parseInt(newUser_rs.getString(1)) + 1;
-    	con.setAutoCommit(false);
     	int houseNumber = user.getAddress().getHouseNumber();
     	String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
     	stmt.executeUpdate("INSERT into addresses VALUES (" + address_id + ", '" +street +"', '"+ houseNumber +"', 'a', '"+ zipcode +"', '"+ city +"', 'NO')");
        	stmt.executeUpdate("INSERT into users (id, name, phone, address_id) VALUES (" + address_id + ", '" + user.getName() + "', '" + user.getPhone() + "', '"+ address_id + "')");
-    	con.commit();
-    	con.setAutoCommit(true);
     	newUser_rs.close();
+    	con.setAutoCommit(false);
     }
     
     public static DefaultListModel getOrders() throws Exception{
@@ -186,6 +185,32 @@ public class DatabaseConnector{
     		con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
+    		e.printStackTrace();
+    	}
+    }
+    
+    public static void newProduct(Product product){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("INSERT into products (name, description, price) VALUES (name='" + product.getName() + "', description='" + product.getDescription() + "', price='" + product.getPrice() + "')");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to insert new Product into database");
+    		e.printStackTrace();
+    	}
+    }
+    
+    public static void deleteUser(User user){
+    	try{
+    		ResultSet deleteUser_rs = stmt.executeQuery("SELECT id from users WHERE name='" + user.getName() + "' AND phone='" + user.getPhone() + "'");
+    		deleteUser_rs.first();
+    		String id = deleteUser_rs.getString(1);
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("DELETE from users WHERE id='" + id + "'");
+    		con.setAutoCommit(false);
+    		deleteUser_rs.close();
+    	}catch(Exception e){
+    		System.out.println("Failed to delete User from database");
     		e.printStackTrace();
     	}
     }

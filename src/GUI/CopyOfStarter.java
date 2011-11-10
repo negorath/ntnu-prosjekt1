@@ -825,7 +825,10 @@ public class CopyOfStarter{
 		Slett = new JButton("Slett");
 		Slett.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				int id = kunder_list.getSelectedIndex();
+				User user = (User)m1.getElementAt(id);
+				DatabaseConnector.deleteUser(user);
+				getUsers();
 			}
 		});
 		Slett.setBounds(847, 64, 100, 41);
@@ -951,6 +954,13 @@ public class CopyOfStarter{
 		retter.add(rediger_retter);
 		
 		leggTil_retter = new JButton("Legg Til");
+		leggTil_retter.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+				DatabaseConnector.newProduct(product);
+				getProducts();
+			}
+		});
 		leggTil_retter.setBounds(734, 64, 100, 41);
 		retter.add(leggTil_retter);
 		
