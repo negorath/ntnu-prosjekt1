@@ -97,7 +97,6 @@ public class CopyOfStarter{
 	private JLabel lblPoststed;
 	private JLabel lblKommentar;
 	private JLabel lblRingendeNummer;
-	private JLabel lblBestillinger;
 	private JButton btnLeggTil_1;
 	private JButton btnFjernElement;
 	private JPanel Utgaende;
@@ -145,6 +144,7 @@ public class CopyOfStarter{
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
 	private JButton btnLevert;
+	private JPanel panel_1;
 
 	/**
 	 * Launch the application.
@@ -557,11 +557,25 @@ public class CopyOfStarter{
 		buttonGroup.add(rdbtnKontant);
 		rdbtnKontant.setBounds(212, 259, 81, 23);
 		bestillingsInfo.add(rdbtnKontant);
+		
+		panel_1 = new JPanel();
+		panel_1.setBorder(new TitledBorder(null, "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1.setBounds(335, 30, 277, 407);
+		bestillingsInfo.add(panel_1);
+		panel_1.setLayout(null);
 
 		list_1 = new JList(model);
-
-		list_1.setBounds(336, 30, 265, 379);
-		bestillingsInfo.add(list_1);
+		list_1.setBounds(6, 22, 265, 379);
+		panel_1.add(list_1);
+		
+				JButton btnRediger_1 = new JButton("Rediger");
+				btnRediger_1.setBounds(182, 0, 89, 23);
+				panel_1.add(btnRediger_1);
+				btnRediger_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						tabbedPane.setSelectedComponent(bestilling);
+					}
+				});
 
 		JLabel lblFulltNavn = new JLabel("Fullt Navn");
 		lblFulltNavn.setBounds(16, 12, 133, 14);
@@ -600,19 +614,6 @@ public class CopyOfStarter{
 		lblRingendeNummer = new JLabel("Ringende Nummer");
 		lblRingendeNummer.setBounds(835, 12, 134, 14);
 		bestillingsInfo.add(lblRingendeNummer);
-
-		lblBestillinger = new JLabel("Bestillinger");
-		lblBestillinger.setBounds(336, 12, 81, 14);
-		bestillingsInfo.add(lblBestillinger);
-
-		JButton btnRediger_1 = new JButton("Rediger");
-		btnRediger_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tabbedPane.setSelectedComponent(bestilling);
-			}
-		});
-		btnRediger_1.setBounds(512, 8, 89, 23);
-		bestillingsInfo.add(btnRediger_1);
 
 		//Denne skal FJERNES!!!?		
 		
@@ -1043,6 +1044,13 @@ public class CopyOfStarter{
 		}
 	}
 	private String menyKnappTrykk(String a) {
+		for (int i = 0; i < model.getSize(); i++) {
+			System.out.println("lol");
+			if (model.get(i).toString().equals(a)) {
+				System.out.println("lol");
+				nummerKnappTrykk("1");
+			}
+		}
 		count = null;
 		model.addElement("1" +" x "+a); 
 		label.setText("x "+"1");
@@ -1053,6 +1061,13 @@ public class CopyOfStarter{
 			count = nr;
 		else
 			count += nr;
+		for (int i = 0; i < model.getSize(); i++) {
+			if (model.get(i).toString().charAt(9) == sisteTrykteKnapp.charAt(9)) {
+				model.remove(i);
+				model.addElement(count + nr + " x " + sisteTrykteKnapp);
+				return null;
+			}
+		}
 		if(!model.isEmpty()){
 			model.remove(model.getSize()-1);
 			model.addElement(count+" x " +sisteTrykteKnapp);			
@@ -1070,7 +1085,7 @@ public class CopyOfStarter{
 				listModelProducts.addElement(m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
