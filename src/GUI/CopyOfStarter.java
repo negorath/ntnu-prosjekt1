@@ -175,12 +175,8 @@ public class CopyOfStarter{
 		}
 		getUsers();
 		getProducts();
-<<<<<<< HEAD
 		getOrders();
-=======
-		getAddresses();
 		lagListe();
->>>>>>> 2bd4110a70bd3c28e0cada6019f0ce70f653bb8f
 		frame.repaint();
 	}
 
