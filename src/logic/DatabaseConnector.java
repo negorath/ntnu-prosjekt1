@@ -67,22 +67,36 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static User getUser(String phoneNumber) throws Exception{
-    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users WHERE phone='" + phoneNumber + "'");
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users WHERE phone='" + phoneNumber + "'");
     	getUser_rs.first();
     	String name = getUser_rs.getString(1);
     	String phone = getUser_rs.getString(2);
     	String address_id = getUser_rs.getString(3);
+    	String id = getUser_rs.getString(4);
     	getUser_rs.close();
     	
     	ResultSet getAddress_rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addresses WHERE id='"+address_id+"'");
     	getAddress_rs.first();
     	Address address = new Address(getAddress_rs.getString(1), Integer.parseInt(getAddress_rs.getString(2)), getAddress_rs.getString(3), getAddress_rs.getString(4));
     	getAddress_rs.close();
-    	return new User(name, phone, address);
+    	User user = new User(name, phone, address);
+    	user.setUserId(id);
+    	return user;
     }
-    public static User getUser(int phoneNumber) throws Exception{
-    	return getUser(String.valueOf(phoneNumber));
+    /**
+     * 
+     * @param Userid from database
+     * @return user from database
+     * @throws Exception
+     */
+    public static String getUser(int id) throws Exception{
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT name FROM users WHERE id='" + id + "'");
+    	getUser_rs.first();
+    	String s = getUser_rs.getString(1);
+    	getUser_rs.close();
+    	return s;
     }
+
     /**
      * 
      * @return arraylist med alle users fra database
@@ -104,16 +118,18 @@ public class DatabaseConnector{
     		addresses.add(address);
     	}while(address_rs.next());
     	address_rs.close();
-    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id FROM users");
+    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users");
     	users_rs.first();
     	do{
         	String name = users_rs.getString(1);
         	String phone = users_rs.getString(2);
-        	String address_id = users_rs.getString(3); 
+        	String address_id = users_rs.getString(3);
+        	String id = users_rs.getString(4);
         	//finding address from array with id equal to address_id
         	for(int i = 0; i<addresses.size(); i++){
         		if(addresses.get(i).getId() == Integer.parseInt(address_id)){
         			User user = new User(name, phone, addresses.get(i));
+        			user.setUserId(id);
         			users.addElement(user);
         		}
         	}
@@ -142,13 +158,16 @@ public class DatabaseConnector{
      */
     public static DefaultListModel getProducts() throws Exception{
     	DefaultListModel products = new DefaultListModel();
-    	ResultSet products_rs = stmt.executeQuery("SELECT name, description, price FROM products");
+    	ResultSet products_rs = stmt.executeQuery("SELECT name, description, price, id FROM products");
     	products_rs.first();
     	do{
     		String name = products_rs.getString(1);
     		String description = products_rs.getString(2);
     		String price = products_rs.getString(3);
-    		products.addElement(new Product(name, description, Double.parseDouble(price)));
+    		String id = products_rs.getString(4);
+    		Product p = new Product(name, description, Double.parseDouble(price));
+    		p.setId(id);
+    		products.addElement(p);
     	}while(products_rs.next());
     	products_rs.close();
     	
@@ -169,24 +188,32 @@ public class DatabaseConnector{
     }
     
     public static DefaultListModel getOrders() throws Exception{
-    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered FROM orders");
+    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered, id FROM orders");
     	DefaultListModel orders = new DefaultListModel();
+    	orders_rs.first();
     	do{
     		String user_id = orders_rs.getString(1);
     		String ordered = orders_rs.getString(2);
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
-    		orders.addElement(new Order(Integer.parseInt(user_id), ordered, due, delivered));
+    		String id = orders_rs.getString(5);
+    		Order o =  new Order(user_id);
+    		o.setId(id);
+    		orders.addElement(o);
     	}while(orders_rs.next());
+    	orders_rs.close();
     	return orders;
     }
     
     public static void newOrder(Order order){
     	try{
     		con.setAutoCommit(true);
-    		stmt.executeUpdate("INSERT into orders VALUES(now(), 0, 0)");
-    		con.commit();
+    		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
+    		newOrder_rs.first();
+    		int id = Integer.parseInt(newOrder_rs.getString(1) + 1);
+    		stmt.executeUpdate("INSERT into orders VALUES(" + id + ", '" + order.getUserId() + "', now(), NULL, NULL, '" + order.getProducts() + "')");
     		con.setAutoCommit(false);
+    		newOrder_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
     		e.printStackTrace();
@@ -201,6 +228,7 @@ public class DatabaseConnector{
     		int id = Integer.parseInt(newProduct_rs.getString(1)) + 1;
     		stmt.executeUpdate("INSERT INTO products VALUES (" + id + ", '" + product.getName() + "', '" + product.getDescription() + "', '" + product.getPrice() + "')");
 			con.setAutoCommit(false);
+			newProduct_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new Product into database");
     		e.printStackTrace();
@@ -209,11 +237,13 @@ public class DatabaseConnector{
     
     public static void deleteUser(User user){
     	try{
-    		ResultSet deleteUser_rs = stmt.executeQuery("SELECT id from users WHERE name='" + user.getName() + "' AND phone='" + user.getPhone() + "'");
+    		ResultSet deleteUser_rs = stmt.executeQuery("SELECT id, address_id from users WHERE name='" + user.getName() + "' AND phone='" + user.getPhone() + "'");
     		deleteUser_rs.first();
     		String id = deleteUser_rs.getString(1);
+    		String address_id = deleteUser_rs.getString(2);
     		con.setAutoCommit(true);
     		stmt.executeUpdate("DELETE from users WHERE id='" + id + "'");
+    		stmt.executeUpdate("DELETE from addresses WHERE id='" + address_id + "'");
     		con.setAutoCommit(false);
     		deleteUser_rs.close();
     	}catch(Exception e){
@@ -234,6 +264,16 @@ public class DatabaseConnector{
     	}catch(Exception e){
     		System.out.println("Failed to delete Product from database");
     		e.printStackTrace();
+    	}
+    }
+    
+    public static void deleteOrder(Order order){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("DELETE from orders WHERE id='" + order.getId() + "'");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to delete Order from database");
     	}
     }
     
@@ -274,8 +314,14 @@ public class DatabaseConnector{
     	}
     }
     
-    public static void edit(Order order){
-    	
+    public static void edit(String id){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("UPDATE orders SET due=now() WHERE id='" + id + "'");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		System.out.println("Failed to edit order in database");
+    	}
     }
 
 }

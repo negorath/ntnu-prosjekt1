@@ -1,12 +1,12 @@
 package logic;
 import java.sql.Connection;
 
-class Order {
+public class Order {
 	
-	private int id;
-	private int userId;
-	private Product[] products;
-	private String ordered, due, delivered;
+	private String id;
+	private String userId;
+	private String products;
+	private String ordered, due = null, delivered;
 	/**
 	 * 
 	 * @param id
@@ -15,44 +15,96 @@ class Order {
 	 * @param due
 	 * @param delivered
 	 */
-	public Order(int userId, String ordered, String due, String delivered){
+	public Order(String userId){
 		this.userId = userId;
-		this.ordered = ordered;
-		this.due = due;
-		this.delivered = delivered;
 	}
 	
 	
 	/**
 	 * @return the userId
 	 */
-	public int getUserId() {
-		return userId;
+	public String getUserId() {
+		return userId;			
 	}
 	/**
 	 * @param userId the userId to set
 	 */
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	/**
 	 * @return the products
 	 */
-	public Product[] getProducts() {
+	public String getProducts() {
 		return products;
 	}
+	public void setProducts(int[] produkter){
+		for(int i = 0; i<produkter.length; i++){
+			System.out.println(produkter[i]);
+		}
+	}
+	//2:15-3:2-4:7
+	public void createFoodList(String s){
+		int teller = 0;
+		for(int i = 0; i<s.length(); i++){
+			if(s.charAt(i) == '-'){
+				teller++;
+			}
+		}
+		teller = 0;
+		int[][] liste = new int[2][teller];
+		String element = "";
+		for(int i = 0; i<s.length(); i++){
+			if(s.charAt(i) != ':' && s.charAt(i) != '-'){
+				element += s.charAt(i);
+			}
+			else if(s.charAt(i) == ':'){
+				liste[0][teller] = Integer.parseInt(element);
+				element = "";
+			}
+			else if(s.charAt(i) == '-'){
+				liste[1][teller] = Integer.parseInt(element);
+				element = "";
+				teller++;
+			}
+		}
+		for (int i = 0; i < liste.length; i++) {
+			for (int j = 0; j < liste.length; j++) {
+				System.out.println(liste[i][j]);
+			}
+			System.out.println();
+		}
+	}
+	
 	/**
 	 * @param products the products to set
 	 */
-	public void setProducts(Product[] products) {
+	public void setProducts(String products) {
 		this.products = products;
 	}
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
+	public void setId(String a){
+		this.id = a;
+	}
+	public String toString(){
+		String s = getId() + " ";
+		try {
+			s += DatabaseConnector.getUser(Integer.parseInt(userId));
+		} catch (Exception e) {
+			System.out.println("Failed to make toString in class Order");
+		}
+		return s;
+	}
 	
-	
+	public String getDue(){
+		return this.due;
+	}
+	public void setDueDateToNow(){
+		this.due = "now()";
+	}
 }
