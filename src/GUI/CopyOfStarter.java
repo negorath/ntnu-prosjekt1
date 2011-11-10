@@ -999,7 +999,7 @@ public class CopyOfStarter{
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
 		
-		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. <br><br>2: Vesuvio: Tomat, ost, skinke.<br><br>3: Milano: Tomat, ost, pepperoni.<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner.<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus.<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella.<br><br>7: Capriciosa: Tomat, ost, skinke, sopp.<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus.<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k.</html>");
+		JLabel pizzaInfo = new JLabel("<html>1: Maragarita: Tomat, Ost. 110,-<br><br>2: Vesuvio: Tomat, ost, skinke. 110,-<br><br>3: Milano: Tomat, ost, pepperoni. 110,-<br><br>4: Gabagol: Tomat, ost, pean¿ttsm¿r, ostepop, popcorn, gummibj¿rner. 220,-<br><br>5: Trondheim spesial: Tomat, ost, biff, l¿k, mais, ananas, chilisaus. 110,-<br><br>6: Calzone: Tomat, kylling, pesto, mozzarella. 120,-<br><br>7: Capriciosa: Tomat, ost, skinke, sopp. 120,-<br><br>8: Maffiosa: Tomat, ost, kebabkj¿tt, l¿k, hvitl¿kssaus. 120,-<br><br>9: Grozzo: Tomat, ost, skinke, pepperoni, biff, kylling, l¿k. 130,-</html>");
 		pizzaInfo.setBounds(700, 101, 269, 442);
 		bestilling.add(pizzaInfo);
 
