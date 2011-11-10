@@ -1,28 +1,29 @@
 package objLogic;
-import java.sql.Connection;
+
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import logic.Address;
-
-
-
-
+import java.sql.Connection;
+import objLogic.*;
 
 public class User{
 	
 	private String name;
 	private String phone;
 	private Address address;
-	private java.sql.Connection con;
+	private Connection con;
 	
+	
+	public User() { 
+		
+	}
 	
 	public User(String name, String phone, Address address){
 		this.name = name;
 		this.phone = phone;
 		this.address = address;
 	}
-	
 	
 	//Kode tatt fra DatabaseConnector, her er det den skal være
 	public User retrieve(String phoneNumber) throws Exception{
@@ -56,11 +57,7 @@ public class User{
     	
 		
 	}
-//	public User retrive(int phoneNumber) throws Exception{
-//		
-//	}
-	
-	public User() { }
+
 
 	/**
 	 * @return the name
@@ -89,7 +86,7 @@ public class User{
 	 * @throws SQLException 
 	 */
 	public void setPhone(String phone) throws SQLException {
-		
+		this.phone = phone;
 	}
 
 	/**
@@ -138,5 +135,19 @@ public class User{
 							this.getAddress().getId() + ")");
 		}
 		address.sync();
+	}
+	/** Delete any record of this user in the database, along with it's address
+	 * 
+	 * @throws SQLException
+	 */
+	public void delete() throws SQLException{
+		this.sync();
+		Statement stmt = con.createStatement();
+		
+		stmt.execute(	"DELETE from users " +
+						"WHERE phone='" + this.getPhone() + "'");
+		
+		this.getAddress().delete();
+		
 	}
 }
