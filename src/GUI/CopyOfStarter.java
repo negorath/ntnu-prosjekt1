@@ -765,7 +765,15 @@ public class CopyOfStarter{
 		btnRedigerAdresse = new JButton("Rediger Adresse");
 		btnRedigerAdresse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				tabbedPane.setSelectedComponent(bestillingsInfo);
+				Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+				try{
+					User u = DatabaseConnector.getUser(o.getUserId());					
+					Address a = u.getAddress();
+					a = ChangeAddress.input(a);
+					
+				}catch(Exception ed){
+					System.out.println("fant ikke brukeren");
+				}
 				lblAddressNotFound.setVisible(false);
 				btnRedigerAdresse.setVisible(false);
 			}
