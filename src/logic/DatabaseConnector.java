@@ -199,6 +199,8 @@ public class DatabaseConnector{
     		String id = orders_rs.getString(5);
     		Order o =  new Order(user_id);
     		o.setId(id);
+    		o.setDue(due);
+    		o.setDelivered(delivered);
     		orders.addElement(o);
     	}while(orders_rs.next());
     	orders_rs.close();
@@ -210,7 +212,7 @@ public class DatabaseConnector{
     		con.setAutoCommit(true);
     		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
     		newOrder_rs.first();
-    		int id = Integer.parseInt(newOrder_rs.getString(1) + 1);
+    		int id = Integer.parseInt(newOrder_rs.getString(1)) + 1;
     		stmt.executeUpdate("INSERT into orders VALUES(" + id + ", '" + order.getUserId() + "', now(), NULL, NULL, '" + order.getProducts() + "')");
     		con.setAutoCommit(false);
     		newOrder_rs.close();

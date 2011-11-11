@@ -85,9 +85,9 @@ public class CopyOfStarter{
 	BufferedImage image;
 	private logic.User user;
 
-	private ArrayList<Integer> kvittering = new ArrayList<Integer>();
+	private ArrayList<String> kvittering = new ArrayList<String>();
 	JList list;
-	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), list_5 = new DefaultListModel();
+	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), listModelFinished = new DefaultListModel();
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
@@ -150,7 +150,7 @@ public class CopyOfStarter{
 	private JLabel pizzaInfo = new JLabel();
 	private JButton button_7;
 
-	private int[] temp;
+	private String[] temp;
 
 	/**
 	 * Launch the application.
@@ -504,9 +504,9 @@ public class CopyOfStarter{
 		btnNeste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				tabbedPane.setSelectedComponent(bestillingsInfo);
-				temp = new int[kvittering.size()];
-				for(int i = 0; i<kvittering.size(); i++){
-					temp[i] = kvittering.get(i);
+				temp = new String[model.size()];
+				for(int i = 0; i<model.size(); i++){
+					temp[i] = (String)model.getElementAt(i);
 				}
 				frame.repaint();
 			}
@@ -707,6 +707,29 @@ public class CopyOfStarter{
 		panel_2.setLayout(null);
 		//list_3 = new JList(list_2);
 		list_3 = new JList(listModelOrders);
+		list_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 2){
+					try{
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						DatabaseConnector.edit(o.getId());
+						getOrders();
+					}
+					catch(Exception e){
+						System.out.println("Noe rart skjedde når du trykket ferdig");
+					}
+				}
+				else if(arg0.getButton() == arg0.BUTTON3){
+					try{
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
+					}catch(Exception e){
+						System.out.println("Klarte ikke hente produkter fra order");
+					}
+				}
+			}
+		});
 		list_3.setBounds(6, 22, 229, 487);
 		panel_2.add(list_3);
 
@@ -716,16 +739,16 @@ public class CopyOfStarter{
 		Utgaende.add(panel_3);
 		panel_3.setLayout(null);
 
-		list_4 = new JList(list_5);
+		list_4 = new JList(listModelFinished);
 		list_4.setBounds(6, 22, 229, 487);
 		panel_3.add(list_4);
 
 		btnLevert = new JButton("Levert");
 		btnLevert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(list_5.getSize()>0){
+				if(listModelFinished.getSize()>0){
 					DatabaseConnector.deleteOrder((Order)m3.getElementAt((list_4.getSelectedIndex())));
-					list_5.remove(list_4.getSelectedIndex());
+					listModelFinished.removeElement(list_4.getSelectedValue());
 					getOrders();
 				}
 			}
@@ -775,13 +798,13 @@ public class CopyOfStarter{
 		btnLages.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					if(list_5.getSize()>0){
+					if(listModelFinished.getSize()>0){
 						m3.addElement(list_4.getSelectedValue());
-						list_5.remove(list_4.getSelectedIndex());
+						listModelFinished.remove(list_4.getSelectedIndex());
 					}
 				}
 				catch(Exception e){
-					System.out.println("Listen er tom");
+					System.out.println("Listen er tommelom");
 				}
 			}
 		});
@@ -793,19 +816,12 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-					String id = o.getUserId();
-					o.setDueDateToNow();
-					DatabaseConnector.edit(id);
-					if(listModelOrders.getSize()>0){
-						list_5.addElement(list_3.getSelectedValue());
-						listModelOrders.remove(list_3.getSelectedIndex());
-						m3.remove(list_3.getSelectedIndex());
-					}
+					DatabaseConnector.edit(o.getId());
+					getOrders();
 				}
 				catch(Exception e){
-					System.out.println("Listen er tom");
+					System.out.println("Noe rart skjedde når du trykket ferdig");
 				}
-				getOrders();
 			}
 		});
 		btnFerdig.setBounds(269, 474, 117, 29);
@@ -832,7 +848,6 @@ public class CopyOfStarter{
 				nummer.setText(nr);
 				try{
 					User user = (User)DatabaseConnector.getUser(nr);
-					System.out.println(user.getName());
 					navn.setText(user.getName());
 					gatenavn.setText(user.getAddress().getStreet());
 					husnummer.setText(String.valueOf(user.getAddress().getHouseNumber()));
@@ -1164,7 +1179,6 @@ public class CopyOfStarter{
 		bestilling.add(pizzaInfo);
 
 
-		//		JList list_3 = new JList();
 		for(int i = 0; i<users.size(); i++){
 			m1.addElement(users.get(i));
 		}
@@ -1191,7 +1205,6 @@ public class CopyOfStarter{
 		}
 		count = null;
 		model.addElement("1" +" x "+a); 
-		label.setText("x "+"1");
 		return a;
 	}
 	private String nummerKnappTrykk(String nr){
@@ -1210,7 +1223,6 @@ public class CopyOfStarter{
 			model.remove(model.getSize()-1);
 			model.addElement(count+" x " +sisteTrykteKnapp);			
 		}
-		label.setText("x " + count);
 
 		return null;
 	}
@@ -1224,8 +1236,7 @@ public class CopyOfStarter{
 				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			//			e.printStackTrace();
-			System.out.println("Finner ingen produkter i databasen");
+//			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
 	/**
@@ -1242,24 +1253,25 @@ public class CopyOfStarter{
 			}
 		}catch(Exception e){
 			e.printStackTrace();
-			System.out.println("Finner ingen kunder i databasen");
+//			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
 	public void getOrders(){
 		try{
 			m3 = DatabaseConnector.getOrders();
 			listModelOrders.clear();
+			listModelFinished.clear();
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);
-				if(o.getDue() == null){
-					listModelOrders.addElement(o.toString());					
+				if(o.getDue() != null){
+					listModelFinished.addElement(o.toString());
 				}
 				else{
-					list_5.addElement(o.toString());
+					listModelOrders.addElement(o.toString());					
 				}
 			}
 		}catch(Exception e){
-			System.out.println("Finner ingen orders i databasen");
+//			System.out.println("Finner ingen orders i databasen");
 		}
 	}
 	public String createReceipt(JList l){
