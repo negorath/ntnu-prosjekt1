@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import localData.ConfigSample;
+import localData.Config;
 
 
 /** Klassen som setter opp koblingen til databasen
@@ -29,16 +29,17 @@ public class DatabaseConnector{
 			con = getConnection();
 			stmt = con.createStatement();
 			con.setAutoCommit(true);
-			System.out.println("Connected to " + ConfigSample.DBName);
+			System.out.println("Connected to " + Config.DBName);
 		}catch(Exception e){
+			e.printStackTrace();
 			System.out.println("klarer ikke laste inn databasen");
 		}
     }
 	public static Connection getConnection() throws Exception {
 
-        String url = "jdbc:mysql:" + ConfigSample.DBHost + ":" + ConfigSample.DBport + "/" + ConfigSample.DBName;
-        String user = ConfigSample.DBUsername;
-        String password = ConfigSample.DBPassword;
+        String url = "jdbc:mysql:" + Config.DBHost + ":" + Config.DBport + "/" + Config.DBName;
+        String user = Config.DBUsername;
+        String password = Config.DBPassword;
         
         try{
         	Class.forName("com.mysql.jdbc.Driver");
@@ -104,9 +105,9 @@ public class DatabaseConnector{
      */
     public static DefaultListModel getUsers() throws Exception{
     	ResultSet address_rs = stmt.executeQuery("SELECT id, street, houseNumber, zipcode, city FROM addresses");
-    	address_rs.first();
-    	ArrayList<Address> addresses = new ArrayList<Address>();
     	DefaultListModel users = new DefaultListModel();
+    	address_rs.first();
+    	ArrayList<Address> addresses = new ArrayList<Address>();    	
     	do{
     		String id = address_rs.getString(1);
     		String street = address_rs.getString(2);
