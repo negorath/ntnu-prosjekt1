@@ -695,6 +695,18 @@ public class CopyOfStarter{
 
 		//--------------------------Utgaaende/chef-----------------------------------------
 
+		new Thread(){
+			public void run(){
+				getOrders();
+				frame.repaint();
+				try {
+					sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}.start();
+		
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
@@ -1328,7 +1340,6 @@ public class CopyOfStarter{
 
 		return temp;
 	}
-
 	public String createOrder(JList l){
 
 		int temp = list_2.getSize() + 1;
