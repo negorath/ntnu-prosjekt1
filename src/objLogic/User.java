@@ -3,9 +3,8 @@ package objLogic;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
-import logic.Address;
 import java.sql.Connection;
-import objLogic.*;
+
 
 public class User{
 	

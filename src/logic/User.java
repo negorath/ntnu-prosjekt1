@@ -1,9 +1,6 @@
 package logic;
 import java.sql.Connection;
 
-import com.mysql.jdbc.ResultSet;
-import com.mysql.jdbc.Statement;
-
 public class User{
 	
 	private String name;
