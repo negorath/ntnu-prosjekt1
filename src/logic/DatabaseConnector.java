@@ -325,5 +325,14 @@ public class DatabaseConnector{
     		System.out.println("Failed to edit order in database");
     	}
     }
+    public static void notFinished(String a){
+    	try {
+			con.setAutoCommit(true);
+			stmt.executeUpdate("UPDATE orders SET due = NULL WHERE id='" + a + "'");
+			con.setAutoCommit(false);
+		} catch (Exception e) {
+			System.out.println("Failed to set the order to 'not finished'");
+		}
+    }
 
 }

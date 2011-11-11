@@ -740,6 +740,29 @@ public class CopyOfStarter{
 		panel_3.setLayout(null);
 
 		list_4 = new JList(listModelFinished);
+		list_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 2){
+					try{
+						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						DatabaseConnector.notFinished(o.getId());
+						getOrders();
+					}
+					catch(Exception e){
+						System.out.println("Noe rart skjedde når du trykket ikke ferdig");
+					}
+				}
+				else if(arg0.getButton() == arg0.BUTTON3){
+					try{
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
+					}catch(Exception e){
+						System.out.println("Klarte ikke hente produkter fra order");
+					}
+				}
+			}
+		});
 		list_4.setBounds(6, 22, 229, 487);
 		panel_3.add(list_4);
 
@@ -799,8 +822,9 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					if(listModelFinished.getSize()>0){
-						m3.addElement(list_4.getSelectedValue());
-						listModelFinished.remove(list_4.getSelectedIndex());
+						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						DatabaseConnector.notFinished(o.getId());
+						getOrders();
 					}
 				}
 				catch(Exception e){
