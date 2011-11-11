@@ -64,8 +64,11 @@ import database.TemporaryUser;
 import java.awt.FlowLayout;
 import javax.swing.JScrollBar;
 import javax.swing.UIManager;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
-public class CopyOfStarter{
+public class CopyOfStarter extends Thread{
 	private TemporaryDatabase database = new TemporaryDatabase();
 	private JFrame frame;
 	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar;
@@ -152,6 +155,7 @@ public class CopyOfStarter{
 	private JButton button_7;
 
 	private String[] temp;
+	private JMenuBar menuBar;
 
 	/**
 	 * Launch the application.
@@ -209,6 +213,21 @@ public class CopyOfStarter{
 		bestilling.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
+		
+		new Thread(){
+			public void run(){
+				while(true){					
+					getProducts();
+					lagListe();
+					frame.repaint();
+					try {
+						sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
 
 		///////////////////meny knapper////////////////////////////
 
@@ -704,12 +723,14 @@ public class CopyOfStarter{
 
 		new Thread(){
 			public void run(){
-				getOrders();
-				frame.repaint();
-				try {
-					sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+				while(true){					
+					getOrders();
+					frame.repaint();
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}.start();
@@ -1230,6 +1251,15 @@ public class CopyOfStarter{
 
 		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
+		
+		menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu mnHelp = new JMenu("Help");
+		menuBar.add(mnHelp);
+		
+		JMenuItem mntmAbout = new JMenuItem("About");
+		mnHelp.add(mntmAbout);
 
 
 		for(int i = 0; i<users.size(); i++){
