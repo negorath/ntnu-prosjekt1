@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +35,7 @@ public class DatabaseConnector{
 			e.printStackTrace();
 			System.out.println("klarer ikke laste inn databasen");
 		}
+		Address.setConnection(con);
     }
 	public static Connection getConnection() throws Exception {
 
@@ -68,17 +70,21 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static User getUser(String phoneNumber) throws Exception{
-    	ResultSet getUser_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users WHERE phone='" + phoneNumber + "'");
-    	getUser_rs.first();
+    	String sql = "SELECT name, phone, address_id, id FROM users WHERE phone='" + phoneNumber + "'";
+    	System.out.println(sql);
+    	ResultSet getUser_rs = stmt.executeQuery(sql);
+    	if (getUser_rs.first() == false) {
+    		return null;
+    	}
     	String name = getUser_rs.getString(1);
     	String phone = getUser_rs.getString(2);
     	String address_id = getUser_rs.getString(3);
     	String id = getUser_rs.getString(4);
     	getUser_rs.close();
     	
-    	ResultSet getAddress_rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city FROM addresses WHERE id='"+address_id+"'");
+    	ResultSet getAddress_rs = stmt.executeQuery("SELECT street, houseNumber, zipcode, city, id FROM addresses WHERE id='"+address_id+"'");
     	getAddress_rs.first();
-    	Address address = new Address(getAddress_rs.getString(1), Integer.parseInt(getAddress_rs.getString(2)), getAddress_rs.getString(3), getAddress_rs.getString(4));
+    	Address address = new Address(getAddress_rs.getInt(5), getAddress_rs.getString(1), Integer.parseInt(getAddress_rs.getString(2)), getAddress_rs.getString(3), getAddress_rs.getString(4));
     	getAddress_rs.close();
     	User user = new User(name, phone, address);
     	user.setUserId(id);
@@ -109,13 +115,12 @@ public class DatabaseConnector{
     	address_rs.first();
     	ArrayList<Address> addresses = new ArrayList<Address>();    	
     	do{
-    		String id = address_rs.getString(1);
+    		int id = address_rs.getInt(1);
     		String street = address_rs.getString(2);
     		String houseNumber = address_rs.getString(3);
     		String zipcode = address_rs.getString(4);
     		String city = address_rs.getString(5);
-    		Address address = new Address(street, Integer.parseInt(houseNumber), zipcode, city);
-    		address.setId(Integer.parseInt(id));
+    		Address address = new Address(id, street, Integer.parseInt(houseNumber), zipcode, city);
     		addresses.add(address);
     	}while(address_rs.next());
     	address_rs.close();
@@ -188,13 +193,24 @@ public class DatabaseConnector{
     	con.setAutoCommit(false);
     }
     
-    public static DefaultListModel getOrders() throws Exception{
-    	ResultSet orders_rs = stmt.executeQuery("SELECT user_id, ordered, due, delivered, id FROM orders");
+    public static DefaultListModel getOrders(String action) throws Exception{
+    	String sql = "SELECT user_id, ordered, due, delivered, id FROM orders WHERE ";
+    	if (action.equals("due")) {
+    		sql += "due IS NULL ORDER BY ordered";
+    	} else if(action.equals("deliver")) {
+    		sql += "due IS NOT NULL AND delivered IS NULL ORDER BY due";
+    	} else if(action.equals("delivered")) {
+    		sql += "delivered IS NOT NULL ORDER BY delivered";
+    	} else {
+    		throw new Exception("Action must be one of due, deliver or delivered.");
+    	}
+    	
+    	ResultSet orders_rs = stmt.executeQuery(sql);
     	DefaultListModel orders = new DefaultListModel();
     	orders_rs.first();
     	do{
     		String user_id = orders_rs.getString(1);
-    		String ordered = orders_rs.getString(2);
+    		//String ordered = orders_rs.getString(2);
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
     		String id = orders_rs.getString(5);
@@ -211,12 +227,12 @@ public class DatabaseConnector{
     public static void newOrder(Order order){
     	try{
     		con.setAutoCommit(true);
-    		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
-    		newOrder_rs.first();
-    		int id = Integer.parseInt(newOrder_rs.getString(1)) + 1;
-    		stmt.executeUpdate("INSERT into orders VALUES(" + id + ", '" + order.getUserId() + "', now(), NULL, NULL, '" + order.getProducts() + "')");
+//    		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
+//    		newOrder_rs.first();
+//    		int id = Integer.parseInt(newOrder_rs.getString(1)) + 1;
+    		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "'");
     		con.setAutoCommit(false);
-    		newOrder_rs.close();
+//    		newOrder_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
     		e.printStackTrace();
@@ -302,6 +318,7 @@ public class DatabaseConnector{
     	}
     }
     
+    
     public static void edit(Product oldProduct, Product newProduct){
     	try{
     		ResultSet edit = stmt.executeQuery("SELECT id from products WHERE name='" + oldProduct.getName() + "' AND description='" + oldProduct.getDescription() + "' AND price='" + oldProduct.getPrice() + "'");
@@ -335,5 +352,20 @@ public class DatabaseConnector{
 			System.out.println("Failed to set the order to 'not finished'");
 		}
     }
+	public static Address getAddressFromUser(int user_id) {
+		try {
+			String sql = "SELECT a.id, a.street, a.houseNumber, a.zipcode, a.city FROM users AS u, addresses AS a WHERE u.address_id = a.id AND u.id = ?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setInt(1, user_id);
+			ResultSet rs = st.executeQuery();
+			rs.first();
+			Address ad = new Address(rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5));
+			rs.close();
+			return ad;
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

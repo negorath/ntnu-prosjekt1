@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
@@ -188,7 +189,13 @@ public class CopyOfStarter{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1000, 720);
+		
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		System.out.println(dim);
+		
+		int width = 1000, height = 720;
+		
+		frame.setBounds((dim.width-width)/2, (dim.height-height)/2, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -654,7 +661,7 @@ public class CopyOfStarter{
 						tmp = tmp.replace(' ' , '+');
 					}
 					try{
-						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());										
+						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 					}catch(Exception haha){
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
@@ -802,20 +809,21 @@ public class CopyOfStarter{
 			public void actionPerformed(ActionEvent e) {
 				Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 				try{
-					User u = DatabaseConnector.getUser(o.getUserId());					
-					Address a = u.getAddress();
+					Address a = DatabaseConnector.getAddressFromUser(Integer.parseInt(o.getUserId()));
 					a = ChangeAddress.input(a);
+					getUsers();
 					
 				}catch(Exception ed){
 					System.out.println("fant ikke brukeren");
+					ed.printStackTrace();
 				}
 				lblAddressNotFound.setVisible(false);
-				btnRedigerAdresse.setVisible(false);
+//				btnRedigerAdresse.setVisible(true);
 			}
 		});
 		btnRedigerAdresse.setBounds(269, 97, 137, 23);
 		Utgaende.add(btnRedigerAdresse);
-		btnRedigerAdresse.setVisible(false);
+//		btnRedigerAdresse.setVisible(true);
 
 		JButton btnVisKart = new JButton("Vis Kart");
 		btnVisKart.addActionListener(new ActionListener() {
@@ -864,6 +872,7 @@ public class CopyOfStarter{
 					getOrders();
 				}
 				catch(Exception e){
+					e.printStackTrace();
 					System.out.println("Noe rart skjedde når du trykket ferdig");
 				}
 			}
@@ -1302,17 +1311,19 @@ public class CopyOfStarter{
 	}
 	public void getOrders(){
 		try{
-			m3 = DatabaseConnector.getOrders();
 			listModelOrders.clear();
 			listModelFinished.clear();
+			
+			m3 = DatabaseConnector.getOrders("due");
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);
-				if(o.getDue() != null){
-					listModelFinished.addElement(o.toString());
-				}
-				else{
-					listModelOrders.addElement(o.toString());					
-				}
+				listModelOrders.addElement(o.toString());
+			}
+			
+			m3 = DatabaseConnector.getOrders("deliver");
+			for(int i = 0; i<m3.size(); i++){
+				Order o = (Order)m3.getElementAt(i);
+				listModelFinished.addElement(o.toString());					
 			}
 		}catch(Exception e){
 //			System.out.println("Finner ingen orders i databasen");

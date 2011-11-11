@@ -1,5 +1,7 @@
 package logic;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Address {
 	
@@ -20,20 +22,25 @@ public class Address {
 	 * @param city
 	 */
 	public Address(String street, int houseNumber, String zipcode,String city) {
-		super();
 		this.street = street;
 		this.houseNumber = houseNumber;
 		this.zipcode = zipcode;
 		this.city = city;
 	}
-
+	public Address(int id, String street, int houseNumber, String zipcode,String city) {
+		this.id = id;
+		this.street = street;
+		this.houseNumber = houseNumber;
+		this.zipcode = zipcode;
+		this.city = city;
+	}
 	private int id;
 	private String street;
 	private int houseNumber;
 	private char houseLetter;
 	private String zipcode;
 	private String city;
-	private String country;
+	private String country = "NO";
 	/**
 	 * @return the address
 	 */
@@ -116,4 +123,39 @@ public class Address {
 		this.id = id;
 	}
 	
+	public boolean save(){
+		
+		try {
+			Statement stmt = con.createStatement();
+//		If this object already exists in the database, update the values 
+			if (this.getId() != -1) {
+				String sql = "UPDATE addresses " +
+								"SET country='" + this.getCountry() + 
+								"', city='" + this.getCity() + 
+								"', zipcode='" + this.getZipcode() + 
+								"', street='" + this.getStreet() + 
+								"', houseNumber='" + this.getHouseNumber() +
+								"', houseLetter='" + this.getHouseLetter() + 
+								"' WHERE id = " + this.getId()
+								;
+				stmt.execute(sql);
+			}
+			else 	{  // Create the address
+				
+				stmt.execute(	"INSERT INTO addresses VALUES (" + 
+								this.getStreet() + ", " +
+								this.getHouseNumber() + ", " + 
+								this.getHouseLetter() + ", " + 
+								this.getZipcode() + ", " +
+								this.getCity() + ", " + 
+								this.getCountry() + ", )" );
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+
 }
