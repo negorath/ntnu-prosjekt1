@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class ChangeAddress {
 
@@ -22,7 +23,7 @@ public class ChangeAddress {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main1(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -43,10 +44,9 @@ public class ChangeAddress {
 	 * Initialize the contents of the frame.
 	 * @wbp.parser.entryPoint
 	 */
-	public static Address input(Address a) {
+	public static Address input(final Address a) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 248, 173);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		adresse = new JTextField(a.getStreet());
@@ -88,10 +88,39 @@ public class ChangeAddress {
 		JButton btnOk = new JButton("Ok");
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				a.setStreet(adresse.getText());
+				a.setHouseNumber(Integer.parseInt(nr.getText()));
+				a.setZipcode(postnr.getText());
+				a.setCity(sted.getText());
+				
+				if (!a.save()) {
+					// TODO: Vis feilmelding til brukeren
+					System.out.println("Klarte ikke Œ lagre");
+				}
+				
+				frame.dispose();
 			}
 		});
+		
+		
+		
 		btnOk.setBounds(7, 109, 89, 23);
 		frame.getContentPane().add(btnOk);
+		
+		JButton btnAvbryt = new JButton("Avbryt");
+		btnAvbryt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+			}
+		});
+		btnAvbryt.setBounds(103, 106, 117, 29);
+		frame.getContentPane().add(btnAvbryt);
+		
+		frame.setLocationRelativeTo(null);
+		frame.setResizable(false);
+		frame.setAlwaysOnTop(true);
+		frame.setTitle("Rediger adresse");
+		frame.setUndecorated(true);
 		frame.setVisible(true);
 		return a;
 	}
