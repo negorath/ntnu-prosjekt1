@@ -124,7 +124,6 @@ public class CopyOfStarter extends Thread{
 	private JList retter_list;
 	private JButton leggTil;
 	private JButton Slett;
-	private JButton Hent;
 	private JButton Rediger_1;
 	private JButton hent_retter;
 	private JButton rediger_retter;
@@ -195,7 +194,6 @@ public class CopyOfStarter extends Thread{
 		frame = new JFrame();
 		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		System.out.println(dim);
 		
 		int width = 1000, height = 720;
 		
@@ -833,7 +831,7 @@ public class CopyOfStarter extends Thread{
 					Address a = DatabaseConnector.getAddressFromUser(Integer.parseInt(o.getUserId()));
 					a = ChangeAddress.input(a);
 					getUsers();
-					
+					kunder_list.repaint();
 				}catch(Exception ed){
 					System.out.println("fant ikke brukeren");
 					ed.printStackTrace();
@@ -949,7 +947,7 @@ public class CopyOfStarter extends Thread{
 		kunder_list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(arg0.getClickCount() == 2){
+				if(arg0.getClickCount() == 1){
 					int selectedIndex = kunder_list.getSelectedIndex();
 					User user = (User)m1.getElementAt(selectedIndex);
 					redigerNavn.setText(user.getName());
@@ -971,10 +969,10 @@ public class CopyOfStarter extends Thread{
 				}
 			}
 		});
-		kunder_list.setBounds(734, 105, 213, 468);
+		kunder_list.setBounds(722, 64, 213, 468);
 		kunder.add(kunder_list);
 
-		leggTil = new JButton("Legg Til");
+		leggTil = new JButton("Opprett");
 		leggTil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
@@ -993,7 +991,7 @@ public class CopyOfStarter extends Thread{
 				}
 			}
 		});
-		leggTil.setBounds(734, 64, 100, 41);
+		leggTil.setBounds(722, 20, 100, 41);
 		kunder.add(leggTil);
 
 		Slett = new JButton("Slett");
@@ -1005,26 +1003,10 @@ public class CopyOfStarter extends Thread{
 				getUsers();
 			}
 		});
-		Slett.setBounds(847, 64, 100, 41);
+		Slett.setBounds(835, 20, 100, 41);
 		kunder.add(Slett);
 
-		Hent = new JButton("Hent");
-		Hent.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int selectedIndex = kunder_list.getSelectedIndex();
-				User user = (User)m1.getElementAt(selectedIndex);
-				redigerNavn.setText(user.getName());
-				redigerNummer.setText(user.getPhone());
-				redigerAdresse.setText(user.getAddress().getStreet());
-				redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-				redigerPostNummer.setText(user.getAddress().getZipcode());
-				redigerPostSted.setText(user.getAddress().getCity());
-			}
-		});
-		Hent.setBounds(734, 11, 100, 41);
-		kunder.add(Hent);
-
-		Rediger_1 = new JButton("Rediger");
+		Rediger_1 = new JButton("Lagre");
 		Rediger_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
@@ -1034,7 +1016,7 @@ public class CopyOfStarter extends Thread{
 				getUsers();
 			}
 		});
-		Rediger_1.setBounds(847, 11, 100, 41);
+		Rediger_1.setBounds(10, 416, 100, 41);
 		kunder.add(Rediger_1);
 
 		redigerNavn = new JTextField();
@@ -1072,6 +1054,24 @@ public class CopyOfStarter extends Thread{
 		redigerPostSted.setBounds(175, 326, 445, 60);
 		kunder.add(redigerPostSted);
 		redigerPostSted.setColumns(10);
+		
+		redigerPostSted.addKeyListener(new KeyAdapter() {
+			@SuppressWarnings("static-access")
+			@Override
+			public void keyPressed(KeyEvent arg) {
+				if (arg.getKeyCode() != arg.VK_ENTER) {
+					return;
+				}
+				
+				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
+				User newUser = new User(redigerNavn.getText(), redigerNummer.getText(), address);
+				User oldUser = (User)m1.getElementAt(kunder_list.getSelectedIndex());
+				DatabaseConnector.edit(oldUser, newUser);
+				getUsers();
+			}
+		});
+
+		
 
 		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
 		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -1114,7 +1114,7 @@ public class CopyOfStarter extends Thread{
 				redigerPostSted.setText("");
 			}
 		});
-		button_7.setBounds(10, 416, 110, 41);
+		button_7.setBounds(510, 416, 110, 41);
 		kunder.add(button_7);
 
 		JPanel retter = new JPanel();
