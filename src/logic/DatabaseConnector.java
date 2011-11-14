@@ -194,7 +194,7 @@ public class DatabaseConnector{
     }
     
     public static DefaultListModel getOrders(String action) throws Exception{
-    	String sql = "SELECT user_id, ordered, due, delivered, id FROM orders WHERE ";
+    	String sql = "SELECT user_id, ordered, due, delivered, id, products FROM orders WHERE ";
     	if (action.equals("due")) {
     		sql += "due IS NULL ORDER BY ordered";
     	} else if(action.equals("deliver")) {
@@ -214,7 +214,9 @@ public class DatabaseConnector{
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
     		String id = orders_rs.getString(5);
+    		String products = orders_rs.getString(6);
     		Order o =  new Order(user_id);
+    		o.createFoodList(products);
     		o.setId(id);
     		o.setDue(due);
     		o.setDelivered(delivered);

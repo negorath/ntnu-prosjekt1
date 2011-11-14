@@ -9,6 +9,8 @@ public class Order {
 	private String userId;
 	private String products;
 	private String ordered, due = "", delivered;
+	private int[] antall;
+	private String[] produkt;
 	/**
 	 * 
 	 * @param id
@@ -58,29 +60,33 @@ public class Order {
 				teller++;
 			}
 		}
+		teller++;
+		antall = new int[teller];
+		produkt = new String[teller];
 		teller = 0;
-		int[][] liste = new int[2][teller];
 		String element = "";
 		for(int i = 0; i<s.length(); i++){
 			if(s.charAt(i) != ':' && s.charAt(i) != '-'){
 				element += s.charAt(i);
 			}
 			else if(s.charAt(i) == ':'){
-				liste[0][teller] = Integer.parseInt(element);
+				antall[teller] = Integer.parseInt(element);
 				element = "";
 			}
 			else if(s.charAt(i) == '-'){
-				liste[1][teller] = Integer.parseInt(element);
+				produkt[teller] = element;
 				element = "";
 				teller++;
 			}
 		}
-//		for (int i = 0; i < liste.length; i++) {
-//			for (int j = 0; j < liste[0].length; j++) {
-//				System.out.println(liste[i][j]);
-//			}
-//			System.out.println();
-//		}
+		produkt[teller] = element;
+		for (int i = 0; i<antall.length; i++){
+			try{
+				System.out.println(antall[i] + " x " + DatabaseConnector.getProduct(produkt[i]).getName());				
+			}catch(Exception e){
+				System.out.println("klarer ikke hente produkter fra bestilling");
+			}
+		}
 	}
 	
 	/**
@@ -119,6 +125,16 @@ public class Order {
 	}
 	
 	public DefaultListModel getProductsAsDefaultListModel(){
-		return null;
+		DefaultListModel dlm = new DefaultListModel();
+		for(int i = 0; i<antall.length; i++){
+			try{
+				Product p = DatabaseConnector.getProduct(produkt[i]);
+				dlm.addElement(antall[i] + " x " + p.getName());								
+			}catch(Exception e){
+				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
+			}
+		}
+		
+		return dlm;
 	}
 }

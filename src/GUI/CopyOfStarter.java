@@ -95,6 +95,7 @@ public class CopyOfStarter extends Thread{
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
+	DefaultListModel showProductModel = new DefaultListModel();
 
 	private JTextField husnummer;
 	private JTextField textField_1;
@@ -145,6 +146,7 @@ public class CopyOfStarter extends Thread{
 	DefaultListModel listmodelUsers = new DefaultListModel();
 	DefaultListModel listModelProducts = new DefaultListModel();
 	DefaultListModel listModelOrders = new DefaultListModel();
+	private JList showProductList;
 
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
@@ -760,14 +762,22 @@ public class CopyOfStarter extends Thread{
 						System.out.println("Noe rart skjedde når du trykket ferdig");
 					}
 				}
-				else if(arg0.getButton() == arg0.BUTTON3){
+				else if(arg0.getClickCount() == 1){
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
+						showProductModel = o.getProductsAsDefaultListModel();
 					}catch(Exception e){
-						System.out.println("Klarte ikke hente produkter fra order");
+						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
+//				else if(arg0.getButton() == arg0.BUTTON3){
+//					try{
+//						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+//						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
+//					}catch(Exception e){
+//						System.out.println("Klarte ikke hente produkter fra order");
+//					}
+//				}
 			}
 		});
 		list_3.setBounds(6, 22, 229, 487);
@@ -821,7 +831,7 @@ public class CopyOfStarter extends Thread{
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
-		lblAddressNotFound.setBounds(259, 72, 222, 14);
+		lblAddressNotFound.setBounds(279, 72, 159, 14);
 		Utgaende.add(lblAddressNotFound);
 		lblAddressNotFound.setVisible(false);
 
@@ -842,7 +852,7 @@ public class CopyOfStarter extends Thread{
 //				btnRedigerAdresse.setVisible(true);
 			}
 		});
-		btnRedigerAdresse.setBounds(269, 97, 137, 23);
+		btnRedigerAdresse.setBounds(255, 97, 158, 23);
 		Utgaende.add(btnRedigerAdresse);
 //		btnRedigerAdresse.setVisible(true);
 
@@ -863,7 +873,7 @@ public class CopyOfStarter extends Thread{
 		});
 		btnVisKart.setForeground(new Color(47, 79, 79));
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnVisKart.setBounds(269, 18, 137, 50);
+		btnVisKart.setBounds(255, 18, 158, 50);
 		Utgaende.add(btnVisKart);
 
 		JButton btnLages = new JButton("Ikke ferdig");
@@ -881,7 +891,7 @@ public class CopyOfStarter extends Thread{
 				}
 			}
 		});
-		btnLages.setBounds(269, 521, 117, 29);
+		btnLages.setBounds(255, 521, 158, 29);
 		Utgaende.add(btnLages);
 
 		JButton btnFerdig = new JButton("Ferdig");
@@ -898,8 +908,12 @@ public class CopyOfStarter extends Thread{
 				}
 			}
 		});
-		btnFerdig.setBounds(269, 474, 117, 29);
+		btnFerdig.setBounds(255, 474, 159, 29);
 		Utgaende.add(btnFerdig);
+		
+		showProductList = new JList(showProductModel);
+		showProductList.setBounds(259, 151, 151, 297);
+		Utgaende.add(showProductList);
 
 
 
