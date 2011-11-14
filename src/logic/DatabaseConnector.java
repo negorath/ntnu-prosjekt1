@@ -151,11 +151,13 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static Product getProduct(String id) throws Exception{
-    	rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE id='"+id+"'");
-    	String name = rs.getString(1);
-    	String description = rs.getString(2);
-    	String price = rs.getString(3);
-    	return new Product(name, description, Double.parseDouble(price));
+    	ResultSet getP_rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE id='"+id+"'");
+    	getP_rs.first();
+    	String name = getP_rs.getString(1);
+    	String description = getP_rs.getString(2);
+    	String price = getP_rs.getString(3);
+    	Product p = new Product(name, description, Double.parseDouble(price));
+    	return p;
     }
     /**
      * 

@@ -80,13 +80,6 @@ public class Order {
 			}
 		}
 		produkt[teller] = element;
-		for (int i = 0; i<antall.length; i++){
-			try{
-				System.out.println(antall[i] + " x " + DatabaseConnector.getProduct(produkt[i]).getName());				
-			}catch(Exception e){
-				System.out.println("klarer ikke hente produkter fra bestilling");
-			}
-		}
 	}
 	
 	/**
@@ -128,8 +121,8 @@ public class Order {
 		DefaultListModel dlm = new DefaultListModel();
 		for(int i = 0; i<antall.length; i++){
 			try{
-				Product p = DatabaseConnector.getProduct(produkt[i]);
-				dlm.addElement(antall[i] + " x " + p.getName());								
+				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
+				dlm.addElement(antall[i] + " x " + navn);							
 			}catch(Exception e){
 				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
 			}

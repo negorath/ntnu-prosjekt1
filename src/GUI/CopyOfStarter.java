@@ -724,15 +724,15 @@ public class CopyOfStarter extends Thread{
 		new Thread(){
 			public void run(){
 				while(true){					
-					getUsers();
-					getProducts();
-					getOrders();
-					frame.repaint();
 					try {
 						sleep(10000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					getUsers();
+					getProducts();
+					getOrders();
+					frame.repaint();
 				}
 			}
 		}.start();
@@ -752,7 +752,15 @@ public class CopyOfStarter extends Thread{
 		list_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(arg0.getClickCount() == 2){
+				if(arg0.getClickCount() == 1){
+					try{
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						showProductModel = o.getProductsAsDefaultListModel();
+					}catch(Exception e){
+						System.out.println("Fant ingen produkter i bestillingen");
+					}
+				}
+				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 						DatabaseConnector.edit(o.getId());
@@ -760,14 +768,6 @@ public class CopyOfStarter extends Thread{
 					}
 					catch(Exception e){
 						System.out.println("Noe rart skjedde når du trykket ferdig");
-					}
-				}
-				else if(arg0.getClickCount() == 1){
-					try{
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-						showProductModel = o.getProductsAsDefaultListModel();
-					}catch(Exception e){
-						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 //				else if(arg0.getButton() == arg0.BUTTON3){
