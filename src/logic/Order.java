@@ -126,8 +126,7 @@ public class Order {
 			}catch(Exception e){
 				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
 			}
-		}
-		
+		}		
 		return dlm;
 	}
 }

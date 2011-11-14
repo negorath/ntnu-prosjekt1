@@ -747,7 +747,6 @@ public class CopyOfStarter extends Thread{
 		panel_2.setBounds(4, 35, 241, 515);
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
-		//list_3 = new JList(list_2);
 		list_3 = new JList(listModelOrders);
 		list_3.addMouseListener(new MouseAdapter() {
 			@Override
@@ -770,14 +769,6 @@ public class CopyOfStarter extends Thread{
 						System.out.println("Noe rart skjedde når du trykket ferdig");
 					}
 				}
-//				else if(arg0.getButton() == arg0.BUTTON3){
-//					try{
-//						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-//						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
-//					}catch(Exception e){
-//						System.out.println("Klarte ikke hente produkter fra order");
-//					}
-//				}
 			}
 		});
 		list_3.setBounds(6, 22, 229, 487);
@@ -860,12 +851,16 @@ public class CopyOfStarter extends Thread{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					User u = (User)m3.getElementAt(list_3.getSelectedIndex());
-					String url = u.getAddress().getStreet() + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
+					User u = (User)m1.getElementAt(list_3.getSelectedIndex());
+					String tmp = u.getAddress().getStreet();
+					if (u.getAddress().getStreet().contains(" ")) {
+						tmp = tmp.replace(' ' , '+');
+					}
+					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
 					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);					
 				}catch(Exception e){
-					//					e.printStackTrace();
+					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
@@ -911,6 +906,7 @@ public class CopyOfStarter extends Thread{
 		btnFerdig.setBounds(255, 474, 159, 29);
 		Utgaende.add(btnFerdig);
 		
+		showProductModel = new DefaultListModel();
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
 		Utgaende.add(showProductList);
