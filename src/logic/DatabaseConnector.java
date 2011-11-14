@@ -71,7 +71,6 @@ public class DatabaseConnector{
      */
     public static User getUser(String phoneNumber) throws Exception{
     	String sql = "SELECT name, phone, address_id, id FROM users WHERE phone='" + phoneNumber + "'";
-    	System.out.println(sql);
     	ResultSet getUser_rs = stmt.executeQuery(sql);
     	if (getUser_rs.first() == false) {
     		return null;

@@ -122,7 +122,8 @@ public class Order {
 		for(int i = 0; i<antall.length; i++){
 			try{
 				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
-				dlm.addElement(antall[i] + " x " + navn);							
+//				dlm.addValue(antall[i] + " x " + navn);	
+				dlm.add(i, antall[i] + " x " + navn);
 			}catch(Exception e){
 				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
 			}

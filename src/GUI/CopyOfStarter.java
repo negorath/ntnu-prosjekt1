@@ -3,76 +3,49 @@ package GUI;
 import java.awt.EventQueue;
 import logic.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
-import javax.swing.JToggleButton;
-import javax.swing.JEditorPane;
-import javax.swing.ListModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.plaf.basic.BasicTreeUI.SelectionModelPropertyChangeHandler;
-import javax.swing.tree.DefaultTreeCellEditor.EditorContainer;
-import javax.swing.JScrollPane;
+
 
 import logic.Address;
-import javax.swing.JTextArea;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.net.URL;
 import java.util.ArrayList;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
 import java.awt.image.BufferedImage;
 
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.VetoableChangeListener;
 import javax.swing.JList;
-import javax.swing.event.ListSelectionListener;
 
 import Map.MapTesting;
 
-import database.TemporaryUser;
-import java.awt.FlowLayout;
-import javax.swing.JScrollBar;
-import javax.swing.UIManager;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 public class CopyOfStarter extends Thread{
-	private TemporaryDatabase database = new TemporaryDatabase();
 	private JFrame frame;
 	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar;
-	private JTextField husNr, husBokstav, land;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
@@ -81,13 +54,11 @@ public class CopyOfStarter extends Thread{
 	private JRadioButton rdbtnKort, rdbtnKontant;
 	private JButton toggleButton, toggleButton_1, toggleButton_2, toggleButton_3, toggleButton_4, toggleButton_5, toggleButton_6, toggleButton_7;
 	private JButton toggleButton_8, tglbtnCola, tglbtnFanta, tglbtnUrge, tglbtnSprite, tglbtnFarris, tglbtnLol;
-	private StringBuilder pizzaStreng = new StringBuilder();
 	private JButton button, button_1, button_2, button_3, button_4, button_5, button_6, btnNewButton_1, btnNewButton, btnNeste;
 	private JButton btnIncall;
 	private JCheckBox chckbxLevering; 
 	JList list_1;
 	BufferedImage image;
-	private logic.User user;
 
 	private ArrayList<String> kvittering = new ArrayList<String>();
 	JList list;
@@ -95,7 +66,6 @@ public class CopyOfStarter extends Thread{
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
-	DefaultListModel showProductModel = new DefaultListModel();
 
 	private JTextField husnummer;
 	private JTextField textField_1;
@@ -103,7 +73,6 @@ public class CopyOfStarter extends Thread{
 	private JLabel lblPoststed;
 	private JLabel lblKommentar;
 	private JLabel lblRingendeNummer;
-	private JButton btnLeggTil_1;
 	private JButton btnFjernElement;
 	private JPanel Utgaende;
 	private JList list_3;
@@ -113,16 +82,14 @@ public class CopyOfStarter extends Thread{
 	private String sisteTrykteKnapp;
 	private MapTesting map = new MapTesting();
 	private JButton btnRedigerAdresse;
-	private ArrayList<Product> products = new ArrayList<Product>();
 	private ArrayList<User> users = new ArrayList<User>();
-	private ArrayList<Address> addresses = new ArrayList<Address>();
 
-	private JTextField textField_2;
 	private JLabel lblAddressNotFound;
 	DatabaseConnector con = new DatabaseConnector();
 	private JPanel kunder;
 	private JList kunder_list;
 	private JList retter_list;
+	private JList showProductList;
 	private JButton leggTil;
 	private JButton Slett;
 	private JButton Rediger_1;
@@ -146,7 +113,7 @@ public class CopyOfStarter extends Thread{
 	DefaultListModel listmodelUsers = new DefaultListModel();
 	DefaultListModel listModelProducts = new DefaultListModel();
 	DefaultListModel listModelOrders = new DefaultListModel();
-	private JList showProductList;
+	DefaultListModel showProductModel = new DefaultListModel();
 
 	ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
@@ -755,6 +722,7 @@ public class CopyOfStarter extends Thread{
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 						showProductModel = o.getProductsAsDefaultListModel();
+						System.out.println(showProductModel.toString());
 					}catch(Exception e){
 						System.out.println("Fant ingen produkter i bestillingen");
 					}
@@ -840,12 +808,10 @@ public class CopyOfStarter extends Thread{
 					ed.printStackTrace();
 				}
 				lblAddressNotFound.setVisible(false);
-//				btnRedigerAdresse.setVisible(true);
 			}
 		});
 		btnRedigerAdresse.setBounds(255, 97, 158, 23);
 		Utgaende.add(btnRedigerAdresse);
-//		btnRedigerAdresse.setVisible(true);
 
 		JButton btnVisKart = new JButton("Vis Kart");
 		btnVisKart.addActionListener(new ActionListener() {
@@ -906,7 +872,6 @@ public class CopyOfStarter extends Thread{
 		btnFerdig.setBounds(255, 474, 159, 29);
 		Utgaende.add(btnFerdig);
 		
-		showProductModel = new DefaultListModel();
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
 		Utgaende.add(showProductList);
@@ -1274,9 +1239,9 @@ public class CopyOfStarter extends Thread{
 		mnHelp.add(mntmAbout);
 
 
-		for(int i = 0; i<users.size(); i++){
-			m1.addElement(users.get(i));
-		}
+//		for(int i = 0; i<users.size(); i++){
+//			m1.addElement(users.get(i));
+//		}
 	}
 	public void lagListe(){
 		try{
