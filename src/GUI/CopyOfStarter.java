@@ -648,6 +648,7 @@ public class CopyOfStarter extends Thread{
 					}
 					try{
 						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
+						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
@@ -718,25 +719,27 @@ public class CopyOfStarter extends Thread{
 		list_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				if(arg0.getClickCount() == 1){
-					try{
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-						showProductModel = o.getProductsAsDefaultListModel();
-//						showProductList.clearSelection();
-						showProductList.setModel(showProductModel);
-						System.out.println(showProductModel.toString());
-					}catch(Exception e){
-						System.out.println("Fant ingen produkter i bestillingen");
-					}
-				}
-				else if(arg0.getClickCount() == 2){
+				if(arg0.getClickCount() == 2){
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 						DatabaseConnector.edit(o.getId());
 						getOrders();
 					}
 					catch(Exception e){
-						System.out.println("Noe rart skjedde når du trykket ferdig");
+//						System.out.println("Noe rart skjedde når du trykket ferdig");
+					}
+				}
+				else if(arg0.getClickCount() == 1){
+					try{
+						int selected = list_3.getSelectedIndex();
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						showProductModel = o.getProductsAsDefaultListModel();
+						showProductList.setModel(showProductModel);
+						getOrders();
+						list_3.setSelectedIndex(selected);
+						
+					}catch(Exception e){
+//						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 			}
@@ -761,15 +764,19 @@ public class CopyOfStarter extends Thread{
 						getOrders();
 					}
 					catch(Exception e){
-						System.out.println("Noe rart skjedde når du trykket ikke ferdig");
+//						System.out.println("Noe rart skjedde når du trykket ikke ferdig");
 					}
 				}
-				else if(arg0.getButton() == arg0.BUTTON3){
+				else if(arg0.getClickCount() == 1){
 					try{
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-						ShowProductsFromOrder.get(o.getProductsAsDefaultListModel());
+						int selected = list_4.getSelectedIndex();
+						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						showProductModel = o.getProductsAsDefaultListModel();
+						showProductList.setModel(showProductModel);
+						getOrders();
+						list_4.setSelectedIndex(selected);
 					}catch(Exception e){
-						System.out.println("Klarte ikke hente produkter fra order");
+//						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 			}
@@ -792,7 +799,7 @@ public class CopyOfStarter extends Thread{
 
 		lblAddressNotFound = new JLabel("Kunne ikke finne adresse");
 		lblAddressNotFound.setForeground(new Color(255, 0, 0));
-		lblAddressNotFound.setBounds(279, 72, 159, 14);
+		lblAddressNotFound.setBounds(265, 72, 159, 14);
 		Utgaende.add(lblAddressNotFound);
 		lblAddressNotFound.setVisible(false);
 
@@ -807,7 +814,7 @@ public class CopyOfStarter extends Thread{
 					kunder_list.repaint();
 				}catch(Exception ed){
 					System.out.println("fant ikke brukeren");
-					ed.printStackTrace();
+//					ed.printStackTrace();
 				}
 				lblAddressNotFound.setVisible(false);
 			}
@@ -819,16 +826,23 @@ public class CopyOfStarter extends Thread{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					User u = (User)m1.getElementAt(list_3.getSelectedIndex());
+					User u = null;
+					if(list_3.getSelectedIndex() != -1){
+						u = (User)m1.getElementAt(list_3.getSelectedIndex());						
+					}
+					else if(list_4.getSelectedIndex() != -1){
+						u = (User)m1.getElementAt(list_4.getSelectedIndex());												
+					}
 					String tmp = u.getAddress().getStreet();
 					if (u.getAddress().getStreet().contains(" ")) {
 						tmp = tmp.replace(' ' , '+');
 					}
 					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);					
+					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);	
+					lblAddressNotFound.setVisible(false);
 				}catch(Exception e){
-					e.printStackTrace();
+//					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
@@ -839,40 +853,40 @@ public class CopyOfStarter extends Thread{
 		btnVisKart.setBounds(255, 18, 158, 50);
 		Utgaende.add(btnVisKart);
 
-		JButton btnLages = new JButton("Ikke ferdig");
-		btnLages.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					if(listModelFinished.getSize()>0){
-						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
-						DatabaseConnector.notFinished(o.getId());
-						getOrders();
-					}
-				}
-				catch(Exception e){
-					System.out.println("Listen er tommelom");
-				}
-			}
-		});
-		btnLages.setBounds(255, 521, 158, 29);
-		Utgaende.add(btnLages);
+//		JButton btnLages = new JButton("Ikke ferdig");
+//		btnLages.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				try{
+//					if(listModelFinished.getSize()>0){
+//						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+//						DatabaseConnector.notFinished(o.getId());
+//						getOrders();
+//					}
+//				}
+//				catch(Exception e){
+//					System.out.println("Listen er tommelom");
+//				}
+//			}
+//		});
+//		btnLages.setBounds(255, 521, 158, 29);
+//		Utgaende.add(btnLages);
 
-		JButton btnFerdig = new JButton("Ferdig");
-		btnFerdig.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				try{
-					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-					DatabaseConnector.edit(o.getId());
-					getOrders();
-				}
-				catch(Exception e){
-					e.printStackTrace();
-					System.out.println("Noe rart skjedde når du trykket ferdig");
-				}
-			}
-		});
-		btnFerdig.setBounds(255, 474, 159, 29);
-		Utgaende.add(btnFerdig);
+//		JButton btnFerdig = new JButton("Ferdig");
+//		btnFerdig.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				try{
+//					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+//					DatabaseConnector.edit(o.getId());
+//					getOrders();
+//				}
+//				catch(Exception e){
+//					e.printStackTrace();
+//					System.out.println("Noe rart skjedde når du trykket ferdig");
+//				}
+//			}
+//		});
+//		btnFerdig.setBounds(255, 474, 159, 29);
+//		Utgaende.add(btnFerdig);
 		
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
