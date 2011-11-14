@@ -722,6 +722,8 @@ public class CopyOfStarter extends Thread{
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 						showProductModel = o.getProductsAsDefaultListModel();
+//						showProductList.clearSelection();
+						showProductList.setModel(showProductModel);
 						System.out.println(showProductModel.toString());
 					}catch(Exception e){
 						System.out.println("Fant ingen produkter i bestillingen");
