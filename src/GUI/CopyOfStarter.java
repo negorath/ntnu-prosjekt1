@@ -212,20 +212,20 @@ public class CopyOfStarter extends Thread{
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
-		new Thread(){
-			public void run(){
-				while(true){					
-					getProducts();
-					lagListe();
-					frame.repaint();
-					try {
-						sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}.start();
+//		new Thread(){
+//			public void run(){
+//				while(true){					
+//					getProducts();
+//					lagListe();
+//					frame.repaint();
+//					try {
+//						sleep(10000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			}
+//		}.start();
 
 		///////////////////meny knapper////////////////////////////
 
@@ -722,10 +722,12 @@ public class CopyOfStarter extends Thread{
 		new Thread(){
 			public void run(){
 				while(true){					
+					getUsers();
+					getProducts();
 					getOrders();
 					frame.repaint();
 					try {
-						sleep(1000);
+						sleep(10000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
