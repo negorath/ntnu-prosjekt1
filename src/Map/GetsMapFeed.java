@@ -1,7 +1,0 @@
-package Map;
-
-
-
-class GetsMapFeed{
-	
-}
