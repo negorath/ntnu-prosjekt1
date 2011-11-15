@@ -71,6 +71,7 @@ public class Start extends Thread{
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
+	DefaultListModel m4 = new DefaultListModel();
 
 	private JButton button_9;
 	private String hvorMange = "";
@@ -102,7 +103,6 @@ public class Start extends Thread{
 	private JButton leggTil;
 	private JButton Slett;
 	private JButton Rediger_1;
-	private JButton hent_retter;
 	private JButton rediger_retter;
 	private JButton leggTil_retter;
 	private JButton leggTil_retter_1;
@@ -690,7 +690,7 @@ public class Start extends Thread{
 						tmp = tmp.replace(' ' , '+');
 					}
 					try{
-						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
+						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
 						lblAddressNotFound.setVisible(true);
@@ -776,7 +776,9 @@ public class Start extends Thread{
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
-						list_3.setSelectedIndex(selected);
+						if(listModelOrders.size() > 0){
+							list_3.setSelectedIndex(selected);							
+						}
 						
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
@@ -820,7 +822,9 @@ public class Start extends Thread{
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
-						list_4.setSelectedIndex(selected);
+						if(listModelFinished.size() > 0){
+							list_4.setSelectedIndex(selected);							
+						}
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
@@ -895,27 +899,58 @@ public class Start extends Thread{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					User u = null;
-					if(!focusOnFinishedOrders){
-//						for(int i = 0; i<m1.getSize(); i++){
-//							if(m1.getElementAt(i) == )
-//							
-//						}
-						u = (User)m1.getElementAt(list_3.getSelectedIndex());	
+					Order o;
+					if(focusOnFinishedOrders){
+						o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());
 					}
-					else{
-						u = (User)m1.getElementAt(list_4.getSelectedIndex());												
+					else{	
+						o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
 					}
+					String telefonNummer = DatabaseConnector.getPhoneByUserId(Integer.parseInt(o.getUserId()));
+					User u = DatabaseConnector.getUser(telefonNummer);
+					
 					String tmp = u.getAddress().getStreet();
-					if (u.getAddress().getStreet().contains(" ")) {
-						tmp = tmp.replace(' ' , '+');
+					String tmp2 = u.getAddress().getCity();
+					if (u.getAddress().getStreet().contains(" ") ||
+						u.getAddress().getStreet().contains("æ") ||
+						u.getAddress().getStreet().contains("Æ") ||
+						u.getAddress().getStreet().contains("ø") ||
+						u.getAddress().getStreet().contains("Ø") ||
+						u.getAddress().getStreet().contains("å") ||
+						u.getAddress().getStreet().contains("Å")
+						) {
+							tmp = tmp.replace(' ' , '+');
+							tmp = tmp.replace('æ' , 'e');
+							tmp = tmp.replace('ø' , 'o');
+							tmp = tmp.replace('å' , 'a');
+							tmp = tmp.replace('Æ' , 'e');
+							tmp = tmp.replace('Ø' , 'o');
+							tmp = tmp.replace('Å' , 'a');
 					}
-					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
+					if (u.getAddress().getCity().contains(" ") ||
+							u.getAddress().getCity().contains("æ") ||
+							u.getAddress().getCity().contains("Æ") ||
+							u.getAddress().getCity().contains("ø") ||
+							u.getAddress().getCity().contains("Ø") ||
+							u.getAddress().getCity().contains("å") ||
+							u.getAddress().getCity().contains("Å")
+							) {
+								tmp2 = tmp.replace(' ' , '+');
+								tmp2 = tmp.replace('æ' , 'e');
+								tmp2 = tmp.replace('ø' , 'o');
+								tmp2 = tmp.replace('å' , 'a');
+								tmp2 = tmp.replace('Æ' , 'e');
+								tmp2 = tmp.replace('Ø' , 'o');
+								tmp2 = tmp.replace('Å' , 'a');
+						}
+					String constant = "http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=";
+					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + tmp2 + ",norway";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);	
+					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
+					System.out.println(constant + url);
 				}catch(Exception e){
-//					e.printStackTrace();
+					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
@@ -939,6 +974,7 @@ public class Start extends Thread{
 		
 		kvitering = new JEditorPane();
 		kvitering.setBounds(6, 22, 288, 487);
+		kvitering.setEditable(false);
 		panel_4.add(kvitering);
 
 
@@ -999,15 +1035,28 @@ public class Start extends Thread{
 					redigerPostNummer.setText(user.getAddress().getZipcode());
 					redigerPostSted.setText(user.getAddress().getCity());
 				}
-				else if(arg0.getButton() == arg0.BUTTON3){
-					try{
-						int id = kunder_list.getSelectedIndex();
-						User user = (User)m1.getElementAt(id);
-						DatabaseConnector.deleteUser(user);
-						getUsers();						
-					}catch(Exception e){
-						System.out.println("Klarte ikke slette bruker");
-					}
+//				else if(arg0.getButton() == arg0.BUTTON3){
+//					try{
+//						int id = kunder_list.getSelectedIndex();
+//						User user = (User)m1.getElementAt(id);
+//						DatabaseConnector.deleteUser(user);
+//						getUsers();						
+//					}catch(Exception e){
+//						System.out.println("Klarte ikke slette bruker");
+//					}
+//				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					int selectedIndex = kunder_list.getSelectedIndex();
+					User user = (User)m1.getElementAt(selectedIndex);
+					redigerNavn.setText(user.getName());
+					redigerNummer.setText(user.getPhone());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostNummer.setText(user.getAddress().getZipcode());
+					redigerPostSted.setText(user.getAddress().getCity());
 				}
 			}
 		});
@@ -1058,7 +1107,7 @@ public class Start extends Thread{
 				getUsers();
 			}
 		});
-		Rediger_1.setBounds(10, 416, 100, 41);
+		Rediger_1.setBounds(10, 420, 100, 41);
 		kunder.add(Rediger_1);
 
 		redigerNavn = new JTextField();
@@ -1156,7 +1205,7 @@ public class Start extends Thread{
 				redigerPostSted.setText("");
 			}
 		});
-		button_7.setBounds(510, 416, 110, 41);
+		button_7.setBounds(510, 420, 110, 41);
 		kunder.add(button_7);
 
 		JPanel retter = new JPanel();
@@ -1167,38 +1216,35 @@ public class Start extends Thread{
 		retter_list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2){
+				if(e.getClickCount() == 1){
 					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
 				}
-				else if(e.getButton() == e.BUTTON3){
-					try{
-						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-						getProducts();						
-					}catch(Exception hehe){
-						System.out.println("Klarte ikke slette produkt");
-					}
+//				else if(e.getButton() == e.BUTTON3){
+//					try{
+//						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+//						getProducts();						
+//					}catch(Exception hehe){
+//						System.out.println("Klarte ikke slette produkt");
+//					}
+//				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.getClickCount() == 1){
+					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					retterNavn.setText(product.getName());
+					retterPris.setText(String.valueOf(product.getPrice()));
+					retterKommentar.setText(product.getDescription());
 				}
 			}
 		});
-		retter_list.setBounds(734, 105, 213, 468);
+		retter_list.setBounds(722, 64, 213, 468);
 		retter.add(retter_list);
 
-		hent_retter = new JButton("Hent");
-		hent_retter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-				retterNavn.setText(product.getName());
-				retterPris.setText(String.valueOf(product.getPrice()));
-				retterKommentar.setText(product.getDescription());
-			}
-		});
-		hent_retter.setBounds(734, 11, 100, 41);
-		retter.add(hent_retter);
-
-		rediger_retter = new JButton("Rediger");
+		rediger_retter = new JButton("Lagre");
 		rediger_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
@@ -1207,10 +1253,10 @@ public class Start extends Thread{
 				getProducts();
 			}
 		});
-		rediger_retter.setBounds(847, 11, 100, 41);
+		rediger_retter.setBounds(10, 420, 100, 41);
 		retter.add(rediger_retter);
 
-		leggTil_retter = new JButton("Legg Til");
+		leggTil_retter = new JButton("Opprett");
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -1225,7 +1271,7 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil_retter.setBounds(734, 64, 100, 41);
+		leggTil_retter.setBounds(722, 20, 100, 41);
 		retter.add(leggTil_retter);
 
 		leggTil_retter_1 = new JButton("Slett");
@@ -1235,7 +1281,7 @@ public class Start extends Thread{
 				getProducts();
 			}
 		});
-		leggTil_retter_1.setBounds(847, 64, 100, 41);
+		leggTil_retter_1.setBounds(835, 20, 100, 41);
 		retter.add(leggTil_retter_1);
 
 		retterNavn = new JTextField();
@@ -1251,6 +1297,23 @@ public class Start extends Thread{
 		retter.add(retterPris);
 
 		retterKommentar = new JTextField();
+		retterKommentar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == arg0.VK_ENTER){
+					try{
+						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+						DatabaseConnector.newProduct(product);
+						getProducts();
+						retterNavn.setText("");
+						retterKommentar.setText("");
+						retterPris.setText("");
+					}catch(Exception e){
+						System.out.println("Failed to add new User into database");
+					}					
+				}
+			}
+		});
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
 		retterKommentar.setColumns(10);
 		retterKommentar.setBounds(10, 199, 408, 202);
@@ -1279,7 +1342,7 @@ public class Start extends Thread{
 				retterPris.setText("");
 			}
 		});
-		btnTmFelter.setBounds(10, 412, 110, 41);
+		btnTmFelter.setBounds(510, 420, 110, 41);
 		retter.add(btnTmFelter);
 
 
@@ -1410,7 +1473,7 @@ public class Start extends Thread{
 				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 //			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
@@ -1418,23 +1481,27 @@ public class Start extends Thread{
 		try{
 			listModelOrders.clear();
 			listModelFinished.clear();
-			
 			//ordre som ikke er påbegynt
 			m3 = DatabaseConnector.getOrders("due");
-			for(int i = 0; i<m3.size(); i++){
-				Order o = (Order)m3.getElementAt(i);
-				listModelOrders.addElement(o.toString());
+			if(m3 != null){
+				for(int i = 0; i<m3.size(); i++){
+					Order o = (Order)m3.getElementAt(i);
+					listModelOrders.addElement(o.toString());
+				}				
+				list_3.setModel(listModelOrders);
 			}
 			//ordre som er påbegynt men enda ikke levert
-			m3 = DatabaseConnector.getOrders("deliver");
-			for(int i = 0; i<m3.size(); i++){
-				Order o = (Order)m3.getElementAt(i);
-				listModelFinished.addElement(o.toString());					
+			m4 = DatabaseConnector.getOrders("deliver");
+			if(m3 != null){
+				for(int i = 0; i<m4.size(); i++){
+					Order o = (Order)m4.getElementAt(i);
+					listModelFinished.addElement(o.toString());					
+				}				
+				list_4.setModel(listModelFinished);
 			}
-			list_3.setModel(listModelOrders);
-			list_4.setModel(listModelFinished);
 		}catch(Exception e){
 //			System.out.println("Finner ingen orders i databasen");
+//			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){

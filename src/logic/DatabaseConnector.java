@@ -95,6 +95,14 @@ public class DatabaseConnector{
     	getUser_rs.close();
     	return s;
     }
+    
+    public static String getPhoneByUserId(int id) throws Exception{
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT phone FROM users WHERE id='" + id + "'");
+    	getUser_rs.first();
+    	String s = getUser_rs.getString(1);
+    	getUser_rs.close();
+    	return s;
+    }
 
     /**
      * 
@@ -201,7 +209,9 @@ public class DatabaseConnector{
     	
     	ResultSet orders_rs = stmt.executeQuery(sql);
     	DefaultListModel orders = new DefaultListModel();
-    	orders_rs.first();
+    	if(orders_rs.first() == false){
+    		return orders;
+    	}
     	do{
     		String user_id = orders_rs.getString(1);
     		String ordered = orders_rs.getString(2);
