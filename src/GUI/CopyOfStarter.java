@@ -693,22 +693,22 @@ public class CopyOfStarter extends Thread{
 
 		//--------------------------Utgaaende/chef-----------------------------------------
 
-		new Thread(){
-			public void run(){
-				while(true){					
-					try {
-						sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					getUsers();
-					getProducts();
-					getOrders();
-					frame.repaint();
-				}
-			}
-		}.start();
-		
+//		new Thread(){
+//			public void run(){
+//				while(true){					
+//					try {
+//						sleep(10000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//					getUsers();
+//					getProducts();
+//					getOrders();
+//					frame.repaint();
+//				}
+//			}
+//		}.start();
+//		
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(230, 230, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);

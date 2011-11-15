@@ -3,6 +3,7 @@ package GUI;
 import java.awt.EventQueue;
 import logic.*;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
@@ -88,6 +89,8 @@ public class Start extends Thread{
 	private JButton btnRedigerAdresse;
 	private ArrayList<User> users = new ArrayList<User>();
 
+	private JPanel panel_4;
+	private JEditorPane kvitering;
 	private JLabel lblAddressNotFound;
 	DatabaseConnector con = new DatabaseConnector();
 	private JPanel kunder;
@@ -712,6 +715,7 @@ public class Start extends Thread{
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
+						kvitering.setText(o.getProductsString());
 						getOrders();
 						list_3.setSelectedIndex(selected);
 						
@@ -755,6 +759,7 @@ public class Start extends Thread{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
+						kvitering.setText(o.getProductsString());
 						getOrders();
 						list_4.setSelectedIndex(selected);
 					}catch(Exception e){
@@ -862,6 +867,16 @@ public class Start extends Thread{
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
 		Utgaende.add(showProductList);
+
+		panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBounds(676, 35, 303, 515);
+		Utgaende.add(panel_4);
+		panel_4.setLayout(null);
+		
+		kvitering = new JEditorPane();
+		kvitering.setBounds(6, 22, 288, 487);
+		panel_4.add(kvitering);
 
 
 
