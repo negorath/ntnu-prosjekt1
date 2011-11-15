@@ -832,10 +832,14 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				try{
 					User u = null;
-					if(list_3.getSelectedIndex() != -1){
-						u = (User)m1.getElementAt(list_3.getSelectedIndex());						
+					if(!focusOnFinishedOrders){
+//						for(int i = 0; i<m1.getSize(); i++){
+//							if(m1.getElementAt(i) == )
+//							
+//						}
+						u = (User)m1.getElementAt(list_3.getSelectedIndex());	
 					}
-					else if(list_4.getSelectedIndex() != -1){
+					else{
 						u = (User)m1.getElementAt(list_4.getSelectedIndex());												
 					}
 					String tmp = u.getAddress().getStreet();
