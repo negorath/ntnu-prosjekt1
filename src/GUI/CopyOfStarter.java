@@ -42,6 +42,8 @@ import Map.MapTesting;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JTextPane;
+import javax.swing.JEditorPane;
 
 public class CopyOfStarter extends Thread{
 	private JFrame frame;
@@ -67,6 +69,7 @@ public class CopyOfStarter extends Thread{
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
 
+	private JEditorPane kvitering;
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -124,6 +127,7 @@ public class CopyOfStarter extends Thread{
 
 	private String[] temp;
 	private JMenuBar menuBar;
+	private JPanel panel_4;
 
 	/**
 	 * Launch the application.
@@ -735,6 +739,7 @@ public class CopyOfStarter extends Thread{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
+						kvitering.setText(o.getProductsString());
 						getOrders();
 						list_3.setSelectedIndex(selected);
 						
@@ -773,6 +778,7 @@ public class CopyOfStarter extends Thread{
 						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
+						kvitering.setText(o.getProductsString());
 						getOrders();
 						list_4.setSelectedIndex(selected);
 					}catch(Exception e){
@@ -891,6 +897,16 @@ public class CopyOfStarter extends Thread{
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
 		Utgaende.add(showProductList);
+		
+		panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(null, "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_4.setBounds(676, 35, 303, 515);
+		Utgaende.add(panel_4);
+		panel_4.setLayout(null);
+		
+		kvitering = new JEditorPane();
+		kvitering.setBounds(6, 22, 288, 487);
+		panel_4.add(kvitering);
 
 
 
