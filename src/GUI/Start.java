@@ -101,7 +101,6 @@ public class Start extends Thread{
 	private JButton leggTil;
 	private JButton Slett;
 	private JButton Rediger_1;
-	private JButton hent_retter;
 	private JButton rediger_retter;
 	private JButton leggTil_retter;
 	private JButton leggTil_retter_1;
@@ -841,27 +840,27 @@ public class Start extends Thread{
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
-					User u = null;
-					if(!focusOnFinishedOrders){
-//						for(int i = 0; i<m1.getSize(); i++){
-//							if(m1.getElementAt(i) == )
-//							
-//						}
-						u = (User)m1.getElementAt(list_3.getSelectedIndex());	
+					Order o;
+					if(focusOnFinishedOrders){
+						o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());
 					}
-					else{
-						u = (User)m1.getElementAt(list_4.getSelectedIndex());												
+					else{	
+						o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
 					}
+					String telefonNummer = DatabaseConnector.getPhoneByUserId(Integer.parseInt(o.getUserId()));
+					User u = DatabaseConnector.getUser(telefonNummer);
+					
 					String tmp = u.getAddress().getStreet();
 					if (u.getAddress().getStreet().contains(" ")) {
 						tmp = tmp.replace(' ' , '+');
 					}
+					String constant = "http://maps.google.com/maps/api/staticmap?center=";
 					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
-					map.call("http://maps.google.com/maps/api/staticmap?center=" + url, tittle);	
+					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
 				}catch(Exception e){
-//					e.printStackTrace();
+					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
@@ -1004,7 +1003,7 @@ public class Start extends Thread{
 				getUsers();
 			}
 		});
-		Rediger_1.setBounds(10, 416, 100, 41);
+		Rediger_1.setBounds(10, 420, 100, 41);
 		kunder.add(Rediger_1);
 
 		redigerNavn = new JTextField();
@@ -1102,7 +1101,7 @@ public class Start extends Thread{
 				redigerPostSted.setText("");
 			}
 		});
-		button_7.setBounds(510, 416, 110, 41);
+		button_7.setBounds(510, 420, 110, 41);
 		kunder.add(button_7);
 
 		JPanel retter = new JPanel();
@@ -1129,22 +1128,10 @@ public class Start extends Thread{
 				}
 			}
 		});
-		retter_list.setBounds(734, 105, 213, 468);
+		retter_list.setBounds(722, 64, 213, 468);
 		retter.add(retter_list);
 
-		hent_retter = new JButton("Hent");
-		hent_retter.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-				retterNavn.setText(product.getName());
-				retterPris.setText(String.valueOf(product.getPrice()));
-				retterKommentar.setText(product.getDescription());
-			}
-		});
-		hent_retter.setBounds(734, 11, 100, 41);
-		retter.add(hent_retter);
-
-		rediger_retter = new JButton("Rediger");
+		rediger_retter = new JButton("Lagre");
 		rediger_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
@@ -1153,10 +1140,10 @@ public class Start extends Thread{
 				getProducts();
 			}
 		});
-		rediger_retter.setBounds(847, 11, 100, 41);
+		rediger_retter.setBounds(10, 420, 100, 41);
 		retter.add(rediger_retter);
 
-		leggTil_retter = new JButton("Legg Til");
+		leggTil_retter = new JButton("Opprett");
 		leggTil_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -1171,7 +1158,7 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil_retter.setBounds(734, 64, 100, 41);
+		leggTil_retter.setBounds(722, 20, 100, 41);
 		retter.add(leggTil_retter);
 
 		leggTil_retter_1 = new JButton("Slett");
@@ -1181,7 +1168,7 @@ public class Start extends Thread{
 				getProducts();
 			}
 		});
-		leggTil_retter_1.setBounds(847, 64, 100, 41);
+		leggTil_retter_1.setBounds(835, 20, 100, 41);
 		retter.add(leggTil_retter_1);
 
 		retterNavn = new JTextField();
@@ -1197,6 +1184,23 @@ public class Start extends Thread{
 		retter.add(retterPris);
 
 		retterKommentar = new JTextField();
+		retterKommentar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == arg0.VK_ENTER){
+					try{
+						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+						DatabaseConnector.newProduct(product);
+						getProducts();
+						retterNavn.setText("");
+						retterKommentar.setText("");
+						retterPris.setText("");
+					}catch(Exception e){
+						System.out.println("Failed to add new User into database");
+					}					
+				}
+			}
+		});
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
 		retterKommentar.setColumns(10);
 		retterKommentar.setBounds(10, 199, 408, 202);
@@ -1225,7 +1229,7 @@ public class Start extends Thread{
 				retterPris.setText("");
 			}
 		});
-		btnTmFelter.setBounds(10, 412, 110, 41);
+		btnTmFelter.setBounds(510, 420, 110, 41);
 		retter.add(btnTmFelter);
 
 
@@ -1323,7 +1327,7 @@ public class Start extends Thread{
 				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			e.printStackTrace();
+//			e.printStackTrace();
 //			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
@@ -1340,9 +1344,6 @@ public class Start extends Thread{
 				}				
 				list_3.setModel(listModelOrders);
 			}
-			else{
-				System.out.println("m3 is null");
-			}
 			//ordre som er påbegynt men enda ikke levert
 			m4 = DatabaseConnector.getOrders("deliver");
 			if(m3 != null){
@@ -1352,13 +1353,9 @@ public class Start extends Thread{
 				}				
 				list_4.setModel(listModelFinished);
 			}
-			else{
-				System.out.println("m4 is null");
-			}
-
 		}catch(Exception e){
 //			System.out.println("Finner ingen orders i databasen");
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){

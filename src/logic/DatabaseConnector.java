@@ -95,6 +95,14 @@ public class DatabaseConnector{
     	getUser_rs.close();
     	return s;
     }
+    
+    public static String getPhoneByUserId(int id) throws Exception{
+    	ResultSet getUser_rs = stmt.executeQuery("SELECT phone FROM users WHERE id='" + id + "'");
+    	getUser_rs.first();
+    	String s = getUser_rs.getString(1);
+    	getUser_rs.close();
+    	return s;
+    }
 
     /**
      * 
