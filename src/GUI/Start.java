@@ -714,7 +714,12 @@ public class Start extends Thread{
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_3.getSelectedIndex();
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						Order o = null;
+						try{
+							o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						getOrders();
@@ -764,7 +769,12 @@ public class Start extends Thread{
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_4.getSelectedIndex();
-						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						Order o = null;
+						try{
+							o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						getOrders();
