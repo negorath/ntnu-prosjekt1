@@ -130,4 +130,21 @@ public class Order {
 		}		
 		return dlm;
 	}
+	public String getProductsString(){
+		String temp = "\t" + "Gruppe 10"  + "\n" + "\tPizzeria\n" + "***********************************************" + "\n\n";
+		long sum = 0;
+		for (int i = 0; i < antall.length; i++) {
+			try {
+				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
+				String pris = String.valueOf(DatabaseConnector.getProduct(produkt[i]).getPrice()*antall[i]);
+				temp += String.valueOf(antall[i]) + " x " + navn + "\t\t" + pris + ",-" + "\n";
+				sum += DatabaseConnector.getProduct(produkt[i]).getPrice() * antall[i];
+			} catch (Exception e) {
+				System.out.println("Greide ikke lage kvittering String");
+			}
+		}
+		temp += "***********************************************" + "\n" + "Sum:" + "\t\t" + sum + ",-";
+		
+		return temp;
+	}
 }
