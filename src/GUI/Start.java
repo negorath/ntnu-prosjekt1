@@ -719,11 +719,11 @@ public class Start extends Thread{
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
-				if(arg0.getClickCount() == 2){
+				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
 						DatabaseConnector.edit(o.getId());
-//						getOrders();
+						getOrders();
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -761,11 +761,11 @@ public class Start extends Thread{
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
-				if(arg0.getClickCount() == 2){
+				else if(arg0.getClickCount() == 2){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						DatabaseConnector.notFinished(o.getId());
-//						getOrders();
+						getOrders();
 					}catch(Exception e){
 						e.printStackTrace();
 					}
