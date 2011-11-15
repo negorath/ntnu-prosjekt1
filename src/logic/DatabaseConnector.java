@@ -201,7 +201,9 @@ public class DatabaseConnector{
     	
     	ResultSet orders_rs = stmt.executeQuery(sql);
     	DefaultListModel orders = new DefaultListModel();
-    	orders_rs.first();
+    	if(orders_rs.first() == false){
+    		return orders;
+    	}
     	do{
     		String user_id = orders_rs.getString(1);
     		String ordered = orders_rs.getString(2);

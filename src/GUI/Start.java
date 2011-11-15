@@ -71,6 +71,7 @@ public class Start extends Thread{
 	DefaultListModel m1 = new DefaultListModel();
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
+	DefaultListModel m4 = new DefaultListModel();
 
 	private JTextField husnummer;
 	private JTextField textField_1;
@@ -717,7 +718,9 @@ public class Start extends Thread{
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
-						list_3.setSelectedIndex(selected);
+						if(listModelOrders.size() > 0){
+							list_3.setSelectedIndex(selected);							
+						}
 						
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
@@ -761,7 +764,9 @@ public class Start extends Thread{
 						showProductList.setModel(showProductModel);
 						kvitering.setText(o.getProductsString());
 						getOrders();
-						list_4.setSelectedIndex(selected);
+						if(listModelFinished.size() > 0){
+							list_4.setSelectedIndex(selected);							
+						}
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
@@ -1326,23 +1331,34 @@ public class Start extends Thread{
 		try{
 			listModelOrders.clear();
 			listModelFinished.clear();
-			
 			//ordre som ikke er påbegynt
 			m3 = DatabaseConnector.getOrders("due");
-			for(int i = 0; i<m3.size(); i++){
-				Order o = (Order)m3.getElementAt(i);
-				listModelOrders.addElement(o.toString());
+			if(m3 != null){
+				for(int i = 0; i<m3.size(); i++){
+					Order o = (Order)m3.getElementAt(i);
+					listModelOrders.addElement(o.toString());
+				}				
+				list_3.setModel(listModelOrders);
+			}
+			else{
+				System.out.println("m3 is null");
 			}
 			//ordre som er påbegynt men enda ikke levert
-			m3 = DatabaseConnector.getOrders("deliver");
-			for(int i = 0; i<m3.size(); i++){
-				Order o = (Order)m3.getElementAt(i);
-				listModelFinished.addElement(o.toString());					
+			m4 = DatabaseConnector.getOrders("deliver");
+			if(m3 != null){
+				for(int i = 0; i<m4.size(); i++){
+					Order o = (Order)m4.getElementAt(i);
+					listModelFinished.addElement(o.toString());					
+				}				
+				list_4.setModel(listModelFinished);
 			}
-			list_3.setModel(listModelOrders);
-			list_4.setModel(listModelFinished);
+			else{
+				System.out.println("m4 is null");
+			}
+
 		}catch(Exception e){
 //			System.out.println("Finner ingen orders i databasen");
+			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){
