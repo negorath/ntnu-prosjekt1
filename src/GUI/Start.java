@@ -72,6 +72,8 @@ public class Start extends Thread{
 	DefaultListModel m2 = new DefaultListModel();
 	DefaultListModel m3 = new DefaultListModel();
 
+	private JButton button_9;
+	private String hvorMange = "";
 	private JTextField husnummer;
 	private JTextField textField_1;
 	private JLabel lblPostnummer;
@@ -195,7 +197,13 @@ public class Start extends Thread{
 		toggleButton = new JButton("Nr.1");
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");		
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.1";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");		
 			}
 		});
 		toggleButton.setBounds(16, 45, 75, 45);
@@ -206,7 +214,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_1);
 		toggleButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.2");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.2";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.2");
 			}
 		});
 
@@ -215,7 +229,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_2);
 		toggleButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.3");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.3";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.3");
 			}
 		});
 
@@ -225,7 +245,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_3);
 		toggleButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.4");
+				sisteTrykteKnapp = "Pizza nr.4";
+				if(hvorMange != ""){
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.4");
 			}
 		});
 
@@ -234,7 +260,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_4);
 		toggleButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.5");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.5";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.5");
 			}
 		});
 
@@ -243,7 +275,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_5);
 		toggleButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.6");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.6";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.6");
 			}
 		});
 		toggleButton_6 = new JButton("Nr.7");
@@ -251,7 +289,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_6);
 		toggleButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.7");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.7";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.7");
 			}
 		});
 
@@ -260,7 +304,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_7);
 		toggleButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.8");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.8";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.8");
 			}
 		});
 
@@ -269,7 +319,13 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_8);
 		toggleButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Pizza nr.9");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Pizza nr.9";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.9");
 			}
 		});
 
@@ -372,7 +428,7 @@ public class Start extends Thread{
 		button = new JButton("1");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("1");
+				hvorMange += "1";
 			}
 		});
 		button.setBounds(16, 403, 75, 45);
@@ -383,7 +439,8 @@ public class Start extends Thread{
 		bestilling.add(button_1);
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("2");
+				hvorMange += "2";
+				System.out.println(hvorMange);
 			}
 		});
 
@@ -393,7 +450,7 @@ public class Start extends Thread{
 		bestilling.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("3");
+				hvorMange += "3";
 			}
 		});
 
@@ -402,7 +459,7 @@ public class Start extends Thread{
 		bestilling.add(button_2);
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("4");
+				hvorMange += "4";
 			}
 		});
 
@@ -412,7 +469,8 @@ public class Start extends Thread{
 		bestilling.add(button_4);
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("5");
+				hvorMange += "5";
+				System.out.println(hvorMange);
 			}
 		});
 
@@ -421,7 +479,7 @@ public class Start extends Thread{
 		bestilling.add(button_5);
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("6");
+				hvorMange += "6";
 			}
 		});
 
@@ -430,7 +488,7 @@ public class Start extends Thread{
 		bestilling.add(button_3);
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("7");
+				hvorMange += "7";
 			}
 		});
 
@@ -439,7 +497,8 @@ public class Start extends Thread{
 		bestilling.add(button_6);
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("8");
+				hvorMange += "8";
+
 			}
 		});
 
@@ -448,7 +507,7 @@ public class Start extends Thread{
 		bestilling.add(btnNewButton_1);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				nummerKnappTrykk("9");
+				hvorMange += "9";
 			}
 		});
 
@@ -457,7 +516,7 @@ public class Start extends Thread{
 		bestilling.add(button_8);
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				nummerKnappTrykk("0");
+				hvorMange += "0";
 			}
 		});
 
@@ -473,7 +532,7 @@ public class Start extends Thread{
 				model.addElement(count+" x " +sisteTrykteKnapp);
 			}
 		});
-
+		
 
 		label = new JLabel("x "+ "1");
 		if ( count == null)
@@ -1235,6 +1294,7 @@ public class Start extends Thread{
 		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
 		
+		
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
@@ -1265,8 +1325,10 @@ public class Start extends Thread{
 	}
 	private String menyKnappTrykk(String a) {
 		for (int i = 0; i < model.getSize(); i++) {
-			if (model.get(i).toString().equals(a)) {
+			if (model.getElementAt(i).toString().substring(4).equalsIgnoreCase(a)) {
 				nummerKnappTrykk("1");
+				System.out.println("A bag of shit");
+				return a;
 			}
 		}
 		count = null;
@@ -1274,22 +1336,52 @@ public class Start extends Thread{
 		return a;
 	}
 	private String nummerKnappTrykk(String nr){
-		if (count == null)
-			count = nr;
-		else
-			count += nr;
-		for (int i = 0; i < model.getSize(); i++) {
-			if (model.get(i).toString().charAt(9) == sisteTrykteKnapp.charAt(9)) {
-				model.remove(i);
-				model.addElement(count + nr + " x " + sisteTrykteKnapp);
-				return null;
-			}
-		}
-		if(!model.isEmpty()){
-			model.remove(model.getSize()-1);
-			model.addElement(count+" x " +sisteTrykteKnapp);			
+//		System.out.println(nr);
+//		int temp = 0;
+//		String tmp = "";
+//		if (count == null){
+//			System.out.println("ilu<3");
+//			temp = Integer.parseInt(nr);
+////			count = nr;
+//		}
+//		else{
+//			tmp += count + nr;
+//			temp = Integer.parseInt(tmp);
+////			count += nr;
+//		}
+//		for (int i = 0; i < model.getSize(); i++) {
+//			if (model.get(i).toString().substring(4).equalsIgnoreCase(sisteTrykteKnapp)) {
+//				int mid = Integer.valueOf(String.valueOf(model.get(i).toString().charAt(0))) + temp;
+//				System.out.println(mid);
+//				model.remove(i);
+//				model.addElement(mid + " x " + sisteTrykteKnapp);
+//				return null;
+//			}
+//		}
+//		if(!model.isEmpty()){
+//			System.out.println("why u here man");
+//			model.remove(model.getSize()-1);
+//			model.addElement(count+" x " +sisteTrykteKnapp);			
+//		}
+		if(model.isEmpty()){
+			model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+			return null;
 		}
 
+		for (int i = 0; i < model.getSize(); i++) {
+			if(model.get(i).toString().substring(4).equalsIgnoreCase(sisteTrykteKnapp) || model.get(i).toString().substring(5).equalsIgnoreCase(sisteTrykteKnapp) || model.get(i).toString().substring(6).equalsIgnoreCase(sisteTrykteKnapp)){
+				int teller = 0, temp = 0;
+				String tmp = "";
+				while(model.get(i).toString().charAt(teller) != ' '){
+					tmp += model.get(i).toString().charAt(teller);
+					teller++;
+				}
+				temp = Integer.parseInt(tmp) + Integer.parseInt(nr);
+				Object o = model.remove(i);
+				o = (temp + " x " + sisteTrykteKnapp);
+				model.add(i, o);
+			}
+		}
 		return null;
 	}
 	public void getProducts(){

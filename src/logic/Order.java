@@ -45,7 +45,12 @@ public class Order {
 	public void setProducts(String[] produkter){
 		this.products = "";
 		for(int i = 0; i<produkter.length; i++){
-			this.products += produkter[i].charAt(0) + ":";
+			int teller = 0;
+			while(produkter[i].charAt(teller) != ' '){
+				this.products += produkter[i].charAt(teller);
+				teller++;
+			}
+			this.products += ":"; 
 			this.products += produkter[i].charAt(produkter[i].length()-1);
 			if(i != produkter.length-1){
 				this.products += "-";
