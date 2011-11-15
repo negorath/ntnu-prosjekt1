@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.ListSelectionModel;
+
 import java.awt.Color;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
@@ -42,6 +44,8 @@ import Map.Map;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Start extends Thread{
 	private JFrame frame;
@@ -121,6 +125,7 @@ public class Start extends Thread{
 	private JPanel panel_1;
 	private JLabel pizzaInfo = new JLabel();
 	private JButton button_7;
+	private boolean focusOnFinishedOrders = false;
 
 	private String[] temp;
 	private JMenuBar menuBar;
@@ -181,20 +186,6 @@ public class Start extends Thread{
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
-//		new Thread(){
-//			public void run(){
-//				while(true){					
-//					getProducts();
-//					lagListe();
-//					frame.repaint();
-//					try {
-//						sleep(10000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			}
-//		}.start();
 
 		///////////////////meny knapper////////////////////////////
 
@@ -615,16 +606,6 @@ public class Start extends Thread{
 		lblRingendeNummer.setBounds(835, 12, 134, 14);
 		bestillingsInfo.add(lblRingendeNummer);
 
-		//Denne skal FJERNES!!!?		
-
-		//		btnLeggTil_1 = new JButton("Legg til");
-		//		btnLeggTil_1.addActionListener(new ActionListener() {
-		//			public void actionPerformed(ActionEvent e) {
-		//				database.addUser(navn.getText(), nummer.getText(), database.addAddress(gatenavn.getText(), husNr.getText(), husBokstav.getText(), postnummer.getText(), poststed.getText(), land.getText()));
-		//			}
-		//		});
-		//		btnLeggTil_1.setBounds(16, 294, 89, 23);
-		//		bestillingsInfo.add(btnLeggTil_1);
 
 		JButton btnNeste_1 = new JButton("Send");
 		btnNeste_1.setForeground(new Color(47, 79, 79));
@@ -689,21 +670,21 @@ public class Start extends Thread{
 
 		//--------------------------Utgaaende/chef-----------------------------------------
 
-		new Thread(){
-			public void run(){
-				while(true){					
-					try {
-						sleep(10000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					getUsers();
-					getProducts();
-					getOrders();
-					frame.repaint();
-				}
-			}
-		}.start();
+//		new Thread(){
+//			public void run(){
+//				while(true){					
+//					try {
+//						sleep(10000);
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//					getUsers();
+//					getProducts();
+//					getOrders();
+//					frame.repaint();
+//				}
+//			}
+//		}.start();
 		
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(230, 230, 250));
@@ -716,9 +697,34 @@ public class Start extends Thread{
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
 		list_3 = new JList(listModelOrders);
+		list_3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusOnFinishedOrders = false;
+				list_3.setFocusable(true);
+			}
+			@Override
+			public void focusLost(FocusEvent e) {
+				list_3.setFocusable(false);
+			}
+		});
 		list_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					try{
+						int selected = list_3.getSelectedIndex();
+						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						showProductModel = o.getProductsAsDefaultListModel();
+						showProductList.setModel(showProductModel);
+						getOrders();
+						frame.repaint();
+						list_3.setSelectedIndex(selected);
+						
+					}catch(Exception e){
+//						System.out.println("Fant ingen produkter i bestillingen");
+					}
+				}
 				if(arg0.getClickCount() == 2){
 					try{
 						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
@@ -727,19 +733,6 @@ public class Start extends Thread{
 					}
 					catch(Exception e){
 //						System.out.println("Noe rart skjedde når du trykket ferdig");
-					}
-				}
-				else if(arg0.getClickCount() == 1){
-					try{
-						int selected = list_3.getSelectedIndex();
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-						showProductModel = o.getProductsAsDefaultListModel();
-						showProductList.setModel(showProductModel);
-						getOrders();
-						list_3.setSelectedIndex(selected);
-						
-					}catch(Exception e){
-//						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 			}
@@ -754,9 +747,33 @@ public class Start extends Thread{
 		panel_3.setLayout(null);
 
 		list_4 = new JList(listModelFinished);
+		list_4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusOnFinishedOrders = true;
+				list_4.setFocusable(true);
+				}
+			@Override
+			public void focusLost(FocusEvent e) {
+				list_4.setFocusable(false);
+			}
+		});
 		list_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					try{
+						int selected = list_4.getSelectedIndex();
+						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						showProductModel = o.getProductsAsDefaultListModel();
+						showProductList.setModel(showProductModel);
+						getOrders();
+						frame.repaint();
+						list_4.setSelectedIndex(selected);
+					}catch(Exception e){
+//						System.out.println("Fant ingen produkter i bestillingen");
+					}
+				}
 				if(arg0.getClickCount() == 2){
 					try{
 						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
@@ -765,18 +782,6 @@ public class Start extends Thread{
 					}
 					catch(Exception e){
 //						System.out.println("Noe rart skjedde når du trykket ikke ferdig");
-					}
-				}
-				else if(arg0.getClickCount() == 1){
-					try{
-						int selected = list_4.getSelectedIndex();
-						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
-						showProductModel = o.getProductsAsDefaultListModel();
-						showProductList.setModel(showProductModel);
-						getOrders();
-						list_4.setSelectedIndex(selected);
-					}catch(Exception e){
-//						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 			}
@@ -806,7 +811,17 @@ public class Start extends Thread{
 		btnRedigerAdresse = new JButton("Rediger Adresse");
 		btnRedigerAdresse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+				Order o = null;
+				try{
+					if(focusOnFinishedOrders){
+						o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());								
+					}
+					else{
+						o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
+					}
+				}catch(Exception et){
+//					et.printStackTrace();
+				}
 				try{
 					Address a = DatabaseConnector.getAddressFromUser(Integer.parseInt(o.getUserId()));
 					a = ChangeAddress.input(a);
@@ -853,40 +868,6 @@ public class Start extends Thread{
 		btnVisKart.setBounds(255, 18, 158, 50);
 		Utgaende.add(btnVisKart);
 
-//		JButton btnLages = new JButton("Ikke ferdig");
-//		btnLages.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				try{
-//					if(listModelFinished.getSize()>0){
-//						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
-//						DatabaseConnector.notFinished(o.getId());
-//						getOrders();
-//					}
-//				}
-//				catch(Exception e){
-//					System.out.println("Listen er tommelom");
-//				}
-//			}
-//		});
-//		btnLages.setBounds(255, 521, 158, 29);
-//		Utgaende.add(btnLages);
-
-//		JButton btnFerdig = new JButton("Ferdig");
-//		btnFerdig.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent arg0) {
-//				try{
-//					Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
-//					DatabaseConnector.edit(o.getId());
-//					getOrders();
-//				}
-//				catch(Exception e){
-//					e.printStackTrace();
-//					System.out.println("Noe rart skjedde når du trykket ferdig");
-//				}
-//			}
-//		});
-//		btnFerdig.setBounds(255, 474, 159, 29);
-//		Utgaende.add(btnFerdig);
 		
 		showProductList = new JList(showProductModel);
 		showProductList.setBounds(259, 151, 151, 297);
@@ -1337,12 +1318,13 @@ public class Start extends Thread{
 			listModelOrders.clear();
 			listModelFinished.clear();
 			
+			//ordre som ikke er påbegynt
 			m3 = DatabaseConnector.getOrders("due");
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);
 				listModelOrders.addElement(o.toString());
 			}
-			
+			//ordre som er påbegynt men enda ikke levert
 			m3 = DatabaseConnector.getOrders("deliver");
 			for(int i = 0; i<m3.size(); i++){
 				Order o = (Order)m3.getElementAt(i);

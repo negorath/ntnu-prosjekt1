@@ -5,6 +5,14 @@ import java.sql.Statement;
 
 public class Address {
 	
+	private int id;
+	private String street;
+	private int houseNumber;
+	private char houseLetter;
+	private String zipcode;
+	private String city;
+	private String country = "NO";
+	
 	public static Connection con;
 	/**Connect to the given database Connection
 	 * 
@@ -34,13 +42,6 @@ public class Address {
 		this.zipcode = zipcode;
 		this.city = city;
 	}
-	private int id;
-	private String street;
-	private int houseNumber;
-	private char houseLetter;
-	private String zipcode;
-	private String city;
-	private String country = "NO";
 	/**
 	 * @return the address
 	 */

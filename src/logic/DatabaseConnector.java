@@ -18,12 +18,9 @@ import localData.Config;
  */
 public class DatabaseConnector{	
 	
-	public DatabaseConnector(){
-		
-	}
+	public DatabaseConnector(){	}
     private static Connection con = null; // connection object
     private static Statement stmt = null; // statement object
-    private static ResultSet rs = null; // result set object
     
     public static void initialize(){
 		try {
@@ -32,13 +29,11 @@ public class DatabaseConnector{
 			con.setAutoCommit(true);
 			System.out.println("Connected to " + Config.DBName);
 		}catch(Exception e){
-			e.printStackTrace();
 			System.out.println("klarer ikke laste inn databasen");
 		}
 		Address.setConnection(con);
     }
 	public static Connection getConnection() throws Exception {
-
         String url = "jdbc:mysql:" + Config.DBHost + ":" + Config.DBport + "/" + Config.DBName;
         String user = Config.DBUsername;
         String password = Config.DBPassword;
@@ -61,8 +56,6 @@ public class DatabaseConnector{
              lgr.log(Level.WARNING, ex.getMessage(), ex);
          }
     }
-    
-
     /**
      * 
      * @param phoneNumber
@@ -199,7 +192,7 @@ public class DatabaseConnector{
     	if (action.equals("due")) {
     		sql += "due IS NULL ORDER BY ordered";
     	} else if(action.equals("deliver")) {
-    		sql += "due IS NOT NULL AND delivered IS NULL ORDER BY due";
+    		sql += "due IS NOT NULL ORDER BY due";
     	} else if(action.equals("delivered")) {
     		sql += "delivered IS NOT NULL ORDER BY delivered";
     	} else {
@@ -211,7 +204,7 @@ public class DatabaseConnector{
     	orders_rs.first();
     	do{
     		String user_id = orders_rs.getString(1);
-    		//String ordered = orders_rs.getString(2);
+    		String ordered = orders_rs.getString(2);
     		String due = orders_rs.getString(3);
     		String delivered = orders_rs.getString(4);
     		String id = orders_rs.getString(5);
@@ -371,4 +364,31 @@ public class DatabaseConnector{
 		return null;
 	}
 
+	public static Order getOrder(String s) throws Exception{
+		String stringID = "";
+		boolean b = true;
+		for(int i = 0; i<s.length(); i++){
+			if((int)s.charAt(i) == 32){
+				b = false;
+			}
+			if(b){
+				stringID += s.charAt(i);				
+			}
+		}
+		int id = Integer.parseInt(stringID);
+		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products FROM orders WHERE id ='" + id + "'");
+		getOrderRs.first();
+		String i = getOrderRs.getString(1);
+		String userID = getOrderRs.getString(2);
+		String ordered = getOrderRs.getString(3);
+		String due = getOrderRs.getString(4);
+		String delivered = getOrderRs.getString(5);
+		String products = getOrderRs.getString(6);
+		Order o = new Order(userID);
+		o.setDue(due);
+		o.setId(i);
+		o.setDelivered(delivered);
+		o.createFoodList(products);
+		return o;
+	}
 }
