@@ -11,6 +11,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class ChangeAddress {
 
@@ -65,6 +67,24 @@ public class ChangeAddress {
 		postnr.setColumns(10);
 		
 		sted = new JTextField(a.getCity());
+		sted.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == arg0.VK_ENTER){
+					a.setStreet(adresse.getText());
+					a.setHouseNumber(Integer.parseInt(nr.getText()));
+					a.setZipcode(postnr.getText());
+					a.setCity(sted.getText());
+					
+					if (!a.save()) {
+						// TODO: Vis feilmelding til brukeren
+						System.out.println("Klarte ikke Œ lagre");
+					}
+					
+					frame.dispose();
+				}
+			}
+		});
 		sted.setBounds(106, 68, 114, 20);
 		frame.getContentPane().add(sted);
 		sted.setColumns(10);

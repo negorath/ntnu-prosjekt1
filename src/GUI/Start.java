@@ -631,7 +631,7 @@ public class Start extends Thread{
 						tmp = tmp.replace(' ' , '+');
 					}
 					try{
-						map.call("http://maps.google.com/maps/api/staticmap?center=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway&zoom=14&size=400x400&sensor=false", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
+						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
 						lblAddressNotFound.setVisible(true);
@@ -851,14 +851,45 @@ public class Start extends Thread{
 					User u = DatabaseConnector.getUser(telefonNummer);
 					
 					String tmp = u.getAddress().getStreet();
-					if (u.getAddress().getStreet().contains(" ")) {
-						tmp = tmp.replace(' ' , '+');
+					String tmp2 = u.getAddress().getCity();
+					if (u.getAddress().getStreet().contains(" ") ||
+						u.getAddress().getStreet().contains("æ") ||
+						u.getAddress().getStreet().contains("Æ") ||
+						u.getAddress().getStreet().contains("ø") ||
+						u.getAddress().getStreet().contains("Ø") ||
+						u.getAddress().getStreet().contains("å") ||
+						u.getAddress().getStreet().contains("Å")
+						) {
+							tmp = tmp.replace(' ' , '+');
+							tmp = tmp.replace('æ' , 'e');
+							tmp = tmp.replace('ø' , 'o');
+							tmp = tmp.replace('å' , 'a');
+							tmp = tmp.replace('Æ' , 'e');
+							tmp = tmp.replace('Ø' , 'o');
+							tmp = tmp.replace('Å' , 'a');
 					}
-					String constant = "http://maps.google.com/maps/api/staticmap?center=";
-					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + u.getAddress().getCity() + ",norway&zoom=14&size=400x400&sensor=false";
+					if (u.getAddress().getCity().contains(" ") ||
+							u.getAddress().getCity().contains("æ") ||
+							u.getAddress().getCity().contains("Æ") ||
+							u.getAddress().getCity().contains("ø") ||
+							u.getAddress().getCity().contains("Ø") ||
+							u.getAddress().getCity().contains("å") ||
+							u.getAddress().getCity().contains("Å")
+							) {
+								tmp2 = tmp.replace(' ' , '+');
+								tmp2 = tmp.replace('æ' , 'e');
+								tmp2 = tmp.replace('ø' , 'o');
+								tmp2 = tmp.replace('å' , 'a');
+								tmp2 = tmp.replace('Æ' , 'e');
+								tmp2 = tmp.replace('Ø' , 'o');
+								tmp2 = tmp.replace('Å' , 'a');
+						}
+					String constant = "http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=";
+					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + tmp2 + ",norway";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
 					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
+					System.out.println(constant + url);
 				}catch(Exception e){
 					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
@@ -884,6 +915,7 @@ public class Start extends Thread{
 		
 		kvitering = new JEditorPane();
 		kvitering.setBounds(6, 22, 288, 487);
+		kvitering.setEditable(false);
 		panel_4.add(kvitering);
 
 
