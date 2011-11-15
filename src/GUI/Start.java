@@ -976,16 +976,16 @@ public class Start extends Thread{
 					redigerPostNummer.setText(user.getAddress().getZipcode());
 					redigerPostSted.setText(user.getAddress().getCity());
 				}
-				else if(arg0.getButton() == arg0.BUTTON3){
-					try{
-						int id = kunder_list.getSelectedIndex();
-						User user = (User)m1.getElementAt(id);
-						DatabaseConnector.deleteUser(user);
-						getUsers();						
-					}catch(Exception e){
-						System.out.println("Klarte ikke slette bruker");
-					}
-				}
+//				else if(arg0.getButton() == arg0.BUTTON3){
+//					try{
+//						int id = kunder_list.getSelectedIndex();
+//						User user = (User)m1.getElementAt(id);
+//						DatabaseConnector.deleteUser(user);
+//						getUsers();						
+//					}catch(Exception e){
+//						System.out.println("Klarte ikke slette bruker");
+//					}
+//				}
 			}
 		});
 		kunder_list.setBounds(722, 64, 213, 468);
@@ -1144,20 +1144,20 @@ public class Start extends Thread{
 		retter_list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 2){
+				if(e.getClickCount() == 1){
 					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
 					retterNavn.setText(product.getName());
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
 				}
-				else if(e.getButton() == e.BUTTON3){
-					try{
-						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-						getProducts();						
-					}catch(Exception hehe){
-						System.out.println("Klarte ikke slette produkt");
-					}
-				}
+//				else if(e.getButton() == e.BUTTON3){
+//					try{
+//						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+//						getProducts();						
+//					}catch(Exception hehe){
+//						System.out.println("Klarte ikke slette produkt");
+//					}
+//				}
 			}
 		});
 		retter_list.setBounds(722, 64, 213, 468);
