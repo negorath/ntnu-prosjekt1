@@ -987,6 +987,19 @@ public class Start extends Thread{
 //					}
 //				}
 			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					int selectedIndex = kunder_list.getSelectedIndex();
+					User user = (User)m1.getElementAt(selectedIndex);
+					redigerNavn.setText(user.getName());
+					redigerNummer.setText(user.getPhone());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostNummer.setText(user.getAddress().getZipcode());
+					redigerPostSted.setText(user.getAddress().getCity());
+				}
+			}
 		});
 		kunder_list.setBounds(722, 64, 213, 468);
 		kunder.add(kunder_list);
@@ -1158,6 +1171,15 @@ public class Start extends Thread{
 //						System.out.println("Klarte ikke slette produkt");
 //					}
 //				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.getClickCount() == 1){
+					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					retterNavn.setText(product.getName());
+					retterPris.setText(String.valueOf(product.getPrice()));
+					retterKommentar.setText(product.getDescription());
+				}
 			}
 		});
 		retter_list.setBounds(722, 64, 213, 468);
