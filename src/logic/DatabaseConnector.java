@@ -222,13 +222,8 @@ public class DatabaseConnector{
     
     public static void newOrder(Order order){
     	try{
-    		con.setAutoCommit(true);
-//    		ResultSet newOrder_rs = stmt.executeQuery("SELECT COUNT(*) FROM orders");
-//    		newOrder_rs.first();
-//    		int id = Integer.parseInt(newOrder_rs.getString(1)) + 1;
     		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "'");
     		con.setAutoCommit(false);
-//    		newOrder_rs.close();
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
     		e.printStackTrace();
@@ -365,6 +360,9 @@ public class DatabaseConnector{
 	}
 
 	public static Order getOrder(String s) throws Exception{
+		if(s.length() <= 0){
+			throw new Exception("k");
+		}
 		String stringID = "";
 		boolean b = true;
 		for(int i = 0; i<s.length(); i++){

@@ -701,11 +701,6 @@ public class Start extends Thread{
 			@Override
 			public void focusGained(FocusEvent e) {
 				focusOnFinishedOrders = false;
-				list_3.setFocusable(true);
-			}
-			@Override
-			public void focusLost(FocusEvent e) {
-				list_3.setFocusable(false);
 			}
 		});
 		list_3.addMouseListener(new MouseAdapter() {
@@ -714,16 +709,10 @@ public class Start extends Thread{
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_3.getSelectedIndex();
-						Order o = null;
-						try{
-							o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						}catch(Exception e){
-							e.printStackTrace();
-						}
+						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						getOrders();
-						frame.repaint();
 						list_3.setSelectedIndex(selected);
 						
 					}catch(Exception e){
@@ -732,17 +721,11 @@ public class Start extends Thread{
 				}
 				if(arg0.getClickCount() == 2){
 					try{
-						Order o = null;
-						try{
-							o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
-						}catch(Exception e){
-							e.printStackTrace();
-						}
+						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
 						DatabaseConnector.edit(o.getId());
-						getOrders();
-					}
-					catch(Exception e){
-//						System.out.println("Noe rart skjedde når du trykket ferdig");
+//						getOrders();
+					}catch(Exception e){
+						e.printStackTrace();
 					}
 				}
 			}
@@ -761,12 +744,7 @@ public class Start extends Thread{
 			@Override
 			public void focusGained(FocusEvent e) {
 				focusOnFinishedOrders = true;
-				list_4.setFocusable(true);
 				}
-			@Override
-			public void focusLost(FocusEvent e) {
-				list_4.setFocusable(false);
-			}
 		});
 		list_4.addMouseListener(new MouseAdapter() {
 			@Override
@@ -774,16 +752,10 @@ public class Start extends Thread{
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_4.getSelectedIndex();
-						Order o = null;
-						try{
-							o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						}catch(Exception e){
-							e.printStackTrace();
-						}
+						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						showProductModel = o.getProductsAsDefaultListModel();
 						showProductList.setModel(showProductModel);
 						getOrders();
-						frame.repaint();
 						list_4.setSelectedIndex(selected);
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
@@ -791,17 +763,11 @@ public class Start extends Thread{
 				}
 				if(arg0.getClickCount() == 2){
 					try{
-						Order o = null;
-						try{
-							o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						}catch(Exception e){
-							e.printStackTrace();
-						}
+						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						DatabaseConnector.notFinished(o.getId());
-						getOrders();
-					}
-					catch(Exception e){
-//						System.out.println("Noe rart skjedde når du trykket ikke ferdig");
+//						getOrders();
+					}catch(Exception e){
+						e.printStackTrace();
 					}
 				}
 			}
@@ -813,9 +779,13 @@ public class Start extends Thread{
 		btnLevert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(listModelFinished.getSize()>0){
-					DatabaseConnector.deleteOrder((Order)m3.getElementAt((list_4.getSelectedIndex())));
-					listModelFinished.removeElement(list_4.getSelectedValue());
-					getOrders();
+					try{
+						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+						DatabaseConnector.deleteOrder(o);
+						getOrders();
+					}catch(Exception ett){
+						ett.printStackTrace();
+					}
 				}
 			}
 		});
@@ -1350,6 +1320,8 @@ public class Start extends Thread{
 				Order o = (Order)m3.getElementAt(i);
 				listModelFinished.addElement(o.toString());					
 			}
+			list_3.setModel(listModelOrders);
+			list_4.setModel(listModelFinished);
 		}catch(Exception e){
 //			System.out.println("Finner ingen orders i databasen");
 		}
