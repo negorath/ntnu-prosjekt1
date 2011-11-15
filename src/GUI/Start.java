@@ -732,7 +732,12 @@ public class Start extends Thread{
 				}
 				if(arg0.getClickCount() == 2){
 					try{
-						Order o = (Order)m3.getElementAt(list_3.getSelectedIndex());
+						Order o = null;
+						try{
+							o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 						DatabaseConnector.edit(o.getId());
 						getOrders();
 					}
@@ -786,7 +791,12 @@ public class Start extends Thread{
 				}
 				if(arg0.getClickCount() == 2){
 					try{
-						Order o = (Order)m3.getElementAt(list_4.getSelectedIndex());
+						Order o = null;
+						try{
+							o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+						}catch(Exception e){
+							e.printStackTrace();
+						}
 						DatabaseConnector.notFinished(o.getId());
 						getOrders();
 					}
