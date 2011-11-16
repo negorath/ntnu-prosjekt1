@@ -1433,12 +1433,13 @@ public class Start extends Thread{
 	}
 	private String menyKnappTrykk(String a) {
 		for (int i = 0; i < model.getSize(); i++) {
-			if (model.getElementAt(i).toString().substring(4).equalsIgnoreCase(a)) {
+			if (model.get(i).toString().charAt(model.get(i).toString().length()-1) == a.charAt(a.length()-1)) {
 				nummerKnappTrykk("1");
 				System.out.println("A bag of shit");
 				return a;
 			}
 		}
+		System.out.println("hŒper ikke denne vises");
 		model.addElement("1" +" x "+a); 
 		return a;
 	}
@@ -1462,11 +1463,13 @@ public class Start extends Thread{
 				Object o = model.remove(i);
 				o = (temp + " x " + sisteTrykteKnapp);
 				model.add(i, o);
+				System.out.println("den finnes");
 				hvorMange = "";
 				return null;
 			}
 		}
 		model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+		System.out.println("Finnes ikke!! :o");
 		hvorMange = "";
 		return null;
 	}
