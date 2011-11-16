@@ -600,16 +600,12 @@ public class Start extends Thread{
 			}
 		});
 
-		btnDel = new JButton("del");
+		btnDel = new JButton("C");
 		btnDel.setBounds(16, 567, 75, 45);
 		bestilling.add(btnDel);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				if(count.length()>1)
-//					count = count.substring(0, count.length()-1);
-//				label.setText("x " + count);
-//				model.remove(model.getSize()-1);
-//				model.addElement(count+" x " +sisteTrykteKnapp);
+				hvorMange = "";
 			}
 		});
 		
