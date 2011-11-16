@@ -1422,7 +1422,7 @@ public class Start extends Thread{
 						retterKommentar.setText("");
 						retterPris.setText("");
 					}catch(Exception e){
-						System.out.println("Failed to add new User into database");
+						System.out.println("Failed to add new Product into database");
 					}					
 				}
 			}
