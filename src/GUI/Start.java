@@ -55,7 +55,6 @@ public class Start extends Thread{
 	private JLabel label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
 	private JTabbedPane tabbedPane;
-	private String count;
 	private JRadioButton rdbtnKort, rdbtnKontant;
 	private JButton toggleButton, toggleButton_1, toggleButton_2, toggleButton_3, toggleButton_4, toggleButton_5, toggleButton_6, toggleButton_7;
 	private JButton toggleButton_8, tglbtnCola, tglbtnFanta, tglbtnUrge, tglbtnSprite, tglbtnFarris, tglbtnLol;
@@ -202,8 +201,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.1");		
+				else{
+					sisteTrykteKnapp = "Pizza nr.1";
+					menyKnappTrykk("Pizza nr.1");		
+				}
 			}
 		});
 		toggleButton.setBounds(16, 45, 75, 45);
@@ -219,8 +220,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.2");
+				else{
+					sisteTrykteKnapp = "Pizza nr.2";
+					menyKnappTrykk("Pizza nr.2");
+				}
 			}
 		});
 
@@ -234,8 +237,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.3");
+				else{
+					sisteTrykteKnapp = "Pizza nr.3";
+					menyKnappTrykk("Pizza nr.3");
+				}
 			}
 		});
 
@@ -250,8 +255,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.4");
+				else{
+					sisteTrykteKnapp = "Pizza nr.4";
+					menyKnappTrykk("Pizza nr.4");
+				}
 			}
 		});
 
@@ -265,8 +272,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.5");
+				else{
+					sisteTrykteKnapp = "Pizza nr.5";
+					menyKnappTrykk("Pizza nr.5");
+				}
 			}
 		});
 
@@ -280,8 +289,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.6");
+				else{
+					sisteTrykteKnapp = "Pizza nr.6";
+					menyKnappTrykk("Pizza nr.6");
+				}
 			}
 		});
 		toggleButton_6 = new JButton("Nr.7");
@@ -294,8 +305,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.7");
+				else{
+					sisteTrykteKnapp = "Pizza nr.7";
+					menyKnappTrykk("Pizza nr.7");
+				}
 			}
 		});
 
@@ -309,8 +322,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.8");
+				else{
+					sisteTrykteKnapp = "Pizza nr.8";
+					menyKnappTrykk("Pizza nr.8");
+				}
 			}
 		});
 
@@ -324,8 +339,10 @@ public class Start extends Thread{
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					sisteTrykteKnapp=menyKnappTrykk("Pizza nr.9");
+				else{
+					sisteTrykteKnapp = "Pizza nr.9";
+					menyKnappTrykk("Pizza nr.9");
+				}
 			}
 		});
 
@@ -341,7 +358,6 @@ public class Start extends Thread{
 		btnFjernAlt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				kvittering.clear();
-				count = "0";
 				model.removeAllElements();
 
 			}
@@ -377,7 +393,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnCola);
 		tglbtnCola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Cola");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Cola";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Cola");
 			}
 		});
 		tglbtnFanta = new JButton("Fanta");
@@ -385,7 +407,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnFanta);
 		tglbtnFanta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Fanta");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Fanta";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Fanta");
 			}
 		});
 		tglbtnSprite = new JButton("Sprite");
@@ -393,7 +421,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnSprite);
 		tglbtnSprite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Sprite");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Sprite";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Sprite");
 			}
 		});
 		tglbtnUrge = new JButton("Urge");
@@ -401,7 +435,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnUrge);
 		tglbtnUrge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Urge");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Urge";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Urge");
 			}
 		});
 		tglbtnFarris = new JButton("Farris");
@@ -409,7 +449,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnFarris);
 		tglbtnFarris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Farris");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Farris";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Farris");
 			}
 		});
 		tglbtnLol = new JButton("Vann");
@@ -417,7 +463,13 @@ public class Start extends Thread{
 		bestilling.add(tglbtnLol);
 		tglbtnLol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				sisteTrykteKnapp=menyKnappTrykk("Vann");
+				if(hvorMange != ""){
+					sisteTrykteKnapp = "Vann";
+					nummerKnappTrykk(hvorMange);
+					hvorMange = "";
+				}
+				else
+					menyKnappTrykk("Vann");
 			}
 		});
 
@@ -525,20 +577,14 @@ public class Start extends Thread{
 		bestilling.add(btnDel);
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(count.length()>1)
-					count = count.substring(0, count.length()-1);
-				label.setText("x " + count);
-				model.remove(model.getSize()-1);
-				model.addElement(count+" x " +sisteTrykteKnapp);
+//				if(count.length()>1)
+//					count = count.substring(0, count.length()-1);
+//				label.setText("x " + count);
+//				model.remove(model.getSize()-1);
+//				model.addElement(count+" x " +sisteTrykteKnapp);
 			}
 		});
 		
-
-		label = new JLabel("x "+ "1");
-		if ( count == null)
-
-			label.setBounds(24, 337, 229, 14);
-		bestilling.add(label);
 
 
 		btnNeste = new JButton("Neste");
@@ -1394,18 +1440,19 @@ public class Start extends Thread{
 				return a;
 			}
 		}
-		count = null;
 		model.addElement("1" +" x "+a); 
 		return a;
 	}
 	private String nummerKnappTrykk(String nr){
 		if(model.isEmpty()){
+			System.out.println("The mamas and the papas");
 			model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+			hvorMange = "";
 			return null;
 		}
 
 		for (int i = 0; i < model.getSize(); i++) {
-			if(model.get(i).toString().substring(4).equalsIgnoreCase(sisteTrykteKnapp) || model.get(i).toString().substring(5).equalsIgnoreCase(sisteTrykteKnapp) || model.get(i).toString().substring(6).equalsIgnoreCase(sisteTrykteKnapp)){
+			if(model.get(i).toString().charAt(model.get(i).toString().length()-1) == sisteTrykteKnapp.charAt(sisteTrykteKnapp.length()-1)){
 				int teller = 0, temp = 0;
 				String tmp = "";
 				while(model.get(i).toString().charAt(teller) != ' '){
@@ -1416,8 +1463,12 @@ public class Start extends Thread{
 				Object o = model.remove(i);
 				o = (temp + " x " + sisteTrykteKnapp);
 				model.add(i, o);
+				hvorMange = "";
+				return null;
 			}
 		}
+		model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+		hvorMange = "";
 		return null;
 	}
 	public void getProducts(){
