@@ -63,22 +63,6 @@ public class Order {
 			this.products += "-";
 		}
 	}
-//	public void setProducts(String[] produkter){
-//		this.products = "";
-//		for(int i = 0; i<produkter.length; i++){
-//			int teller = 0;
-//			while(produkter[i].charAt(teller) != ' '){
-//				this.products += produkter[i].charAt(teller);
-//				teller++;
-//			}
-//			this.products += ":"; 
-//			this.products += produkter[i].charAt(produkter[i].length()-1);
-//			if(i != produkter.length-1){
-//				this.products += "-";
-//			}
-//		}
-//	}
-	//2:15-3:2-4:7
 	public void createFoodList(String s){
 		int teller = 0;
 		for(int i = 0; i<s.length(); i++){
@@ -147,26 +131,28 @@ public class Order {
 		DefaultListModel dlm = new DefaultListModel();
 		for(int i = 0; i<antall.length; i++){
 			try{
+				System.out.println("hehe: " + produkt[i]);
 				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
-//				dlm.addValue(antall[i] + " x " + navn);	
 				dlm.add(i, antall[i] + " x " + navn);
 			}catch(Exception e){
-				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
+//				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
 			}
 		}		
 		return dlm;
 	}
 	public String getProductsString(){
 		String temp = "\t" + "Gruppe 10"  + "\n" + "\tPizzeria\n" + "***********************************************" + "\n\n";
-		long sum = 0;
+		double sum = 0;
 		for (int i = 0; i < antall.length; i++) {
 			try {
-				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
-				String pris = String.valueOf(DatabaseConnector.getProduct(produkt[i]).getPrice()*antall[i]);
+				Product p = DatabaseConnector.getProduct(produkt[i]);
+				String navn = p.getName();
+				String pris = String.valueOf(p.getPrice()*antall[i]);
 				temp += String.valueOf(antall[i]) + " x " + navn + "\t\t" + pris + ",-" + "\n";
-				sum += DatabaseConnector.getProduct(produkt[i]).getPrice() * antall[i];
+				sum += Double.parseDouble(pris);
 			} catch (Exception e) {
-				System.out.println("Greide ikke lage kvittering String");
+//				System.out.println("Greide ikke lage kvittering String");
+//				e.printStackTrace();
 			}
 		}
 		temp += "***********************************************" + "\n" + "Sum:" + "\t\t" + sum + ",-";
