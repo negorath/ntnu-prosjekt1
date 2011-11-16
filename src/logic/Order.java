@@ -130,7 +130,6 @@ public class Order {
 		for(int i = 0; i<antall.length; i++){
 			try{
 				if(!produkt[i].equals("")){
-					System.out.println("hehe: " + produkt[i]);
 					String navn = DatabaseConnector.getProduct(produkt[i]).getName();
 					dlm.add(i, antall[i] + " x " + navn);					
 				}
