@@ -50,6 +50,8 @@ import javax.swing.JMenuItem;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import javax.swing.JTextArea;
+import javax.swing.event.MenuKeyListener;
+import javax.swing.event.MenuKeyEvent;
 
 public class Start extends Thread{
 	private JFrame frame;
@@ -1471,11 +1473,26 @@ public class Start extends Thread{
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
+		JMenu mnHjelp = new JMenu("Hjelp");
+		menuBar.add(mnHjelp);
 		
-		JMenuItem mntmAbout = new JMenuItem("About");
-		mnHelp.add(mntmAbout);
+		JMenuItem mntmInstruksjoner = new JMenuItem("Instruksjoner");
+		mntmInstruksjoner.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Instruksjoner.run();
+			}
+		});
+		mnHjelp.add(mntmInstruksjoner);
+		
+		JMenuItem mntmOm = new JMenuItem("Om");
+		mntmOm.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				Om.run();
+			}
+		});
+		mnHjelp.add(mntmOm);
 
 
 //		for(int i = 0; i<users.size(); i++){
