@@ -186,19 +186,20 @@ public class DatabaseConnector{
     
     public static void newUser(User user)throws Exception{
     	ResultSet newUser_rs = stmt.executeQuery("SELECT COUNT(*) FROM addresses");
-    	newUser_rs.first();
-    	con.setAutoCommit(true);
-    	int address_id = Integer.parseInt(newUser_rs.getString(1)) + 1;
-    	int houseNumber = user.getAddress().getHouseNumber();
-    	String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
-    	stmt.executeUpdate("INSERT into addresses VALUES (" + address_id + ", '" +street +"', '"+ houseNumber +"', 'a', '"+ zipcode +"', '"+ city +"', 'NO')");
-       	stmt.executeUpdate("INSERT into users (id, name, phone, address_id) VALUES (" + address_id + ", '" + user.getName() + "', '" + user.getPhone() + "', '"+ address_id + "')");
-    	newUser_rs.close();
-    	con.setAutoCommit(false);
+    	if(newUser_rs.first() == true){
+    		con.setAutoCommit(true);
+    		int address_id = Integer.parseInt(newUser_rs.getString(1)) + 1;
+    		int houseNumber = user.getAddress().getHouseNumber();
+    		String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
+    		stmt.executeUpdate("INSERT into addresses VALUES (" + address_id + ", '" +street +"', '"+ houseNumber +"', 'a', '"+ zipcode +"', '"+ city +"', 'NO')");
+    		stmt.executeUpdate("INSERT into users (id, name, phone, address_id) VALUES (" + address_id + ", '" + user.getName() + "', '" + user.getPhone() + "', '"+ address_id + "')");
+    		newUser_rs.close();
+    		con.setAutoCommit(false);
+    	}
     }
     
     public static DefaultListModel getOrders(String action) throws Exception{
-    	String sql = "SELECT user_id, ordered, due, delivered, id, products FROM orders WHERE ";
+    	String sql = "SELECT user_id, ordered, due, delivered, id, products, comment FROM orders WHERE ";
     	if (action.equals("due")) {
     		sql += "due IS NULL ORDER BY ordered";
     	} else if(action.equals("deliver")) {
