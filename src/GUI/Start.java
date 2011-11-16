@@ -80,7 +80,6 @@ public class Start extends Thread{
 	private JButton button_9;
 	private String hvorMange = "";
 	private JTextField husnummer;
-	private JTextField textField_1;
 	private JLabel lblPostnummer;
 	private JLabel lblPoststed;
 	private JLabel lblKommentar;
@@ -715,17 +714,12 @@ public class Start extends Thread{
 		bestillingsInfo.add(lblGatenavn);
 
 		husnummer = new JTextField();
-		husnummer.setBounds(216, 83, 34, 28);
+		husnummer.setBounds(216, 83, 55, 28);
 		bestillingsInfo.add(husnummer);
 		husnummer.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(260, 83, 34, 28);
-		bestillingsInfo.add(textField_1);
-
-		JLabel lblHusnr = new JLabel("Husnr og bokstav");
-		lblHusnr.setBounds(204, 69, 90, 14);
+		JLabel lblHusnr = new JLabel("Husnummer");
+		lblHusnr.setBounds(218, 70, 90, 14);
 		bestillingsInfo.add(lblHusnr);
 
 		lblPostnummer = new JLabel("Postnummer");
@@ -798,7 +792,6 @@ public class Start extends Thread{
 				poststed.setText("");
 				kommentar.setText("");
 				husnummer.setText("");
-				textField_1.setText("");
 				chckbxLevering.setSelected(false);
 				rdbtnKort.setSelected(false);
 				rdbtnKontant.setSelected(false);
@@ -1646,12 +1639,3 @@ public class Start extends Thread{
 		return lol;
 	}
 }
-
-/*
-<table width="100%">
-<tr>
-<td align="left">Left aligned text</td>
-<td align="right">Right aligned text</td>
-</tr>
-</table>
-*/
