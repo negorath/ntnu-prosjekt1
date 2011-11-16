@@ -58,8 +58,10 @@ public class Order {
 				}
 			}
 			this.products += ":";
-				this.products += produkter[i].charAt(produkter[i].length()-1);
-			this.products += "-";
+			this.products += produkter[i].charAt(produkter[i].length()-1);
+			if(i < produkter.length){
+				this.products += "-";				
+			}
 		}
 	}
 	public void createFoodList(String s){

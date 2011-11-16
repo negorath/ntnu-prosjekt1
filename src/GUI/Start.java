@@ -47,6 +47,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.JTextArea;
 
 public class Start extends Thread{
 	private JFrame frame;
@@ -64,6 +65,7 @@ public class Start extends Thread{
 	private JList list_1;
 	private BufferedImage image;
 
+	private JTextArea textArea;
 	private boolean isBrus = false;
 	private ArrayList<String> kvittering = new ArrayList<String>();
 	private JList list;
@@ -754,6 +756,7 @@ public class Start extends Thread{
 					User user = DatabaseConnector.getUser(nummer.getText());
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
+					order.setKommentar(kommentar.getText());
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
@@ -777,6 +780,7 @@ public class Start extends Thread{
 						//This time the user have been created and is in the database
 						Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 						order.setProducts(temp);
+						order.setKommentar(kommentar.getText());
 						temp=null;
 						DatabaseConnector.newOrder(order);
 						getOrders();
@@ -852,7 +856,7 @@ public class Start extends Thread{
 						if(listModelOrders.size() > 0){
 							list_3.setSelectedIndex(selected);							
 						}
-						
+						textArea.setText(o.getKommentar());
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
@@ -898,6 +902,7 @@ public class Start extends Thread{
 						if(listModelFinished.size() > 0){
 							list_4.setSelectedIndex(selected);							
 						}
+						textArea.setText(o.getKommentar());
 					}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
 					}
@@ -1035,7 +1040,7 @@ public class Start extends Thread{
 
 		
 		showProductList = new JList(showProductModel);
-		showProductList.setBounds(259, 151, 151, 297);
+		showProductList.setBounds(259, 151, 151, 195);
 		Utgaende.add(showProductList);
 
 		panel_4 = new JPanel();
@@ -1048,6 +1053,11 @@ public class Start extends Thread{
 		kvitering.setBounds(6, 22, 288, 487);
 		kvitering.setEditable(false);
 		panel_4.add(kvitering);
+		
+		textArea = new JTextArea();
+		textArea.setBounds(255, 357, 158, 193);
+		Utgaende.add(textArea);
+		textArea.setEditable(false);
 
 
 

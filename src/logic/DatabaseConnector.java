@@ -221,11 +221,13 @@ public class DatabaseConnector{
     		String delivered = orders_rs.getString(4);
     		String id = orders_rs.getString(5);
     		String products = orders_rs.getString(6);
+    		String comment = orders_rs.getString(7);
     		Order o =  new Order(user_id);
     		o.createFoodList(products);
     		o.setId(id);
     		o.setDue(due);
     		o.setDelivered(delivered);
+    		o.setKommentar(comment);
     		orders.addElement(o);
     	}while(orders_rs.next());
     	orders_rs.close();
@@ -234,7 +236,7 @@ public class DatabaseConnector{
     
     public static void newOrder(Order order){
     	try{
-    		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "'");
+    		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "', comment='" + order.getKommentar() + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
@@ -386,7 +388,7 @@ public class DatabaseConnector{
 			}
 		}
 		int id = Integer.parseInt(stringID);
-		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products FROM orders WHERE id ='" + id + "'");
+		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products, comment FROM orders WHERE id ='" + id + "'");
 		getOrderRs.first();
 		String i = getOrderRs.getString(1);
 		String userID = getOrderRs.getString(2);
@@ -394,11 +396,13 @@ public class DatabaseConnector{
 		String due = getOrderRs.getString(4);
 		String delivered = getOrderRs.getString(5);
 		String products = getOrderRs.getString(6);
+		String comment = getOrderRs.getString(7);
 		Order o = new Order(userID);
 		o.setDue(due);
 		o.setId(i);
 		o.setDelivered(delivered);
 		o.createFoodList(products);
+		o.setKommentar(comment);
 		return o;
 	}
 }
