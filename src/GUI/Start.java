@@ -64,6 +64,7 @@ public class Start extends Thread{
 	private JList list_1;
 	private BufferedImage image;
 
+	private boolean isBrus = false;
 	private ArrayList<String> kvittering = new ArrayList<String>();
 	private JList list;
 	private DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), listModelFinished = new DefaultListModel();
@@ -395,11 +396,15 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Cola";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
+				else{
+					isBrus = true;
+					sisteTrykteKnapp = "Cola";
 					menyKnappTrykk("Cola");
+				}
 			}
 		});
 		tglbtnFanta = new JButton("Fanta");
@@ -409,11 +414,15 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Fanta";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
+				else{
+					sisteTrykteKnapp = "Fanta";
+					isBrus = true;
 					menyKnappTrykk("Fanta");
+				}
 			}
 		});
 		tglbtnSprite = new JButton("Sprite");
@@ -423,39 +432,51 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Sprite";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
+				else{
+					sisteTrykteKnapp = "Sprite";
+					isBrus = true;
 					menyKnappTrykk("Sprite");
+				}
 			}
 		});
-		tglbtnUrge = new JButton("Urge");
+		tglbtnUrge = new JButton("Cola-Zero");
 		tglbtnUrge.setBounds(16, 291, 75, 45);
 		bestilling.add(tglbtnUrge);
 		tglbtnUrge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
-					sisteTrykteKnapp = "Urge";
+					sisteTrykteKnapp = "Cola-Zero";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					menyKnappTrykk("Urge");
+				else{
+					sisteTrykteKnapp = "Cola-Zero";
+					isBrus = true;
+					menyKnappTrykk("Cola-Zero");
+				}
 			}
 		});
-		tglbtnFarris = new JButton("Farris");
+		tglbtnFarris = new JButton("BonAqua");
 		tglbtnFarris.setBounds(101, 291, 75, 45);
 		bestilling.add(tglbtnFarris);
 		tglbtnFarris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
-					sisteTrykteKnapp = "Farris";
+					sisteTrykteKnapp = "BonAqua";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
-					menyKnappTrykk("Farris");
+				else{
+					sisteTrykteKnapp = "BonAqua";
+					isBrus = true;
+					menyKnappTrykk("BonAqua");
+				}
 			}
 		});
 		tglbtnLol = new JButton("Vann");
@@ -465,11 +486,15 @@ public class Start extends Thread{
 			public void actionPerformed(ActionEvent arg0) {
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Vann";
+					isBrus = true;
 					nummerKnappTrykk(hvorMange);
 					hvorMange = "";
 				}
-				else
+				else{
+					sisteTrykteKnapp = "Vann";
+					isBrus = true;
 					menyKnappTrykk("Vann");
+				}
 			}
 		});
 
@@ -1421,7 +1446,7 @@ public class Start extends Thread{
 		try{
 			getProducts();
 			String pizzaListe = "<html>";
-			for (int j = 0; j < m2.size(); j++) {
+			for (int j = 0; j < 9; j++) {
 				Product p = (Product)m2.getElementAt(j);
 				pizzaListe += "#" + p.getId() + " " + p.toString() + "<br>" + p.getDescription() + "<br><br>";
 			}
@@ -1432,20 +1457,57 @@ public class Start extends Thread{
 		}
 	}
 	private String menyKnappTrykk(String a) {
+		if (isBrus) {
+			for (int i = 0; i < model.getSize(); i++) {
+				if (model.get(i).toString().charAt(model.get(i).toString().length()-3) == a.charAt(a.length()-3)) {
+					nummerKnappTrykk("1");
+					return a;
+				}
+			}
+			isBrus = false;
+			model.addElement("1" +" x "+a);
+			return a;
+		}
 		for (int i = 0; i < model.getSize(); i++) {
 			if (model.get(i).toString().charAt(model.get(i).toString().length()-1) == a.charAt(a.length()-1)) {
 				nummerKnappTrykk("1");
-				System.out.println("A bag of shit");
 				return a;
 			}
 		}
-		System.out.println("hŒper ikke denne vises");
 		model.addElement("1" +" x "+a); 
 		return a;
 	}
 	private String nummerKnappTrykk(String nr){
+		if (isBrus) {
+			isBrus = false;
+			if(model.isEmpty()){
+				model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+				hvorMange = "";
+				isBrus = false;
+				return null;
+			}
+			for (int i = 0; i < model.getSize(); i++) {
+				if(model.get(i).toString().charAt(model.get(i).toString().length()-3) == sisteTrykteKnapp.charAt(sisteTrykteKnapp.length()-3)){
+					int teller = 0, temp = 0;
+					String tmp = "";
+					while(model.get(i).toString().charAt(teller) != ' '){
+						tmp += model.get(i).toString().charAt(teller);
+						teller++;
+					}
+					temp = Integer.parseInt(tmp) + Integer.parseInt(nr);
+					Object o = model.remove(i);
+					o = (temp + " x " + sisteTrykteKnapp);
+					model.add(i, o);
+					hvorMange = "";
+					isBrus = false;
+					return null;
+				}
+			}
+			model.addElement(hvorMange + " x " + sisteTrykteKnapp);
+			hvorMange = "";
+			return null;
+		}
 		if(model.isEmpty()){
-			System.out.println("The mamas and the papas");
 			model.addElement(hvorMange + " x " + sisteTrykteKnapp);
 			hvorMange = "";
 			return null;
@@ -1463,13 +1525,11 @@ public class Start extends Thread{
 				Object o = model.remove(i);
 				o = (temp + " x " + sisteTrykteKnapp);
 				model.add(i, o);
-				System.out.println("den finnes");
 				hvorMange = "";
 				return null;
 			}
 		}
 		model.addElement(hvorMange + " x " + sisteTrykteKnapp);
-		System.out.println("Finnes ikke!! :o");
 		hvorMange = "";
 		return null;
 	}
@@ -1557,6 +1617,7 @@ public class Start extends Thread{
 
 		return temp;
 	}
+	
 	public String createOrder(JList l){
 
 		int temp = list_2.getSize() + 1;
