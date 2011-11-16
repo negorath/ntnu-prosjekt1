@@ -177,7 +177,7 @@ public class Start extends Thread{
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		
+		frame.setTitle("Pizza Pie In The Sky");
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		int width = 1000, height = 720;
