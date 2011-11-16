@@ -755,16 +755,46 @@ public class Start extends Thread{
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
-					User user = DatabaseConnector.getUser(nummer.getText());
+					User u = DatabaseConnector.getUser(nummer.getText());
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
 					order.setKommentar(kommentar.getText());
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();
-					tmp = user.getAddress().getStreet();
-					if (user.getAddress().getStreet().contains(" ")) {
-						tmp = tmp.replace(' ' , '+');
+					tmp = u.getAddress().getStreet();
+					String tmp2 = u.getAddress().getCity();
+					if (u.getAddress().getStreet().contains(" ") ||
+						u.getAddress().getStreet().contains("æ") ||
+						u.getAddress().getStreet().contains("Æ") ||
+						u.getAddress().getStreet().contains("ø") ||
+						u.getAddress().getStreet().contains("Ø") ||
+						u.getAddress().getStreet().contains("å") ||
+						u.getAddress().getStreet().contains("Å")
+						) {
+							tmp = tmp.replace(' ' , '+');
+							tmp = tmp.replace('æ' , 'e');
+							tmp = tmp.replace('ø' , 'o');
+							tmp = tmp.replace('å' , 'a');
+							tmp = tmp.replace('Æ' , 'e');
+							tmp = tmp.replace('Ø' , 'o');
+							tmp = tmp.replace('Å' , 'a');
+					}
+					if (u.getAddress().getCity().contains(" ") ||
+							u.getAddress().getCity().contains("æ") ||
+							u.getAddress().getCity().contains("Æ") ||
+							u.getAddress().getCity().contains("ø") ||
+							u.getAddress().getCity().contains("Ø") ||
+							u.getAddress().getCity().contains("å") ||
+							u.getAddress().getCity().contains("Å")
+							) {
+								tmp2 = tmp.replace(' ' , '+');
+								tmp2 = tmp.replace('æ' , 'e');
+								tmp2 = tmp.replace('ø' , 'o');
+								tmp2 = tmp.replace('å' , 'a');
+								tmp2 = tmp.replace('Æ' , 'e');
+								tmp2 = tmp.replace('Ø' , 'o');
+								tmp2 = tmp.replace('Å' , 'a');
 					}
 					try{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
@@ -1028,7 +1058,7 @@ public class Start extends Thread{
 								tmp2 = tmp.replace('Æ' , 'e');
 								tmp2 = tmp.replace('Ø' , 'o');
 								tmp2 = tmp.replace('Å' , 'a');
-						}
+					}
 					String constant = "http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=";
 					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + tmp2 + ",norway";
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
