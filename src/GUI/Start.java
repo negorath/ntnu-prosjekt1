@@ -787,7 +787,7 @@ public class Start extends Thread{
 								tmp2 = tmp.replace('Å' , 'a');
 					}
 					try{
-						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + poststed.getText() + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
+						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
 						lblAddressNotFound.setVisible(true);
