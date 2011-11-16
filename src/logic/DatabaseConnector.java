@@ -185,17 +185,16 @@ public class DatabaseConnector{
     }
     
     public static void newUser(User user)throws Exception{
-    	ResultSet newUser_rs = stmt.executeQuery("SELECT COUNT(*) FROM addresses");
-    	if(newUser_rs.first() == true){
-    		con.setAutoCommit(true);
-    		int address_id = Integer.parseInt(newUser_rs.getString(1)) + 1;
-    		int houseNumber = user.getAddress().getHouseNumber();
-    		String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
-    		stmt.executeUpdate("INSERT into addresses VALUES (" + address_id + ", '" +street +"', '"+ houseNumber +"', 'a', '"+ zipcode +"', '"+ city +"', 'NO')");
-    		stmt.executeUpdate("INSERT into users (id, name, phone, address_id) VALUES (" + address_id + ", '" + user.getName() + "', '" + user.getPhone() + "', '"+ address_id + "')");
-    		newUser_rs.close();
-    		con.setAutoCommit(false);
-    	}
+    	con.setAutoCommit(true);
+    	int houseNumber = user.getAddress().getHouseNumber();
+    	String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
+    	stmt.executeUpdate("INSERT into addresses VALUES (street='"+ street + "', houseNumber='"+ houseNumber +"', zipcode='"+ zipcode +"', city='"+ city +")");
+    	ResultSet newUser_rs = stmt.executeQuery("SELECT MAX(id) FROM addresses");
+    	newUser_rs.first();
+    	String address_id = newUser_rs.getString(1);
+    	stmt.executeUpdate("INSERT into users VALUES (name='" + user.getName() + "', phone='" + user.getPhone() + "', address_id'"+ address_id + "')");
+    	newUser_rs.close();
+    	con.setAutoCommit(false);
     }
     
     public static DefaultListModel getOrders(String action) throws Exception{
