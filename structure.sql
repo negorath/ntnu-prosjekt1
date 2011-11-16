@@ -50,6 +50,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `due` timestamp NULL DEFAULT NULL,
   `delivered` timestamp NULL DEFAULT NULL,
   `products` varchar(255) NOT NULL,
+  `comment` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 

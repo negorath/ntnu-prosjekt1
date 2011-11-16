@@ -813,7 +813,7 @@ public class Start extends Thread{
 		});
 		list_3.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mousePressed(MouseEvent arg0) {
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_3.getSelectedIndex();
@@ -859,7 +859,7 @@ public class Start extends Thread{
 		});
 		list_4.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void mousePressed(MouseEvent arg0) {
 				if(arg0.getClickCount() == 1){
 					try{
 						int selected = list_4.getSelectedIndex();

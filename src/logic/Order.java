@@ -10,6 +10,7 @@ public class Order {
 	private String products;
 	private String ordered, due = "", delivered;
 	private int[] antall;
+	private String kommentar;
 	private String[] produkt;
 	/**
 	 * 
@@ -149,7 +150,7 @@ public class Order {
 					Product p = DatabaseConnector.getProduct(produkt[i]);
 					String navn = p.getName();
 					String pris = String.valueOf(p.getPrice()*antall[i]);
-					temp += String.valueOf(antall[i]) + " x " + navn + "\t\t" + pris + ",-" + "\n";
+					temp += String.valueOf(antall[i]) + " x " + navn + "\t" + pris + ",-" + "\n";
 					sum += Double.parseDouble(pris);					
 				}
 			} catch (Exception e) {
@@ -160,5 +161,12 @@ public class Order {
 		temp += "***********************************************" + "\n" + "Sum:" + "\t\t" + sum + ",-";
 		
 		return temp;
+	}
+	
+	public void setKommentar(String kommentar){
+		this.kommentar = kommentar;
+	}
+	public String getKommentar(){
+		return this.kommentar;
 	}
 }
