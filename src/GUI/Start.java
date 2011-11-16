@@ -866,6 +866,8 @@ public class Start extends Thread{
 						Order o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());							
 						DatabaseConnector.edit(o.getId());
 						getOrders();
+						textArea.setText("");
+						showProductModel.clear();
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -912,6 +914,8 @@ public class Start extends Thread{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						DatabaseConnector.notFinished(o.getId());
 						getOrders();
+						textArea.setText("");
+						showProductModel.clear();
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -929,6 +933,8 @@ public class Start extends Thread{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
 						DatabaseConnector.deleteOrder(o);
 						getOrders();
+						textArea.setText("");
+						showProductModel.clear();
 					}catch(Exception ett){
 						ett.printStackTrace();
 					}
