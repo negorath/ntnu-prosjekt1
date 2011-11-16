@@ -994,7 +994,6 @@ public class Start extends Thread{
 					String tittle = u.getAddress().getStreet() + " " + String.valueOf(u.getAddress().getHouseNumber()) + ", " + u.getAddress().getCity();
 					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
-					System.out.println(constant + url);
 				}catch(Exception e){
 					e.printStackTrace();
 					lblAddressNotFound.setVisible(true);
