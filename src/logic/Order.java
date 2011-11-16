@@ -131,11 +131,14 @@ public class Order {
 		DefaultListModel dlm = new DefaultListModel();
 		for(int i = 0; i<antall.length; i++){
 			try{
-				System.out.println("hehe: " + produkt[i]);
-				String navn = DatabaseConnector.getProduct(produkt[i]).getName();
-				dlm.add(i, antall[i] + " x " + navn);
+				if(!produkt[i].equals("")){
+					System.out.println("hehe: " + produkt[i]);
+					String navn = DatabaseConnector.getProduct(produkt[i]).getName();
+					dlm.add(i, antall[i] + " x " + navn);					
+				}
 			}catch(Exception e){
 //				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
+//				e.printStackTrace();
 			}
 		}		
 		return dlm;
@@ -145,11 +148,13 @@ public class Order {
 		double sum = 0;
 		for (int i = 0; i < antall.length; i++) {
 			try {
-				Product p = DatabaseConnector.getProduct(produkt[i]);
-				String navn = p.getName();
-				String pris = String.valueOf(p.getPrice()*antall[i]);
-				temp += String.valueOf(antall[i]) + " x " + navn + "\t\t" + pris + ",-" + "\n";
-				sum += Double.parseDouble(pris);
+				if(!produkt[i].equals("")){
+					Product p = DatabaseConnector.getProduct(produkt[i]);
+					String navn = p.getName();
+					String pris = String.valueOf(p.getPrice()*antall[i]);
+					temp += String.valueOf(antall[i]) + " x " + navn + "\t\t" + pris + ",-" + "\n";
+					sum += Double.parseDouble(pris);					
+				}
 			} catch (Exception e) {
 //				System.out.println("Greide ikke lage kvittering String");
 //				e.printStackTrace();
