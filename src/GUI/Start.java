@@ -55,7 +55,8 @@ import javax.swing.event.MenuKeyEvent;
 
 public class Start extends Thread{
 	private JFrame frame;
-	private JTextField nummer, navn, gatenavn, postnummer, poststed, kommentar;
+	private JTextField nummer, navn, gatenavn, postnummer, poststed;
+	JTextPane kommentar;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JLabel label;
 	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
@@ -119,7 +120,7 @@ public class Start extends Thread{
 	private JTextField redigerPostSted;
 	private JTextField retterNavn;
 	private JTextField retterPris;
-	private JTextField retterKommentar;
+	private JTextPane retterKommentar;
 	private JLabel lblProduktnavn;
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
@@ -665,10 +666,9 @@ public class Start extends Thread{
 		bestillingsInfo.add(poststed);
 		poststed.setColumns(10);
 
-		kommentar = new JTextField();
+		kommentar = new JTextPane();
 		kommentar.setBounds(16, 190, 190, 93);
 		bestillingsInfo.add(kommentar);
-		kommentar.setColumns(10);
 
 		chckbxLevering = new JCheckBox("Levering");
 		chckbxLevering.setBounds(212, 190, 85, 23);
@@ -1408,7 +1408,7 @@ public class Start extends Thread{
 		retterPris.setBounds(453, 64, 156, 60);
 		retter.add(retterPris);
 
-		retterKommentar = new JTextField();
+		retterKommentar = new JTextPane();
 		retterKommentar.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -1427,7 +1427,6 @@ public class Start extends Thread{
 			}
 		});
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
-		retterKommentar.setColumns(10);
 		retterKommentar.setBounds(10, 199, 408, 202);
 		retter.add(retterKommentar);
 
