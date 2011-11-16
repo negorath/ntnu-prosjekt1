@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
 
 import java.awt.Color;
@@ -17,6 +18,7 @@ import javax.swing.JTextField;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Toolkit;
+import javax.swing.text.html.HTMLEditorKit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -93,7 +95,7 @@ public class Start extends Thread{
 	private ArrayList<User> users = new ArrayList<User>();
 
 	private JPanel panel_4;
-	private JEditorPane kvitering;
+	private JTextPane kvitering;
 	private JLabel lblAddressNotFound;
 	private DatabaseConnector con = new DatabaseConnector();
 	private JPanel kunder;
@@ -1040,12 +1042,13 @@ public class Start extends Thread{
 
 		panel_4 = new JPanel();
 		panel_4.setBorder(new TitledBorder(null, "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_4.setBounds(676, 35, 303, 515);
+		panel_4.setBounds(676, 35, 297, 515);
 		Utgaende.add(panel_4);
 		panel_4.setLayout(null);
 		
-		kvitering = new JEditorPane();
-		kvitering.setBounds(6, 22, 288, 487);
+		kvitering = new JTextPane();
+		kvitering.setContentType("text/html");
+		kvitering.setBounds(6, 22, 285, 487);
 		kvitering.setEditable(false);
 		panel_4.add(kvitering);
 
@@ -1627,3 +1630,12 @@ public class Start extends Thread{
 		return lol;
 	}
 }
+
+/*
+<table width="100%">
+<tr>
+<td align="left">Left aligned text</td>
+<td align="right">Right aligned text</td>
+</tr>
+</table>
+*/

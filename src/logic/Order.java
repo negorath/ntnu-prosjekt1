@@ -142,7 +142,7 @@ public class Order {
 		return dlm;
 	}
 	public String getProductsString(){
-		String temp = "\t" + "Gruppe 10"  + "\n" + "\tPizzeria\n" + "***********************************************" + "\n\n";
+		String temp = "<html><center>" + "Gruppe 10"  + "<br>" + "\tPizzeria\n" + "</center>" + "<br>" + "*****************************************" + "<br><br>";
 		double sum = 0;
 		for (int i = 0; i < antall.length; i++) {
 			try {
@@ -150,7 +150,7 @@ public class Order {
 					Product p = DatabaseConnector.getProduct(produkt[i]);
 					String navn = p.getName();
 					String pris = String.valueOf(p.getPrice()*antall[i]);
-					temp += String.valueOf(antall[i]) + " x " + navn + "\t" + pris + ",-" + "\n";
+					temp += "<table width='100%'><tr><td align='left'>" + String.valueOf(antall[i]) + " x " + navn + "</td>" + "<td align='right'>" + pris + ",-" + "</td>" + "</tr></table>" + "<br>";
 					sum += Double.parseDouble(pris);					
 				}
 			} catch (Exception e) {
@@ -158,7 +158,7 @@ public class Order {
 //				e.printStackTrace();
 			}
 		}
-		temp += "***********************************************" + "\n" + "Sum:" + "\t\t" + sum + ",-";
+		temp += "*****************************************" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "</html>";
 		
 		return temp;
 	}
