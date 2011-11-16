@@ -954,7 +954,8 @@ public class Start extends Thread{
 				if(listModelFinished.getSize()>0){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						DatabaseConnector.deleteOrder(o);
+//						DatabaseConnector.deleteOrder(o);
+						DatabaseConnector.delivered(o);
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();

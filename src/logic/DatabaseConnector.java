@@ -202,7 +202,7 @@ public class DatabaseConnector{
     	if (action.equals("due")) {
     		sql += "due IS NULL ORDER BY ordered";
     	} else if(action.equals("deliver")) {
-    		sql += "due IS NOT NULL ORDER BY due";
+    		sql += "due IS NOT NULL AND delivered IS NULL ORDER BY due";
     	} else if(action.equals("delivered")) {
     		sql += "delivered IS NOT NULL ORDER BY delivered";
     	} else {
@@ -348,6 +348,17 @@ public class DatabaseConnector{
     		System.out.println("Failed to edit order in database");
     	}
     }
+    
+    public static void delivered(Order o){
+    	try{
+    		con.setAutoCommit(true);
+    		stmt.executeUpdate("UPDATE ORDERS SET delivered=now() WHERE id='" + o.getId() + "'");
+    		con.setAutoCommit(false);
+    	}catch(Exception e){
+    		
+    	}
+    }
+    
     public static void notFinished(String a){
     	try {
 			con.setAutoCommit(true);
