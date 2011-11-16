@@ -188,11 +188,11 @@ public class DatabaseConnector{
     	con.setAutoCommit(true);
     	int houseNumber = user.getAddress().getHouseNumber();
     	String street = user.getAddress().getStreet(), zipcode = user.getAddress().getZipcode(), city = user.getAddress().getCity();
-    	stmt.executeUpdate("INSERT into addresses VALUES (street='"+ street + "', houseNumber='"+ houseNumber +"', zipcode='"+ zipcode +"', city='"+ city +")");
+    	stmt.executeUpdate("INSERT into addresses SET street='"+ street + "', houseNumber='"+ houseNumber +"', houseLetter='a', zipcode='"+ zipcode +"', city='"+ city +"', country='NO'");
     	ResultSet newUser_rs = stmt.executeQuery("SELECT MAX(id) FROM addresses");
     	newUser_rs.first();
     	String address_id = newUser_rs.getString(1);
-    	stmt.executeUpdate("INSERT into users VALUES (name='" + user.getName() + "', phone='" + user.getPhone() + "', address_id'"+ address_id + "')");
+    	stmt.executeUpdate("INSERT into users SET name='" + user.getName() + "', phone='" + user.getPhone() + "', address_id='"+ address_id + "'");
     	newUser_rs.close();
     	con.setAutoCommit(false);
     }

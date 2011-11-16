@@ -647,6 +647,7 @@ public class Start extends Thread{
 		nummer.setBounds(835, 30, 134, 28);
 		bestillingsInfo.add(nummer);
 		nummer.setColumns(10);
+		nummer.setEditable(false);
 
 		gatenavn = new JTextField();
 		gatenavn.setBounds(16, 83, 190, 28);
@@ -781,6 +782,7 @@ public class Start extends Thread{
 						getOrders();
 					}catch(Exception j){
 						System.out.println("Failed to create new User");
+						j.printStackTrace();
 					}
 				}
 				navn.setText("");
