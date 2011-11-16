@@ -1399,33 +1399,6 @@ public class Start extends Thread{
 		return a;
 	}
 	private String nummerKnappTrykk(String nr){
-//		System.out.println(nr);
-//		int temp = 0;
-//		String tmp = "";
-//		if (count == null){
-//			System.out.println("ilu<3");
-//			temp = Integer.parseInt(nr);
-////			count = nr;
-//		}
-//		else{
-//			tmp += count + nr;
-//			temp = Integer.parseInt(tmp);
-////			count += nr;
-//		}
-//		for (int i = 0; i < model.getSize(); i++) {
-//			if (model.get(i).toString().substring(4).equalsIgnoreCase(sisteTrykteKnapp)) {
-//				int mid = Integer.valueOf(String.valueOf(model.get(i).toString().charAt(0))) + temp;
-//				System.out.println(mid);
-//				model.remove(i);
-//				model.addElement(mid + " x " + sisteTrykteKnapp);
-//				return null;
-//			}
-//		}
-//		if(!model.isEmpty()){
-//			System.out.println("why u here man");
-//			model.remove(model.getSize()-1);
-//			model.addElement(count+" x " +sisteTrykteKnapp);			
-//		}
 		if(model.isEmpty()){
 			model.addElement(hvorMange + " x " + sisteTrykteKnapp);
 			return null;
