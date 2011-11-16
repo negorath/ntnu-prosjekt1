@@ -17,7 +17,7 @@ public class Om {
 	 */
 	public static void run() {
 		frame.getContentPane().setBackground(Color.DARK_GRAY);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 305, 120);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setAlwaysOnTop(true);
 		frame.setResizable(false);
@@ -26,7 +26,7 @@ public class Om {
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBackground(new Color(255, 255, 255));
-		textArea.setBounds(10, 11, 430, 255);
+		textArea.setBounds(10, 11, 285, 63);
 		frame.getContentPane().add(textArea);
 		textArea.setEditable(false);
 		
@@ -36,7 +36,7 @@ public class Om {
 				frame.dispose();
 			}
 		});
-		btnLukk.setBounds(10, 272, 430, 23);
+		btnLukk.setBounds(10, 85, 285, 23);
 		frame.getContentPane().add(btnLukk);
 		frame.setVisible(true);
 		
