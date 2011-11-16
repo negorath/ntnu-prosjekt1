@@ -62,16 +62,16 @@ public class Start extends Thread{
 	private JButton button, button_1, button_2, button_3, button_4, button_5, button_6, btnNewButton_1, btnNewButton, btnNeste;
 	private JButton btnIncall;
 	private JCheckBox chckbxLevering; 
-	JList list_1;
-	BufferedImage image;
+	private JList list_1;
+	private BufferedImage image;
 
 	private ArrayList<String> kvittering = new ArrayList<String>();
-	JList list;
-	DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), listModelFinished = new DefaultListModel();
-	DefaultListModel m1 = new DefaultListModel();
-	DefaultListModel m2 = new DefaultListModel();
-	DefaultListModel m3 = new DefaultListModel();
-	DefaultListModel m4 = new DefaultListModel();
+	private JList list;
+	private DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), listModelFinished = new DefaultListModel();
+	private DefaultListModel m1 = new DefaultListModel();
+	private DefaultListModel m2 = new DefaultListModel();
+	private DefaultListModel m3 = new DefaultListModel();
+	private DefaultListModel m4 = new DefaultListModel();
 
 	private JButton button_9;
 	private String hvorMange = "";
@@ -95,7 +95,7 @@ public class Start extends Thread{
 	private JPanel panel_4;
 	private JEditorPane kvitering;
 	private JLabel lblAddressNotFound;
-	DatabaseConnector con = new DatabaseConnector();
+	private DatabaseConnector con = new DatabaseConnector();
 	private JPanel kunder;
 	private JList kunder_list;
 	private JList retter_list;
@@ -118,13 +118,13 @@ public class Start extends Thread{
 	private JLabel lblProduktnavn;
 	private JLabel lblPris;
 	private JLabel lblBeskrivelse;
-	JPanel Retter;
-	DefaultListModel listmodelUsers = new DefaultListModel();
-	DefaultListModel listModelProducts = new DefaultListModel();
-	DefaultListModel listModelOrders = new DefaultListModel();
-	DefaultListModel showProductModel = new DefaultListModel();
+	private JPanel Retter;
+	private DefaultListModel listmodelUsers = new DefaultListModel();
+	private DefaultListModel listModelProducts = new DefaultListModel();
+	private DefaultListModel listModelOrders = new DefaultListModel();
+	private DefaultListModel showProductModel = new DefaultListModel();
 
-	ArrayList<String> alleUsers = new ArrayList<String>();
+	private ArrayList<String> alleUsers = new ArrayList<String>();
 	private JPanel panel_2;
 	private JButton btnLevert;
 	private JPanel panel_1;

@@ -42,21 +42,42 @@ public class Order {
 	public String getProducts() {
 		return products;
 	}
+	
 	public void setProducts(String[] produkter){
 		this.products = "";
+		
 		for(int i = 0; i<produkter.length; i++){
-			int teller = 0;
-			while(produkter[i].charAt(teller) != ' '){
-				this.products += produkter[i].charAt(teller);
-				teller++;
+			boolean bol = true;
+			for(int j = 0; j<produkter[i].length(); j++){
+				if((int)produkter[i].charAt(j) == 32){
+					bol = false;
+				}
+				if(bol){
+					this.products += produkter[i].charAt(j);					
+				}
 			}
-			this.products += ":"; 
-			this.products += produkter[i].charAt(produkter[i].length()-1);
-			if(i != produkter.length-1){
-				this.products += "-";
+			this.products += ":";
+			for(int j = 14; j<produkter[i].length(); j++){
+				this.products += produkter[i].charAt(j);
 			}
+			this.products += "-";
 		}
 	}
+//	public void setProducts(String[] produkter){
+//		this.products = "";
+//		for(int i = 0; i<produkter.length; i++){
+//			int teller = 0;
+//			while(produkter[i].charAt(teller) != ' '){
+//				this.products += produkter[i].charAt(teller);
+//				teller++;
+//			}
+//			this.products += ":"; 
+//			this.products += produkter[i].charAt(produkter[i].length()-1);
+//			if(i != produkter.length-1){
+//				this.products += "-";
+//			}
+//		}
+//	}
 	//2:15-3:2-4:7
 	public void createFoodList(String s){
 		int teller = 0;
