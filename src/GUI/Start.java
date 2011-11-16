@@ -193,7 +193,7 @@ public class Start extends Thread{
 		//---------------------Ny bestilling--------------------------------------
 
 		bestilling = new JPanel();
-		bestilling.setBackground(new Color(230, 230, 250));
+		bestilling.setBackground(new Color(240, 248, 255));
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
