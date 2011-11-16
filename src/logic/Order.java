@@ -57,9 +57,7 @@ public class Order {
 				}
 			}
 			this.products += ":";
-			for(int j = 14; j<produkter[i].length(); j++){
-				this.products += produkter[i].charAt(j);
-			}
+				this.products += produkter[i].charAt(produkter[i].length()-1);
 			this.products += "-";
 		}
 	}
