@@ -33,7 +33,8 @@ public class Om {
 		frame.getContentPane().setLayout(null);
 		
 		JTextArea textArea = new JTextArea();
-		textArea.setBackground(new Color(255, 255, 255));
+		textArea.setForeground(Color.WHITE);
+		textArea.setBackground(Color.DARK_GRAY);
 		textArea.setBounds(10, 11, 193, 101);
 		frame.getContentPane().add(textArea);
 		textArea.setEditable(false);

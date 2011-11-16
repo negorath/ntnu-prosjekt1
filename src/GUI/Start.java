@@ -193,7 +193,7 @@ public class Start extends Thread{
 		//---------------------Ny bestilling--------------------------------------
 
 		bestilling = new JPanel();
-		bestilling.setBackground(new Color(240, 248, 255));
+		bestilling.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
@@ -354,6 +354,7 @@ public class Start extends Thread{
 		});
 
 		reciept = new JPanel();
+		reciept.setBackground(Color.DARK_GRAY);
 		reciept.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kvittering", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		reciept.setBounds(300, 20, 352, 603);
 		bestilling.add(reciept);
@@ -617,7 +618,7 @@ public class Start extends Thread{
 		btnNeste = new JButton("Neste");
 		btnNeste.setForeground(new Color(47, 79, 79));
 		btnNeste.setFont(new Font("Verdana", Font.BOLD, 16));
-		btnNeste.setBackground(new Color(204, 255, 204));
+//		btnNeste.setBackground(new Color(204, 255, 204));
 		btnNeste.setBounds(831, 567, 138, 68);
 		bestilling.add(btnNeste);
 		btnNeste.addActionListener(new ActionListener() {
@@ -1464,6 +1465,7 @@ public class Start extends Thread{
 		buttons.add(toggleButton);buttons.add(toggleButton_1);buttons.add(toggleButton_2);
 		buttons.add(toggleButton_3);buttons.add(toggleButton_4);buttons.add(toggleButton_5);
 		buttons.add(toggleButton_6);buttons.add(toggleButton_7);buttons.add(toggleButton_8);
+		pizzaInfo.setForeground(Color.DARK_GRAY);
 
 
 		pizzaInfo.setBounds(700, 68, 269, 492);
