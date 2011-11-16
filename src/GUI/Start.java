@@ -1495,11 +1495,18 @@ public class Start extends Thread{
 			}
 		});
 		mnHjelp.add(mntmOm);
-
-
-//		for(int i = 0; i<users.size(); i++){
-//			m1.addElement(users.get(i));
-//		}
+		
+		JMenu mnHistorie = new JMenu("Historie");
+		menuBar.add(mnHistorie);
+		
+		JMenuItem mntmOrdrehistorikk = new JMenuItem("Ordrehistorikk");
+		mntmOrdrehistorikk.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				History.run();				
+			}
+		});
+		mnHistorie.add(mntmOrdrehistorikk);
 	}
 	public void lagListe(){
 		try{

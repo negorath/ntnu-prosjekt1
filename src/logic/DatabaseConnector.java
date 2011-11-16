@@ -82,10 +82,9 @@ public class DatabaseConnector{
     	user.setUserId(id);
     	return user;
     }
-    /**
-     * 
+    /** 
      * @param Userid from database
-     * @return user from database
+     * @return users name from database
      * @throws Exception
      */
     public static String getUser(int id) throws Exception{
@@ -95,7 +94,9 @@ public class DatabaseConnector{
     	getUser_rs.close();
     	return s;
     }
-    
+    /**
+     * user id, returns user
+     */
     public static String getPhoneByUserId(int id) throws Exception{
     	ResultSet getUser_rs = stmt.executeQuery("SELECT phone FROM users WHERE id='" + id + "'");
     	getUser_rs.first();

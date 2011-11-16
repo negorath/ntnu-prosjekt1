@@ -127,6 +127,9 @@ public class Order {
 	public void setDelivered(String s){
 		this.delivered = s;
 	}
+	public String getDelivered(){
+		return this.delivered;
+	}
 	
 	public DefaultListModel getProductsAsDefaultListModel(){
 		DefaultListModel dlm = new DefaultListModel();
