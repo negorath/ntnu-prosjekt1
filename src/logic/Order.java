@@ -47,6 +47,27 @@ public class Order {
 	public void setProducts(String[] produkter){
 		this.products = "";
 		
+		//sjekker om det er drikkevarer
+		
+		//121 x asfasd
+		int mellomrom = 0;
+		for(int i = 0; i<produkter.length; i++){
+			for(int j = 0; j<produkter[0].length(); j++){
+				if(mellomrom == 0){
+					this.products += produkter[i].charAt(j);
+				}
+				if(mellomrom == 1){
+					this.products += ":";
+				}
+				if((int)produkter[i].charAt(j) == 32){
+					mellomrom++;
+				}
+				else if(mellomrom > 1){
+					this.products += produkter[i].charAt(j);
+				}
+			}
+		}
+		this.products += "-";
 		for(int i = 0; i<produkter.length; i++){
 			boolean bol = true;
 			for(int j = 0; j<produkter[i].length(); j++){
