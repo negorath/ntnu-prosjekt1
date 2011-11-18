@@ -1494,6 +1494,7 @@ public class Start extends Thread{
 			}
 		});
 		menuBar.add(label_1);
+		label_1.setToolTipText("Avslutter Programmet");
 		
 		JMenu mnHjelp = new JMenu("Hjelp");
 		menuBar.add(mnHjelp);
