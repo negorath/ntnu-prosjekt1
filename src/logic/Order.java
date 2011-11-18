@@ -140,8 +140,8 @@ public class Order {
 					dlm.add(i, antall[i] + " x " + navn);
 				}
 			}catch(Exception e){
-				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
-//				e.printStackTrace();
+//				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
+				e.printStackTrace();
 			}
 		}		
 		return dlm;
