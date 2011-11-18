@@ -773,13 +773,29 @@ public class Start extends Thread{
 		btnNeste_1.setBackground(new Color(204, 255, 204));
 		btnNeste_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
+				
 				tabbedPane.setSelectedComponent(Utgaende);
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
+					
+					u.getAddress().setStreet(gatenavn.getText());
+					u.getAddress().setHouseNumber(Integer.parseInt(husnummer.getText()));
+					u.getAddress().setZipcode(postnummer.getText());
+					u.getAddress().setCity(poststed.getText());
+					u.getAddress().save();
+					getUsers();
+					getOrders();
+					if (!u.getAddress().save()) {
+						System.out.println("Klarte ikke Œ lagre");
+					}
+					frame.repaint();
+					
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
+					System.out.println(order.getProducts());
 					order.setKommentar(kommentar.getText());
 					temp=null;
 					DatabaseConnector.newOrder(order);
@@ -825,6 +841,8 @@ public class Start extends Thread{
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
 					}
+					
+					
 				}catch(Exception e){
 					try{
 						Address a = new Address(gatenavn.getText(), Integer.parseInt(husnummer.getText()), postnummer.getText(), poststed.getText());
@@ -1210,7 +1228,7 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil.setBounds(722, 20, 100, 41);
+		leggTil.setBounds(122, 420, 100, 41);
 		kunder.add(leggTil);
 
 		Slett = new JButton("Slett");
@@ -1403,7 +1421,7 @@ public class Start extends Thread{
 				}
 			}
 		});
-		leggTil_retter.setBounds(722, 20, 100, 41);
+		leggTil_retter.setBounds(122, 420, 100, 41);
 		retter.add(leggTil_retter);
 
 		leggTil_retter_1 = new JButton("Slett");

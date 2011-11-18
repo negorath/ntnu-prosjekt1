@@ -58,7 +58,11 @@ public class Order {
 				}
 			}
 			this.products += ":";
-			this.products += produkter[i].charAt(produkter[i].length()-1);
+			if((int)produkter[i].charAt(produkter[i].length()-1) > 57){
+				this.products +=produkter[i].charAt(produkter[i].length()-3);
+			}
+			else
+				this.products += produkter[i].charAt(produkter[i].length()-1);
 			if(i < produkter.length){
 				this.products += "-";				
 			}
