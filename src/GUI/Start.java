@@ -180,6 +180,8 @@ public class Start extends Thread{
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.GRAY);
+		frame.setBackground(Color.DARK_GRAY);
 		frame.setTitle("Pizza Pie In The Sky");
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		
@@ -190,7 +192,7 @@ public class Start extends Thread{
 		frame.getContentPane().setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		tabbedPane.setBounds(0, 0, 1000, 700);
+		tabbedPane.setBounds(1, 1, 998, 695);
 		frame.getContentPane().add(tabbedPane);
 
 		//---------------------Ny bestilling--------------------------------------
@@ -357,7 +359,7 @@ public class Start extends Thread{
 		});
 
 		reciept = new JPanel();
-		reciept.setBackground(Color.DARK_GRAY);
+		reciept.setBackground(Color.GRAY);
 		reciept.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Kvittering", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		reciept.setBounds(300, 20, 352, 603);
 		bestilling.add(reciept);
@@ -1476,6 +1478,8 @@ public class Start extends Thread{
 		
 		
 		menuBar = new JMenuBar();
+		menuBar.setForeground(Color.BLACK);
+		menuBar.setBackground(Color.WHITE);
 		frame.setJMenuBar(menuBar);
 		
 		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
@@ -1497,6 +1501,7 @@ public class Start extends Thread{
 		label_1.setToolTipText("Avslutter Programmet");
 		
 		JMenu mnHjelp = new JMenu("Hjelp");
+		mnHjelp.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHjelp);
 		
 		JMenuItem mntmInstruksjoner = new JMenuItem("Instruksjoner");
@@ -1518,6 +1523,7 @@ public class Start extends Thread{
 		mnHjelp.add(mntmOm);
 		
 		JMenu mnHistorie = new JMenu("Historikk");
+		mnHistorie.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHistorie);
 		
 		JMenuItem mntmOrdrehistorikk = new JMenuItem("Ordrehistorikk");
