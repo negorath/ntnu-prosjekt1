@@ -72,6 +72,7 @@ public class Start extends Thread{
 	private JList list_1;
 	private BufferedImage image;
 
+	private JLabel label_2;
 	private JTextArea textArea;
 	private boolean isBrus = false;
 	private ArrayList<String> kvittering = new ArrayList<String>();
@@ -208,6 +209,7 @@ public class Start extends Thread{
 		toggleButton = new JButton("Nr.1");
 		toggleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.1";
 					nummerKnappTrykk(hvorMange);
@@ -227,6 +229,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_1);
 		toggleButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.2";
 					nummerKnappTrykk(hvorMange);
@@ -244,6 +247,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_2);
 		toggleButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.3";
 					nummerKnappTrykk(hvorMange);
@@ -262,6 +266,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_3);
 		toggleButton_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				sisteTrykteKnapp = "Pizza nr.4";
 				if(hvorMange != ""){
 					nummerKnappTrykk(hvorMange);
@@ -279,6 +284,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_4);
 		toggleButton_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.5";
 					nummerKnappTrykk(hvorMange);
@@ -296,6 +302,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_5);
 		toggleButton_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.6";
 					nummerKnappTrykk(hvorMange);
@@ -312,6 +319,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_6);
 		toggleButton_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.7";
 					nummerKnappTrykk(hvorMange);
@@ -329,6 +337,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_7);
 		toggleButton_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.8";
 					nummerKnappTrykk(hvorMange);
@@ -346,6 +355,7 @@ public class Start extends Thread{
 		bestilling.add(toggleButton_8);
 		toggleButton_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Pizza nr.9";
 					nummerKnappTrykk(hvorMange);
@@ -406,6 +416,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnCola);
 		tglbtnCola.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Cola";
 					isBrus = true;
@@ -424,6 +435,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnFanta);
 		tglbtnFanta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Fanta";
 					isBrus = true;
@@ -442,6 +454,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnSprite);
 		tglbtnSprite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Sprite";
 					isBrus = true;
@@ -460,6 +473,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnUrge);
 		tglbtnUrge.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Cola-Zero";
 					isBrus = true;
@@ -478,6 +492,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnFarris);
 		tglbtnFarris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "BonAqua";
 					isBrus = true;
@@ -496,6 +511,7 @@ public class Start extends Thread{
 		bestilling.add(tglbtnLol);
 		tglbtnLol.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				label_2.setText("x ");
 				if(hvorMange != ""){
 					sisteTrykteKnapp = "Vann";
 					isBrus = true;
@@ -518,6 +534,7 @@ public class Start extends Thread{
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "1";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 		button.setBounds(16, 403, 75, 45);
@@ -529,7 +546,7 @@ public class Start extends Thread{
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "2";
-				System.out.println(hvorMange);
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -540,6 +557,7 @@ public class Start extends Thread{
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "3";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -549,6 +567,7 @@ public class Start extends Thread{
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "4";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -559,7 +578,7 @@ public class Start extends Thread{
 		button_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "5";
-				System.out.println(hvorMange);
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -569,6 +588,7 @@ public class Start extends Thread{
 		button_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "6";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -578,6 +598,7 @@ public class Start extends Thread{
 		button_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "7";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -587,7 +608,7 @@ public class Start extends Thread{
 		button_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "8";
-
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -597,6 +618,7 @@ public class Start extends Thread{
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange += "9";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -606,6 +628,7 @@ public class Start extends Thread{
 		button_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				hvorMange += "0";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 
@@ -615,6 +638,7 @@ public class Start extends Thread{
 		btnDel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				hvorMange = "";
+				label_2.setText("x " + hvorMange);
 			}
 		});
 		
@@ -1475,6 +1499,10 @@ public class Start extends Thread{
 
 		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
+		
+		label_2 = new JLabel("x ");
+		label_2.setBounds(16, 375, 219, 16);
+		bestilling.add(label_2);
 		
 		
 		menuBar = new JMenuBar();
