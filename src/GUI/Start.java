@@ -1496,7 +1496,7 @@ public class Start extends Thread{
 		});
 		mnHjelp.add(mntmOm);
 		
-		JMenu mnHistorie = new JMenu("Historie");
+		JMenu mnHistorie = new JMenu("Historikk");
 		menuBar.add(mnHistorie);
 		
 		JMenuItem mntmOrdrehistorikk = new JMenuItem("Ordrehistorikk");
