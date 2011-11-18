@@ -142,6 +142,7 @@ public class Start extends Thread{
 
 	private String[] temp;
 	private JMenuBar menuBar;
+	private JLabel label_1;
 
 	/**
 	 * Launch the application.
@@ -1477,11 +1478,19 @@ public class Start extends Thread{
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
-		JLabel label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
+		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				System.exit(0);
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				label_1.setIcon(new ImageIcon("src/Bilder/exit_on.gif"));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				label_1.setIcon(new ImageIcon("src/Bilder/exit.gif"));
 			}
 		});
 		menuBar.add(label_1);
