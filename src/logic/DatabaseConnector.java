@@ -152,6 +152,14 @@ public class DatabaseConnector{
      * @throws Exception
      */
     public static Product getProduct(String id) throws Exception{
+    	switch(id.charAt(0)){
+    	case 'o': id = "10"; break;
+    	case 'n': id = "11"; break;
+    	case 'i': id = "12"; break;
+    	case 'e': id = "13"; break;
+    	case 'q': id = "14"; break;
+    	case 'a': id = "15"; break;
+    	}
     	ResultSet getP_rs = stmt.executeQuery("SELECT name, description, price FROM products WHERE id='"+id+"'");
     	if(getP_rs.first() == false){
     		return null;
