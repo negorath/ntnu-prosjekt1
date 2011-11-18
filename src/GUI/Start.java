@@ -3,6 +3,7 @@ package GUI;
 import java.awt.EventQueue;
 import logic.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -52,6 +53,7 @@ import java.awt.event.FocusEvent;
 import javax.swing.JTextArea;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
+import javax.swing.JToggleButton;
 
 public class Start extends Thread{
 	private JFrame frame;
@@ -1475,6 +1477,15 @@ public class Start extends Thread{
 		menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
 		
+		JLabel label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
+		label_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				System.exit(0);
+			}
+		});
+		menuBar.add(label_1);
+		
 		JMenu mnHjelp = new JMenu("Hjelp");
 		menuBar.add(mnHjelp);
 		
@@ -1507,6 +1518,7 @@ public class Start extends Thread{
 			}
 		});
 		mnHistorie.add(mntmOrdrehistorikk);
+		frame.setUndecorated(true);
 	}
 	public void lagListe(){
 		try{
