@@ -1390,10 +1390,14 @@ public class Start extends Thread{
 		rediger_retter = new JButton("Lagre");
 		rediger_retter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-				Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
-				DatabaseConnector.edit(oldProduct, newProduct);
-				getProducts();
+				try{
+					Product oldProduct = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					Product newProduct = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+					DatabaseConnector.edit(oldProduct, newProduct);
+					getProducts();					
+				}catch(Exception ee){
+					ee.printStackTrace();
+				}
 			}
 		});
 		rediger_retter.setBounds(10, 420, 100, 41);
@@ -1574,8 +1578,9 @@ public class Start extends Thread{
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
-			eee.printStackTrace();
-			System.out.println("Noe gikk galt, hmmm?");
+//			eee.printStackTrace();
+			System.out.println("Finnes ingen produkter i database");
+			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGŒ til Rediger > Retter og legg inn retter");
 		}
 	}
 	private String menyKnappTrykk(String a) {
