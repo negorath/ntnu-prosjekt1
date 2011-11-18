@@ -51,6 +51,8 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `delivered` timestamp NULL DEFAULT NULL,
   `products` varchar(255) NOT NULL,
   `comment` varchar(255) NOT NULL,
+  `levering` tinyint(1) NOT NULL,
+  `kort` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -89,3 +91,5 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 
 ALTER TABLE  `users` ADD UNIQUE (`phone`);
+ALTER TABLE  `orders` ADD COLUMN `levering` TINYINT(1);
+ALTER TABLE  `orders` ADD COLUMN `kort` TINYINT(1);

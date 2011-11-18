@@ -12,6 +12,7 @@ public class Order {
 	private int[] antall;
 	private String kommentar;
 	private String[] produkt;
+	private int levering, kort;
 	/**
 	 * 
 	 * @param id
@@ -23,7 +24,33 @@ public class Order {
 	public Order(String userId){
 		this.userId = userId;
 	}
-	
+	/**
+	 * sets levering
+	 */
+	public void setLevering(int i){
+		this.levering = i;
+	}
+	/**
+	 * 
+	 * @return levering true or false
+	 */
+	public int getLevering(){
+		return levering;
+	}
+	/**
+	 * settter betaling med kort
+	 * @param boolean
+	 */
+	public void setKort(int i){
+		this.kort = i;
+	}
+	/**
+	 * 
+	 * @return kort
+	 */
+	public int getKort(){
+		return kort;
+	}
 	
 	/**
 	 * @return the userId
@@ -166,6 +193,10 @@ public class Order {
 //				System.out.println("Greide ikke lage kvittering String");
 //				e.printStackTrace();
 			}
+		}
+		if(getLevering() == 1 && sum < 500){
+			temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 50.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
+			sum += 50;
 		}
 		temp += "*****************************************" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "</html>";
 		

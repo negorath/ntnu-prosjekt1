@@ -101,6 +101,8 @@ public class Start extends Thread{
 	private JButton btnRedigerAdresse;
 	private ArrayList<User> users = new ArrayList<User>();
 
+	private int q;
+	private int w;
 	private JPanel panel_4;
 	private JTextPane kvitering;
 	private JLabel lblAddressNotFound;
@@ -705,6 +707,7 @@ public class Start extends Thread{
 		bestillingsInfo.add(chckbxLevering);
 
 		rdbtnKort = new JRadioButton("Kort");
+		rdbtnKort.setSelected(true);
 		buttonGroup.add(rdbtnKort);
 		rdbtnKort.setBounds(213, 233, 58, 23);
 		bestillingsInfo.add(rdbtnKort);
@@ -797,6 +800,16 @@ public class Start extends Thread{
 					order.setProducts(temp);
 					System.out.println(order.getProducts());
 					order.setKommentar(kommentar.getText());
+					if(chckbxLevering.isSelected())
+						q = 1;
+					else
+						q = 0;
+					order.setLevering(q);
+					if(rdbtnKort.isSelected())
+						w = 1;
+					else
+						w = 0;
+					order.setKort(w);
 					temp=null;
 					DatabaseConnector.newOrder(order);
 					getOrders();

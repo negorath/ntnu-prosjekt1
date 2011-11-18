@@ -245,7 +245,7 @@ public class DatabaseConnector{
     
     public static void newOrder(Order order){
     	try{
-    		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "', comment='" + order.getKommentar() + "'");
+    		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "', comment='" + order.getKommentar() + "', levering='" + order.getLevering() + "', kort='" + order.getKort() + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
     		System.out.println("Failed to insert new order into database");
@@ -408,7 +408,7 @@ public class DatabaseConnector{
 			}
 		}
 		int id = Integer.parseInt(stringID);
-		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products, comment FROM orders WHERE id ='" + id + "'");
+		ResultSet getOrderRs = stmt.executeQuery("SELECT id, user_id, ordered, due, delivered, products, comment, levering, kort FROM orders WHERE id ='" + id + "'");
 		getOrderRs.first();
 		String i = getOrderRs.getString(1);
 		String userID = getOrderRs.getString(2);
@@ -417,12 +417,16 @@ public class DatabaseConnector{
 		String delivered = getOrderRs.getString(5);
 		String products = getOrderRs.getString(6);
 		String comment = getOrderRs.getString(7);
+		int levering = getOrderRs.getInt(8);
+		int kort = getOrderRs.getInt(9);
 		Order o = new Order(userID);
 		o.setDue(due);
 		o.setId(i);
 		o.setDelivered(delivered);
 		o.createFoodList(products);
 		o.setKommentar(comment);
+		o.setLevering(levering);
+		o.setKort(kort);
 		return o;
 	}
 }
