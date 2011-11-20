@@ -179,7 +179,7 @@ public class Order {
 		return dlm;
 	}
 	public String getProductsString(){
-		String temp = "<html><center>" + "Gruppe 10"  + "<br>" + "\tPizzeria\n" + "</center>" + "<br>" + "*****************************************" + "<br><br>";
+		String temp = "<html><center>" + "Gruppe 10"  + "<br>" + "\tPizzeria\n" + "<br>Tlf: 13 37 13 37" + "</center>" + "<br>" + "---------------------------------------------------------" + "<br><br>";
 		double sum = 0;
 		double mva14 = 0, mva25 = 0;
 		DecimalFormat d = new DecimalFormat("0.00");
@@ -208,7 +208,7 @@ public class Order {
 				mva25 += (50.0/125)*25;
 			}
 		}
-		temp += "*****************************************" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "<br><br>";
+		temp += "---------------------------------------------------------" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "<br><br>";
 		temp += "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Mva 14%:" + "</td>" +  "<td align='right'>" + d.format(mva14) + ",-" + "</td>" + "</tr>" + "</table>";
 		temp += "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Mva 25%:" + "</td>" +  "<td align='right'>" + d.format(mva25) + ",-" + "</td>" + "</tr>" + "</table>";
 		temp += "<table width='100%'>" + "<tr>" + "<td align='right'>" + "-----------" + "--" + "</td>" + "</tr>" + "</table>";

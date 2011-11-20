@@ -1439,7 +1439,7 @@ public class Start extends Thread{
 		lblPoststed_1.setBounds(175, 283, 441, 32);
 		kunder.add(lblPoststed_1);
 
-		button_7 = new JButton("T\u00F8m Felter");
+		button_7 = new JButton("T\u00F8m felter");
 		button_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				redigerNummer.setText("");
@@ -1596,7 +1596,7 @@ public class Start extends Thread{
 		lblBeskrivelse.setBounds(10, 158, 408, 30);
 		retter.add(lblBeskrivelse);
 
-		JButton btnTmFelter = new JButton("T\u00F8m Felter");
+		JButton btnTmFelter = new JButton("T\u00F8m felter");
 		btnTmFelter.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				retterKommentar.setText("");
@@ -1627,7 +1627,7 @@ public class Start extends Thread{
 
 		menuBar = new JMenuBar();
 		menuBar.setForeground(Color.BLACK);
-		menuBar.setBackground(Color.WHITE);
+		menuBar.setBackground(Color.BLACK);
 		frame.setJMenuBar(menuBar);
 
 		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
@@ -1649,10 +1649,12 @@ public class Start extends Thread{
 		label_1.setToolTipText("Avslutter Programmet");
 
 		JMenu mnHjelp = new JMenu("Hjelp");
+		mnHjelp.setBackground(Color.BLACK);
 		mnHjelp.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHjelp);
 
 		JMenuItem mntmInstruksjoner = new JMenuItem("Instruksjoner");
+		mntmInstruksjoner.setBackground(new Color(255, 250, 250));
 		mntmInstruksjoner.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1668,6 +1670,7 @@ public class Start extends Thread{
 		mnHjelp.add(mntmInstruksjoner);
 
 		JMenuItem mntmOm = new JMenuItem("Om");
+		mntmOm.setBackground(new Color(255, 250, 250));
 		mntmOm.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1677,10 +1680,12 @@ public class Start extends Thread{
 		mnHjelp.add(mntmOm);
 
 		JMenu mnHistorie = new JMenu("Historikk");
+		mnHistorie.setBackground(Color.BLACK);
 		mnHistorie.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHistorie);
 
 		JMenuItem mntmOrdrehistorikk = new JMenuItem("Ordrehistorikk");
+		mntmOrdrehistorikk.setBackground(new Color(255, 250, 250));
 		mntmOrdrehistorikk.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
