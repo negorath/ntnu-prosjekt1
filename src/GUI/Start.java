@@ -50,6 +50,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.io.IOException;
+
 import javax.swing.JTextArea;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
@@ -157,6 +159,9 @@ public class Start extends Thread{
 	private JScrollPane scrollPane_7;
 	private JScrollPane scrollPane_8;
 	private JScrollPane scrollPane_9;
+	private JPanel panel_5;
+	private JScrollPane scrollPane_10;
+	private JPanel panel_6;
 
 	/**
 	 * Launch the application.
@@ -213,7 +218,7 @@ public class Start extends Thread{
 
 		bestilling = new JPanel();
 		bestilling.setBackground(new Color(255, 250, 250));
-		tabbedPane.addTab("Ny Bestilling", null, bestilling, null);
+		tabbedPane.addTab("Ny bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
 		
 
@@ -388,7 +393,7 @@ public class Start extends Thread{
 		bestilling.add(reciept);
 		reciept.setLayout(null);
 
-		JButton btnFjernAlt = new JButton("Fjern Alt");
+		JButton btnFjernAlt = new JButton("Fjern alt");
 		btnFjernAlt.setForeground(new Color(47, 79, 79));
 		btnFjernAlt.setFont(new Font("Verdana", Font.BOLD, 11));
 		btnFjernAlt.addActionListener(new ActionListener() {
@@ -682,7 +687,7 @@ public class Start extends Thread{
 		bestillingsInfo = new JPanel();
 		bestillingsInfo.setPreferredSize(new Dimension(500, 550));
 		bestillingsInfo.setBackground(new Color(255, 250, 250));
-		tabbedPane.addTab("info", null, bestillingsInfo, null);
+		tabbedPane.addTab("Informasjon", null, bestillingsInfo, null);
 		bestillingsInfo.setLayout(null);
 
 		navn = new JTextField();
@@ -750,6 +755,8 @@ public class Start extends Thread{
 		scrollPane_8.setViewportView(list_1);
 
 		JButton btnRediger_1 = new JButton("Rediger");
+		btnRediger_1.setFont(new Font("Verdana", Font.BOLD, 11));
+		btnRediger_1.setForeground(new Color(47, 79, 79));
 		btnRediger_1.setBounds(182, 0, 89, 23);
 		panel_1.add(btnRediger_1);
 		btnRediger_1.addActionListener(new ActionListener() {
@@ -758,7 +765,7 @@ public class Start extends Thread{
 			}
 		});
 
-		JLabel lblFulltNavn = new JLabel("Fullt Navn");
+		JLabel lblFulltNavn = new JLabel("Fullt navn");
 		lblFulltNavn.setBounds(16, 12, 133, 14);
 		bestillingsInfo.add(lblFulltNavn);
 
@@ -787,7 +794,7 @@ public class Start extends Thread{
 		lblKommentar.setBounds(16, 174, 190, 14);
 		bestillingsInfo.add(lblKommentar);
 
-		lblRingendeNummer = new JLabel("Ringende Nummer");
+		lblRingendeNummer = new JLabel("Ringende nummer");
 		lblRingendeNummer.setBounds(835, 12, 134, 14);
 		bestillingsInfo.add(lblRingendeNummer);
 
@@ -1027,6 +1034,8 @@ public class Start extends Thread{
 				});
 
 		btnLevert = new JButton("Levert");
+		btnLevert.setFont(new Font("Verdana", Font.BOLD, 11));
+		btnLevert.setForeground(new Color(47, 79, 79));
 		btnLevert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(listModelFinished.getSize()>0){
@@ -1053,7 +1062,7 @@ public class Start extends Thread{
 		Utgaende.add(lblAddressNotFound);
 		lblAddressNotFound.setVisible(false);
 
-		btnRedigerAdresse = new JButton("Rediger Adresse");
+		btnRedigerAdresse = new JButton("Rediger adresse");
 		btnRedigerAdresse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Order o = null;
@@ -1082,7 +1091,7 @@ public class Start extends Thread{
 		btnRedigerAdresse.setBounds(255, 97, 158, 23);
 		Utgaende.add(btnRedigerAdresse);
 
-		JButton btnVisKart = new JButton("Vis Kart");
+		JButton btnVisKart = new JButton("Vis kart");
 		btnVisKart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try{
@@ -1240,12 +1249,20 @@ public class Start extends Thread{
 		Rediger.add(tabbedPane_1);
 
 		kunder = new JPanel();
+		kunder.setBackground(new Color(255, 250, 250));
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
 		
+		panel_5 = new JPanel();
+		panel_5.setBackground(Color.GRAY);
+		panel_5.setBorder(new TitledBorder(null, "Kunder", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_5.setBounds(710, 64, 225, 496);
+		kunder.add(panel_5);
+		panel_5.setLayout(null);
+		
 		scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(722, 64, 213, 468);
-		kunder.add(scrollPane_5);
+		scrollPane_5.setBounds(6, 22, 213, 468);
+		panel_5.add(scrollPane_5);
 		
 				kunder_list = new JList(listmodelUsers);
 				scrollPane_5.setViewportView(kunder_list);
@@ -1434,13 +1451,20 @@ public class Start extends Thread{
 		kunder.add(button_7);
 
 		JPanel retter = new JPanel();
-		retter.setBackground(Color.GRAY);
+		retter.setBackground(new Color(255, 250, 250));
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
 		
+		panel_6 = new JPanel();
+		panel_6.setBackground(Color.GRAY);
+		panel_6.setBorder(new TitledBorder(null, "Produkter", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_6.setBounds(710, 64, 225, 496);
+		retter.add(panel_6);
+		panel_6.setLayout(null);
+		
 		scrollPane_6 = new JScrollPane();
-		scrollPane_6.setBounds(722, 64, 213, 468);
-		retter.add(scrollPane_6);
+		scrollPane_6.setBounds(6, 22, 213, 468);
+		panel_6.add(scrollPane_6);
 		
 				retter_list = new JList(listModelProducts);
 				scrollPane_6.setViewportView(retter_list);
@@ -1528,28 +1552,31 @@ public class Start extends Thread{
 		retterPris.setColumns(10);
 		retterPris.setBounds(453, 64, 156, 60);
 		retter.add(retterPris);
-
-		retterKommentar = new JTextPane();
-		retterKommentar.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent arg0) {
-				if(arg0.getKeyCode() == arg0.VK_ENTER){
-					try{
-						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
-						DatabaseConnector.newProduct(product);
-						getProducts();
-						retterNavn.setText("");
-						retterKommentar.setText("");
-						retterPris.setText("");
-					}catch(Exception e){
-						System.out.println("Failed to add new Product into database");
-					}					
-				}
-			}
-		});
+		
+		scrollPane_10 = new JScrollPane();
+		scrollPane_10.setBounds(10, 199, 408, 202);
+		retter.add(scrollPane_10);
+		
+				retterKommentar = new JTextPane();
+				scrollPane_10.setViewportView(retterKommentar);
+				retterKommentar.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent arg0) {
+						if(arg0.getKeyCode() == arg0.VK_ENTER){
+							try{
+								Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+								DatabaseConnector.newProduct(product);
+								getProducts();
+								retterNavn.setText("");
+								retterKommentar.setText("");
+								retterPris.setText("");
+							}catch(Exception e){
+								System.out.println("Failed to add new Product into database");
+							}					
+						}
+					}
+				});
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
-		retterKommentar.setBounds(10, 199, 408, 202);
-		retter.add(retterKommentar);
 
 		lblProduktnavn = new JLabel("Produktnavn");
 		lblProduktnavn.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -1626,7 +1653,13 @@ public class Start extends Thread{
 		mntmInstruksjoner.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				Instruksjoner.run();
+				try {
+					Instruksjoner.run();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("Klarte ikke Œpne instruksjoner");
+					e1.printStackTrace();
+				}
 			}
 		});
 		mnHjelp.add(mntmInstruksjoner);
