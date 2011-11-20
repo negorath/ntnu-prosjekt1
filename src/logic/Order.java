@@ -1,5 +1,6 @@
 package logic;
 import java.sql.Connection;
+import java.text.DecimalFormat;
 
 import javax.swing.DefaultListModel;
 
@@ -180,6 +181,8 @@ public class Order {
 	public String getProductsString(){
 		String temp = "<html><center>" + "Gruppe 10"  + "<br>" + "\tPizzeria\n" + "</center>" + "<br>" + "*****************************************" + "<br><br>";
 		double sum = 0;
+		double mva14 = 0, mva25 = 0;
+		DecimalFormat d = new DecimalFormat("0.00");
 		for (int i = 0; i < antall.length; i++) {
 			try {
 				if(!produkt[i].equals("")){
@@ -187,18 +190,29 @@ public class Order {
 					String navn = p.getName();
 					String pris = String.valueOf(p.getPrice()*antall[i]);
 					temp += "<table width='100%'><tr><td align='left'>" + String.valueOf(antall[i]) + " x " + navn + "</td>" + "<td align='right'>" + pris + ",-" + "</td>" + "</tr></table>" + "<br>";
-					sum += Double.parseDouble(pris);					
+					sum += Double.parseDouble(pris);
+					mva14 += (Double.parseDouble(pris)/114)*14;
 				}
 			} catch (Exception e) {
 //				System.out.println("Greide ikke lage kvittering String");
 //				e.printStackTrace();
 			}
 		}
-		if(getLevering() == 1 && sum < 500){
-			temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 50.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
-			sum += 50;
+		if(getLevering() == 1){
+			if(sum > 500){
+				temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 0.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
+			}
+			else{
+				temp += "<table width='100%'><tr><td align='left'>" + "Levering</td>" + "<td align='right'>" + 50.0 + ",-" + "</td>" + "</tr></table>" + "<br>";
+				sum += 50;
+				mva25 += (50.0/125)*25;
+			}
 		}
-		temp += "*****************************************" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "</html>";
+		temp += "*****************************************" + "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum:" + "</td>" + "<td align='right'>" + sum + ",-" + "</td>" + "</tr>" + "</table>" + "<br><br>";
+		temp += "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Mva 14%:" + "</td>" +  "<td align='right'>" + d.format(mva14) + ",-" + "</td>" + "</tr>" + "</table>";
+		temp += "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Mva 25%:" + "</td>" +  "<td align='right'>" + d.format(mva25) + ",-" + "</td>" + "</tr>" + "</table>";
+		temp += "<table width='100%'>" + "<tr>" + "<td align='right'>" + "-----------" + "--" + "</td>" + "</tr>" + "</table>";
+		temp += "<table width='100%'>" + "<tr>" + "<td align='left'>" + "Sum mva:" + "</td>" +  "<td align='right'>" + d.format(mva14+mva25) + ",-" + "</td>" + "</tr>" + "</table>";
 		
 		return temp;
 	}
