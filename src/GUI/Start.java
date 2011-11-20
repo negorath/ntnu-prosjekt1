@@ -59,7 +59,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JScrollPane;
 
 /**
- * Hovedklassen som kjører programmet
+ * Hovedklassen som kjÃ¸rer programmet
  */
 public class Start extends Thread{
 	private JFrame frame;
@@ -824,7 +824,7 @@ public class Start extends Thread{
 					getUsers();
 					getOrders();
 					if (!u.getAddress().save()) {
-						System.out.println("Klarte ikke Œ lagre");
+						System.out.println("Klarte ikke Å’ lagre");
 					}
 					frame.repaint();
 
@@ -848,36 +848,36 @@ public class Start extends Thread{
 					tmp = u.getAddress().getStreet();
 					String tmp2 = u.getAddress().getCity();
 					if (u.getAddress().getStreet().contains(" ") ||
-							u.getAddress().getStreet().contains("¾") ||
-							u.getAddress().getStreet().contains("®") ||
-							u.getAddress().getStreet().contains("¿") ||
-							u.getAddress().getStreet().contains("¯") ||
-							u.getAddress().getStreet().contains("Œ") ||
-							u.getAddress().getStreet().contains("")
-					) {
+							u.getAddress().getStreet().contains("Ã¦") ||
+							u.getAddress().getStreet().contains("Ã†") ||
+							u.getAddress().getStreet().contains("Ã¸") ||
+							u.getAddress().getStreet().contains("Ã˜") ||
+							u.getAddress().getStreet().contains("Ã¥") ||
+							u.getAddress().getStreet().contains("Ã…")
+							) {
 						tmp = tmp.replace(' ' , '+');
-						tmp = tmp.replace('¾' , 'e');
-						tmp = tmp.replace('¿' , 'o');
-						tmp = tmp.replace('Œ' , 'a');
-						tmp = tmp.replace('®' , 'e');
-						tmp = tmp.replace('¯' , 'o');
-						tmp = tmp.replace('' , 'a');
+						tmp = tmp.replace('Ã¦' , 'e');
+						tmp = tmp.replace('Ã¸' , 'o');
+						tmp = tmp.replace('Ã¥' , 'a');
+						tmp = tmp.replace('Ã†' , 'e');
+						tmp = tmp.replace('Ã˜' , 'o');
+						tmp = tmp.replace('Ã…' , 'a');
 					}
 					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("¾") ||
-							u.getAddress().getCity().contains("®") ||
-							u.getAddress().getCity().contains("¿") ||
-							u.getAddress().getCity().contains("¯") ||
-							u.getAddress().getCity().contains("Œ") ||
-							u.getAddress().getCity().contains("")
-					) {
+							u.getAddress().getCity().contains("Ã¦") ||
+							u.getAddress().getCity().contains("Ã†") ||
+							u.getAddress().getCity().contains("Ã¸") ||
+							u.getAddress().getCity().contains("Ã˜") ||
+							u.getAddress().getCity().contains("Ã¥") ||
+							u.getAddress().getCity().contains("Ã…")
+							) {
 						tmp2 = tmp.replace(' ' , '+');
-						tmp2 = tmp.replace('¾' , 'e');
-						tmp2 = tmp.replace('¿' , 'o');
-						tmp2 = tmp.replace('Œ' , 'a');
-						tmp2 = tmp.replace('®' , 'e');
-						tmp2 = tmp.replace('¯' , 'o');
-						tmp2 = tmp.replace('' , 'a');
+						tmp2 = tmp.replace('Ã¦' , 'e');
+						tmp2 = tmp.replace('Ã¸' , 'o');
+						tmp2 = tmp.replace('Ã¥' , 'a');
+						tmp2 = tmp.replace('Ã†' , 'e');
+						tmp2 = tmp.replace('Ã˜' , 'o');
+						tmp2 = tmp.replace('Ã…' , 'a');
 					}
 					try{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
@@ -1111,36 +1111,36 @@ public class Start extends Thread{
 					String tmp = u.getAddress().getStreet();
 					String tmp2 = u.getAddress().getCity();
 					if (u.getAddress().getStreet().contains(" ") ||
-							u.getAddress().getStreet().contains("¾") ||
-							u.getAddress().getStreet().contains("®") ||
-							u.getAddress().getStreet().contains("¿") ||
-							u.getAddress().getStreet().contains("¯") ||
-							u.getAddress().getStreet().contains("Œ") ||
-							u.getAddress().getStreet().contains("")
-					) {
+							u.getAddress().getStreet().contains("Ã¦") ||
+							u.getAddress().getStreet().contains("Ã†") ||
+							u.getAddress().getStreet().contains("Ã¸") ||
+							u.getAddress().getStreet().contains("Ã˜") ||
+							u.getAddress().getStreet().contains("Ã¥") ||
+							u.getAddress().getStreet().contains("Ã…")
+							) {
 						tmp = tmp.replace(' ' , '+');
-						tmp = tmp.replace('¾' , 'e');
-						tmp = tmp.replace('¿' , 'o');
-						tmp = tmp.replace('Œ' , 'a');
-						tmp = tmp.replace('®' , 'e');
-						tmp = tmp.replace('¯' , 'o');
-						tmp = tmp.replace('' , 'a');
+						tmp = tmp.replace('Ã¦' , 'e');
+						tmp = tmp.replace('Ã¸' , 'o');
+						tmp = tmp.replace('Ã¥' , 'a');
+						tmp = tmp.replace('Ã†' , 'e');
+						tmp = tmp.replace('Ã˜' , 'o');
+						tmp = tmp.replace('Ã…' , 'a');
 					}
 					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("¾") ||
-							u.getAddress().getCity().contains("®") ||
-							u.getAddress().getCity().contains("¿") ||
-							u.getAddress().getCity().contains("¯") ||
-							u.getAddress().getCity().contains("Œ") ||
-							u.getAddress().getCity().contains("")
-					) {
+							u.getAddress().getCity().contains("Ã¦") ||
+							u.getAddress().getCity().contains("Ã†") ||
+							u.getAddress().getCity().contains("Ã¸") ||
+							u.getAddress().getCity().contains("Ã˜") ||
+							u.getAddress().getCity().contains("Ã¥") ||
+							u.getAddress().getCity().contains("Ã…")
+							) {
 						tmp2 = tmp.replace(' ' , '+');
-						tmp2 = tmp.replace('¾' , 'e');
-						tmp2 = tmp.replace('¿' , 'o');
-						tmp2 = tmp.replace('Œ' , 'a');
-						tmp2 = tmp.replace('®' , 'e');
-						tmp2 = tmp.replace('¯' , 'o');
-						tmp2 = tmp.replace('' , 'a');
+						tmp2 = tmp.replace('Ã¦' , 'e');
+						tmp2 = tmp.replace('Ã¸' , 'o');
+						tmp2 = tmp.replace('Ã¥' , 'a');
+						tmp2 = tmp.replace('Ã†' , 'e');
+						tmp2 = tmp.replace('Ã˜' , 'o');
+						tmp2 = tmp.replace('Ã…' , 'a');
 					}
 					String constant = "http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=";
 					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + tmp2 + ",norway";
@@ -1658,9 +1658,9 @@ public class Start extends Thread{
 			public void mouseReleased(MouseEvent e) {
 				try {
 					Instruksjoner.run();
-				} catch (IOException e1) {
+				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					System.out.println("Klarte ikke Œpne instruksjoner");
+					System.out.println("Klarte ikke Å’pne instruksjoner");
 					e1.printStackTrace();
 				}
 			}
@@ -1702,7 +1702,7 @@ public class Start extends Thread{
 		}catch(Exception eee){
 			//			eee.printStackTrace();
 			System.out.println("Finnes ingen produkter i database");
-			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGŒ til Rediger > Retter og legg inn retter");
+			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGÅ’ til Rediger > Retter og legg inn retter");
 		}
 	}
 	private String menyKnappTrykk(String a) {
@@ -1816,7 +1816,7 @@ public class Start extends Thread{
 		try{
 			listModelOrders.clear();
 			listModelFinished.clear();
-			//ordre som ikke er påbegynt
+			//ordre som ikke er pÃ¥begynt
 			m3 = DatabaseConnector.getOrders("due");
 			if(m3 != null){
 				for(int i = 0; i<m3.size(); i++){
@@ -1825,7 +1825,7 @@ public class Start extends Thread{
 				}				
 				list_3.setModel(listModelOrders);
 			}
-			//ordre som er påbegynt men enda ikke levert
+			//ordre som er pÃ¥begynt men enda ikke levert
 			m4 = DatabaseConnector.getOrders("deliver");
 			if(m3 != null){
 				for(int i = 0; i<m4.size(); i++){
