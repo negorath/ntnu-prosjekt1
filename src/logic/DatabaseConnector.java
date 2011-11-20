@@ -125,7 +125,7 @@ public class DatabaseConnector{
     		addresses.add(address);
     	}while(address_rs.next());
     	address_rs.close();
-    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users");
+    	ResultSet users_rs = stmt.executeQuery("SELECT name, phone, address_id, id FROM users order by name");
     	users_rs.first();
     	do{
         	String name = users_rs.getString(1);

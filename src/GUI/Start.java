@@ -703,6 +703,7 @@ public class Start extends Thread{
 		bestillingsInfo.add(kommentar);
 
 		chckbxLevering = new JCheckBox("Levering");
+		chckbxLevering.setSelected(true);
 		chckbxLevering.setBounds(212, 190, 85, 23);
 		bestillingsInfo.add(chckbxLevering);
 
@@ -937,6 +938,7 @@ public class Start extends Thread{
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
+						kvitering.setText("");
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -985,6 +987,7 @@ public class Start extends Thread{
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
+						kvitering.setText("");
 					}catch(Exception e){
 						e.printStackTrace();
 					}
@@ -1005,6 +1008,7 @@ public class Start extends Thread{
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
+						kvitering.setText("");
 					}catch(Exception ett){
 						ett.printStackTrace();
 					}
@@ -1116,7 +1120,7 @@ public class Start extends Thread{
 
 		
 		showProductList = new JList(showProductModel);
-		showProductList.setBounds(259, 151, 151, 195);
+		showProductList.setBounds(257, 151, 153, 195);
 		Utgaende.add(showProductList);
 
 		panel_4 = new JPanel();
@@ -1132,9 +1136,29 @@ public class Start extends Thread{
 		panel_4.add(kvitering);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(255, 357, 158, 193);
+		textArea.setBounds(255, 399, 158, 151);
 		Utgaende.add(textArea);
 		textArea.setEditable(false);
+		
+		JButton btnNewButton_2 = new JButton("Slett");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Order o;
+				try {
+					o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
+					DatabaseConnector.deleteOrder(o);
+					getOrders();
+					textArea.setText("");
+					showProductModel.clear();
+					kvitering.setText("");
+				} catch (Exception e) {
+					System.out.println("greide ikke slette ordre");
+					e.printStackTrace();
+				}							
+			}
+		});
+		btnNewButton_2.setBounds(257, 358, 154, 29);
+		Utgaende.add(btnNewButton_2);
 
 
 
