@@ -1177,7 +1177,7 @@ public class Start extends Thread{
 		btnIncall.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnIncall.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String nr = JOptionPane.showInputDialog(null, "Skriv inn incall number");
+				String nr = JOptionPane.showInputDialog(null, "Hvilket nummer som skal ringe", "Skriv inn tlf", 3);
 				nummer.setText(nr);
 				try{
 					User user = (User)DatabaseConnector.getUser(nr);
