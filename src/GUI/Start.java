@@ -54,7 +54,9 @@ import javax.swing.JTextArea;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.JToggleButton;
-
+/**
+ * Hovedklassen som kjører programmet
+ */
 public class Start extends Thread{
 	private JFrame frame;
 	private JTextField nummer, navn, gatenavn, postnummer, poststed;
