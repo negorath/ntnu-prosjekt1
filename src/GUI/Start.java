@@ -58,6 +58,9 @@ import javax.swing.event.MenuKeyEvent;
 import javax.swing.JToggleButton;
 import javax.swing.JScrollPane;
 
+/**
+ * Hovedklassen som kj¯rer programmet
+ */
 public class Start extends Thread{
 	private JFrame frame;
 	private JTextField nummer, navn, gatenavn, postnummer, poststed;
@@ -203,9 +206,9 @@ public class Start extends Thread{
 		frame.setBackground(Color.DARK_GRAY);
 		frame.setTitle("Pizza Pie In The Sky");
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		
+
 		int width = 1000, height = 720;
-		
+
 		frame.setBounds((dim.width-width)/2, (dim.height-height)/2, width, height);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -220,7 +223,7 @@ public class Start extends Thread{
 		bestilling.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("Ny bestilling", null, bestilling, null);
 		bestilling.setLayout(null);
-		
+
 
 		///////////////////meny knapper////////////////////////////
 
@@ -421,7 +424,7 @@ public class Start extends Thread{
 		reciept.add(btnFjernElement);
 		btnFjernAlt.setBounds(242, 0, 100, 23);
 		reciept.add(btnFjernAlt);
-		
+
 		scrollPane_7 = new JScrollPane();
 		scrollPane_7.setBounds(10, 25, 332, 567);
 		reciept.add(scrollPane_7);
@@ -662,13 +665,13 @@ public class Start extends Thread{
 				label_2.setText("x " + hvorMange);
 			}
 		});
-		
+
 
 
 		btnNeste = new JButton("Neste");
 		btnNeste.setForeground(new Color(47, 79, 79));
 		btnNeste.setFont(new Font("Verdana", Font.BOLD, 16));
-//		btnNeste.setBackground(new Color(204, 255, 204));
+		//		btnNeste.setBackground(new Color(204, 255, 204));
 		btnNeste.setBounds(831, 567, 138, 68);
 		bestilling.add(btnNeste);
 		btnNeste.addActionListener(new ActionListener() {
@@ -716,7 +719,7 @@ public class Start extends Thread{
 		poststed.setBounds(160, 135, 134, 28);
 		bestillingsInfo.add(poststed);
 		poststed.setColumns(10);
-		
+
 		scrollPane_9 = new JScrollPane();
 		scrollPane_9.setBounds(16, 190, 190, 93);
 		bestillingsInfo.add(scrollPane_9);
@@ -746,7 +749,7 @@ public class Start extends Thread{
 		panel_1.setBounds(335, 30, 277, 407);
 		bestillingsInfo.add(panel_1);
 		panel_1.setLayout(null);
-		
+
 		scrollPane_8 = new JScrollPane();
 		scrollPane_8.setBounds(6, 22, 265, 379);
 		panel_1.add(scrollPane_8);
@@ -805,14 +808,14 @@ public class Start extends Thread{
 		btnNeste_1.setBackground(new Color(204, 255, 204));
 		btnNeste_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+
+
 				tabbedPane.setSelectedComponent(Utgaende);
 				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
-					
+
 					u.getAddress().setStreet(gatenavn.getText());
 					u.getAddress().setHouseNumber(Integer.parseInt(husnummer.getText()));
 					u.getAddress().setZipcode(postnummer.getText());
@@ -824,7 +827,7 @@ public class Start extends Thread{
 						System.out.println("Klarte ikke å lagre");
 					}
 					frame.repaint();
-					
+
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
 					System.out.println(order.getProducts());
@@ -845,36 +848,36 @@ public class Start extends Thread{
 					tmp = u.getAddress().getStreet();
 					String tmp2 = u.getAddress().getCity();
 					if (u.getAddress().getStreet().contains(" ") ||
-						u.getAddress().getStreet().contains("Ê") ||
-						u.getAddress().getStreet().contains("∆") ||
-						u.getAddress().getStreet().contains("¯") ||
-						u.getAddress().getStreet().contains("ÿ") ||
-						u.getAddress().getStreet().contains("Â") ||
-						u.getAddress().getStreet().contains("≈")
-						) {
-							tmp = tmp.replace(' ' , '+');
-							tmp = tmp.replace('Ê' , 'e');
-							tmp = tmp.replace('¯' , 'o');
-							tmp = tmp.replace('Â' , 'a');
-							tmp = tmp.replace('∆' , 'e');
-							tmp = tmp.replace('ÿ' , 'o');
-							tmp = tmp.replace('≈' , 'a');
+							u.getAddress().getStreet().contains("æ") ||
+							u.getAddress().getStreet().contains("Æ") ||
+							u.getAddress().getStreet().contains("ø") ||
+							u.getAddress().getStreet().contains("Ø") ||
+							u.getAddress().getStreet().contains("å") ||
+							u.getAddress().getStreet().contains("Å")
+					) {
+						tmp = tmp.replace(' ' , '+');
+						tmp = tmp.replace('æ' , 'e');
+						tmp = tmp.replace('ø' , 'o');
+						tmp = tmp.replace('å' , 'a');
+						tmp = tmp.replace('Æ' , 'e');
+						tmp = tmp.replace('Ø' , 'o');
+						tmp = tmp.replace('Å' , 'a');
 					}
 					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("Ê") ||
-							u.getAddress().getCity().contains("∆") ||
-							u.getAddress().getCity().contains("¯") ||
-							u.getAddress().getCity().contains("ÿ") ||
-							u.getAddress().getCity().contains("Â") ||
-							u.getAddress().getCity().contains("≈")
-							) {
-								tmp2 = tmp.replace(' ' , '+');
-								tmp2 = tmp.replace('Ê' , 'e');
-								tmp2 = tmp.replace('¯' , 'o');
-								tmp2 = tmp.replace('Â' , 'a');
-								tmp2 = tmp.replace('∆' , 'e');
-								tmp2 = tmp.replace('ÿ' , 'o');
-								tmp2 = tmp.replace('≈' , 'a');
+							u.getAddress().getCity().contains("æ") ||
+							u.getAddress().getCity().contains("Æ") ||
+							u.getAddress().getCity().contains("ø") ||
+							u.getAddress().getCity().contains("Ø") ||
+							u.getAddress().getCity().contains("å") ||
+							u.getAddress().getCity().contains("Å")
+					) {
+						tmp2 = tmp.replace(' ' , '+');
+						tmp2 = tmp.replace('æ' , 'e');
+						tmp2 = tmp.replace('ø' , 'o');
+						tmp2 = tmp.replace('å' , 'a');
+						tmp2 = tmp.replace('Æ' , 'e');
+						tmp2 = tmp.replace('Ø' , 'o');
+						tmp2 = tmp.replace('Å' , 'a');
 					}
 					try{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
@@ -883,8 +886,8 @@ public class Start extends Thread{
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
 					}
-					
-					
+
+
 				}catch(Exception e){
 					try{
 						Address a = new Address(gatenavn.getText(), Integer.parseInt(husnummer.getText()), postnummer.getText(), poststed.getText());
@@ -922,7 +925,7 @@ public class Start extends Thread{
 
 		//--------------------------Utgaaende/chef-----------------------------------------
 
-		
+
 		Utgaende = new JPanel();
 		Utgaende.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
@@ -934,7 +937,7 @@ public class Start extends Thread{
 		panel_2.setBounds(4, 35, 241, 515);
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(6, 22, 229, 487);
 		panel_2.add(scrollPane);
@@ -962,7 +965,7 @@ public class Start extends Thread{
 						}
 						textArea.setText(o.getKommentar());
 					}catch(Exception e){
-//						System.out.println("Fant ingen produkter i bestillingen");
+						//						System.out.println("Fant ingen produkter i bestillingen");
 					}
 				}
 				else if(arg0.getClickCount() == 2){
@@ -986,52 +989,52 @@ public class Start extends Thread{
 		panel_3.setBounds(423, 35, 241, 515);
 		Utgaende.add(panel_3);
 		panel_3.setLayout(null);
-		
+
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(6, 22, 229, 487);
 		panel_3.add(scrollPane_1);
-		
-				list_4 = new JList(listModelFinished);
-				scrollPane_1.setViewportView(list_4);
-				list_4.addFocusListener(new FocusAdapter() {
-					@Override
-					public void focusGained(FocusEvent e) {
-						focusOnFinishedOrders = true;
+
+		list_4 = new JList(listModelFinished);
+		scrollPane_1.setViewportView(list_4);
+		list_4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				focusOnFinishedOrders = true;
+			}
+		});
+		list_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					try{
+						int selected = list_4.getSelectedIndex();
+						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+						showProductModel = o.getProductsAsDefaultListModel();
+						showProductList.setModel(showProductModel);
+						kvitering.setText(o.getProductsString());
+						getOrders();
+						if(listModelFinished.size() > 0){
+							list_4.setSelectedIndex(selected);							
 						}
-				});
-				list_4.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mousePressed(MouseEvent arg0) {
-						if(arg0.getClickCount() == 1){
-							try{
-								int selected = list_4.getSelectedIndex();
-								Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-								showProductModel = o.getProductsAsDefaultListModel();
-								showProductList.setModel(showProductModel);
-								kvitering.setText(o.getProductsString());
-								getOrders();
-								if(listModelFinished.size() > 0){
-									list_4.setSelectedIndex(selected);							
-								}
-								textArea.setText(o.getKommentar());
-							}catch(Exception e){
-//						System.out.println("Fant ingen produkter i bestillingen");
-							}
-						}
-						else if(arg0.getClickCount() == 2){
-							try{
-								Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-								DatabaseConnector.notFinished(o.getId());
-								getOrders();
-								textArea.setText("");
-								showProductModel.clear();
-								kvitering.setText("");
-							}catch(Exception e){
-								e.printStackTrace();
-							}
-						}
+						textArea.setText(o.getKommentar());
+					}catch(Exception e){
+						//						System.out.println("Fant ingen produkter i bestillingen");
 					}
-				});
+				}
+				else if(arg0.getClickCount() == 2){
+					try{
+						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+						DatabaseConnector.notFinished(o.getId());
+						getOrders();
+						textArea.setText("");
+						showProductModel.clear();
+						kvitering.setText("");
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		});
 
 		btnLevert = new JButton("Levert");
 		btnLevert.setFont(new Font("Verdana", Font.BOLD, 11));
@@ -1041,7 +1044,7 @@ public class Start extends Thread{
 				if(listModelFinished.getSize()>0){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-//						DatabaseConnector.deleteOrder(o);
+						//						DatabaseConnector.deleteOrder(o);
 						DatabaseConnector.delivered(o);
 						getOrders();
 						textArea.setText("");
@@ -1074,7 +1077,7 @@ public class Start extends Thread{
 						o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
 					}
 				}catch(Exception et){
-//					et.printStackTrace();
+					//					et.printStackTrace();
 				}
 				try{
 					Address a = DatabaseConnector.getAddressFromUser(Integer.parseInt(o.getUserId()));
@@ -1083,7 +1086,7 @@ public class Start extends Thread{
 					kunder_list.repaint();
 				}catch(Exception ed){
 					System.out.println("fant ikke brukeren");
-//					ed.printStackTrace();
+					//					ed.printStackTrace();
 				}
 				lblAddressNotFound.setVisible(false);
 			}
@@ -1104,40 +1107,40 @@ public class Start extends Thread{
 					}
 					String telefonNummer = DatabaseConnector.getPhoneByUserId(Integer.parseInt(o.getUserId()));
 					User u = DatabaseConnector.getUser(telefonNummer);
-					
+
 					String tmp = u.getAddress().getStreet();
 					String tmp2 = u.getAddress().getCity();
 					if (u.getAddress().getStreet().contains(" ") ||
-						u.getAddress().getStreet().contains("Ê") ||
-						u.getAddress().getStreet().contains("∆") ||
-						u.getAddress().getStreet().contains("¯") ||
-						u.getAddress().getStreet().contains("ÿ") ||
-						u.getAddress().getStreet().contains("Â") ||
-						u.getAddress().getStreet().contains("≈")
-						) {
-							tmp = tmp.replace(' ' , '+');
-							tmp = tmp.replace('Ê' , 'e');
-							tmp = tmp.replace('¯' , 'o');
-							tmp = tmp.replace('Â' , 'a');
-							tmp = tmp.replace('∆' , 'e');
-							tmp = tmp.replace('ÿ' , 'o');
-							tmp = tmp.replace('≈' , 'a');
+							u.getAddress().getStreet().contains("æ") ||
+							u.getAddress().getStreet().contains("Æ") ||
+							u.getAddress().getStreet().contains("ø") ||
+							u.getAddress().getStreet().contains("Ø") ||
+							u.getAddress().getStreet().contains("å") ||
+							u.getAddress().getStreet().contains("Å")
+					) {
+						tmp = tmp.replace(' ' , '+');
+						tmp = tmp.replace('æ' , 'e');
+						tmp = tmp.replace('ø' , 'o');
+						tmp = tmp.replace('å' , 'a');
+						tmp = tmp.replace('Æ' , 'e');
+						tmp = tmp.replace('Ø' , 'o');
+						tmp = tmp.replace('Å' , 'a');
 					}
 					if (u.getAddress().getCity().contains(" ") ||
-							u.getAddress().getCity().contains("Ê") ||
-							u.getAddress().getCity().contains("∆") ||
-							u.getAddress().getCity().contains("¯") ||
-							u.getAddress().getCity().contains("ÿ") ||
-							u.getAddress().getCity().contains("Â") ||
-							u.getAddress().getCity().contains("≈")
-							) {
-								tmp2 = tmp.replace(' ' , '+');
-								tmp2 = tmp.replace('Ê' , 'e');
-								tmp2 = tmp.replace('¯' , 'o');
-								tmp2 = tmp.replace('Â' , 'a');
-								tmp2 = tmp.replace('∆' , 'e');
-								tmp2 = tmp.replace('ÿ' , 'o');
-								tmp2 = tmp.replace('≈' , 'a');
+							u.getAddress().getCity().contains("æ") ||
+							u.getAddress().getCity().contains("Æ") ||
+							u.getAddress().getCity().contains("ø") ||
+							u.getAddress().getCity().contains("Ø") ||
+							u.getAddress().getCity().contains("å") ||
+							u.getAddress().getCity().contains("Å")
+					) {
+						tmp2 = tmp.replace(' ' , '+');
+						tmp2 = tmp.replace('æ' , 'e');
+						tmp2 = tmp.replace('ø' , 'o');
+						tmp2 = tmp.replace('å' , 'a');
+						tmp2 = tmp.replace('Æ' , 'e');
+						tmp2 = tmp.replace('Ø' , 'o');
+						tmp2 = tmp.replace('Å' , 'a');
 					}
 					String constant = "http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=";
 					String url = tmp + "&" + String.valueOf(u.getAddress().getHouseNumber()) + "&" + u.getAddress().getZipcode() + "&" + tmp2 + ",norway";
@@ -1155,12 +1158,12 @@ public class Start extends Thread{
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnVisKart.setBounds(255, 18, 158, 50);
 		Utgaende.add(btnVisKart);
-		
+
 		scrollPane_2 = new JScrollPane();
 		scrollPane_2.setBounds(257, 151, 153, 195);
 		Utgaende.add(scrollPane_2);
 
-		
+
 		showProductList = new JList(showProductModel);
 		scrollPane_2.setViewportView(showProductList);
 
@@ -1170,24 +1173,24 @@ public class Start extends Thread{
 		panel_4.setBounds(676, 35, 297, 515);
 		Utgaende.add(panel_4);
 		panel_4.setLayout(null);
-		
+
 		scrollPane_4 = new JScrollPane();
 		scrollPane_4.setBounds(6, 22, 285, 487);
 		panel_4.add(scrollPane_4);
-		
+
 		kvitering = new JTextPane();
 		scrollPane_4.setViewportView(kvitering);
 		kvitering.setContentType("text/html");
 		kvitering.setEditable(false);
-		
+
 		scrollPane_3 = new JScrollPane();
 		scrollPane_3.setBounds(255, 399, 158, 151);
 		Utgaende.add(scrollPane_3);
-		
+
 		textArea = new JTextArea();
 		scrollPane_3.setViewportView(textArea);
 		textArea.setEditable(false);
-		
+
 		JButton btnNewButton_2 = new JButton("Slett");
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -1252,58 +1255,58 @@ public class Start extends Thread{
 		kunder.setBackground(new Color(255, 250, 250));
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
-		
+
 		panel_5 = new JPanel();
 		panel_5.setBackground(Color.GRAY);
 		panel_5.setBorder(new TitledBorder(null, "Kunder", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_5.setBounds(710, 64, 225, 496);
 		kunder.add(panel_5);
 		panel_5.setLayout(null);
-		
+
 		scrollPane_5 = new JScrollPane();
 		scrollPane_5.setBounds(6, 22, 213, 468);
 		panel_5.add(scrollPane_5);
-		
-				kunder_list = new JList(listmodelUsers);
-				scrollPane_5.setViewportView(kunder_list);
-				kunder_list.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent arg0) {
-						if(arg0.getClickCount() == 1){
-							int selectedIndex = kunder_list.getSelectedIndex();
-							User user = (User)m1.getElementAt(selectedIndex);
-							redigerNavn.setText(user.getName());
-							redigerNummer.setText(user.getPhone());
-							redigerAdresse.setText(user.getAddress().getStreet());
-							redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-							redigerPostNummer.setText(user.getAddress().getZipcode());
-							redigerPostSted.setText(user.getAddress().getCity());
-						}
-//				else if(arg0.getButton() == arg0.BUTTON3){
-//					try{
-//						int id = kunder_list.getSelectedIndex();
-//						User user = (User)m1.getElementAt(id);
-//						DatabaseConnector.deleteUser(user);
-//						getUsers();						
-//					}catch(Exception e){
-//						System.out.println("Klarte ikke slette bruker");
-//					}
-//				}
-					}
-					@Override
-					public void mouseReleased(MouseEvent arg0) {
-						if(arg0.getClickCount() == 1){
-							int selectedIndex = kunder_list.getSelectedIndex();
-							User user = (User)m1.getElementAt(selectedIndex);
-							redigerNavn.setText(user.getName());
-							redigerNummer.setText(user.getPhone());
-							redigerAdresse.setText(user.getAddress().getStreet());
-							redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-							redigerPostNummer.setText(user.getAddress().getZipcode());
-							redigerPostSted.setText(user.getAddress().getCity());
-						}
-					}
-				});
+
+		kunder_list = new JList(listmodelUsers);
+		scrollPane_5.setViewportView(kunder_list);
+		kunder_list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					int selectedIndex = kunder_list.getSelectedIndex();
+					User user = (User)m1.getElementAt(selectedIndex);
+					redigerNavn.setText(user.getName());
+					redigerNummer.setText(user.getPhone());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostNummer.setText(user.getAddress().getZipcode());
+					redigerPostSted.setText(user.getAddress().getCity());
+				}
+				//				else if(arg0.getButton() == arg0.BUTTON3){
+				//					try{
+				//						int id = kunder_list.getSelectedIndex();
+				//						User user = (User)m1.getElementAt(id);
+				//						DatabaseConnector.deleteUser(user);
+				//						getUsers();						
+				//					}catch(Exception e){
+				//						System.out.println("Klarte ikke slette bruker");
+				//					}
+				//				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				if(arg0.getClickCount() == 1){
+					int selectedIndex = kunder_list.getSelectedIndex();
+					User user = (User)m1.getElementAt(selectedIndex);
+					redigerNavn.setText(user.getName());
+					redigerNummer.setText(user.getPhone());
+					redigerAdresse.setText(user.getAddress().getStreet());
+					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+					redigerPostNummer.setText(user.getAddress().getZipcode());
+					redigerPostSted.setText(user.getAddress().getCity());
+				}
+			}
+		});
 
 		leggTil = new JButton("Opprett");
 		leggTil.addActionListener(new ActionListener() {
@@ -1387,7 +1390,7 @@ public class Start extends Thread{
 		redigerPostSted.setBounds(175, 326, 445, 60);
 		kunder.add(redigerPostSted);
 		redigerPostSted.setColumns(10);
-		
+
 		redigerPostSted.addKeyListener(new KeyAdapter() {
 			@SuppressWarnings("static-access")
 			@Override
@@ -1395,7 +1398,7 @@ public class Start extends Thread{
 				if (arg.getKeyCode() != arg.VK_ENTER) {
 					return;
 				}
-				
+
 				Address address = new Address(redigerAdresse.getText(), Integer.parseInt(redigerHusNr.getText()), redigerPostNummer.getText(), redigerPostSted.getText());
 				User newUser = new User(redigerNavn.getText(), redigerNummer.getText(), address);
 				User oldUser = (User)m1.getElementAt(kunder_list.getSelectedIndex());
@@ -1404,7 +1407,7 @@ public class Start extends Thread{
 			}
 		});
 
-		
+
 
 		JLabel lblFulltNavn_1 = new JLabel("Fullt Navn");
 		lblFulltNavn_1.setFont(new Font("Verdana", Font.BOLD, 14));
@@ -1454,48 +1457,48 @@ public class Start extends Thread{
 		retter.setBackground(new Color(255, 250, 250));
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
-		
+
 		panel_6 = new JPanel();
 		panel_6.setBackground(Color.GRAY);
 		panel_6.setBorder(new TitledBorder(null, "Produkter", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_6.setBounds(710, 64, 225, 496);
 		retter.add(panel_6);
 		panel_6.setLayout(null);
-		
+
 		scrollPane_6 = new JScrollPane();
 		scrollPane_6.setBounds(6, 22, 213, 468);
 		panel_6.add(scrollPane_6);
-		
-				retter_list = new JList(listModelProducts);
-				scrollPane_6.setViewportView(retter_list);
-				retter_list.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						if(e.getClickCount() == 1){
-							Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-							retterNavn.setText(product.getName());
-							retterPris.setText(String.valueOf(product.getPrice()));
-							retterKommentar.setText(product.getDescription());
-						}
-//				else if(e.getButton() == e.BUTTON3){
-//					try{
-//						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-//						getProducts();						
-//					}catch(Exception hehe){
-//						System.out.println("Klarte ikke slette produkt");
-//					}
-//				}
-					}
-					@Override
-					public void mouseReleased(MouseEvent e) {
-						if(e.getClickCount() == 1){
-							Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-							retterNavn.setText(product.getName());
-							retterPris.setText(String.valueOf(product.getPrice()));
-							retterKommentar.setText(product.getDescription());
-						}
-					}
-				});
+
+		retter_list = new JList(listModelProducts);
+		scrollPane_6.setViewportView(retter_list);
+		retter_list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(e.getClickCount() == 1){
+					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					retterNavn.setText(product.getName());
+					retterPris.setText(String.valueOf(product.getPrice()));
+					retterKommentar.setText(product.getDescription());
+				}
+				//				else if(e.getButton() == e.BUTTON3){
+				//					try{
+				//						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
+				//						getProducts();						
+				//					}catch(Exception hehe){
+				//						System.out.println("Klarte ikke slette produkt");
+				//					}
+				//				}
+			}
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(e.getClickCount() == 1){
+					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+					retterNavn.setText(product.getName());
+					retterPris.setText(String.valueOf(product.getPrice()));
+					retterKommentar.setText(product.getDescription());
+				}
+			}
+		});
 
 		rediger_retter = new JButton("Lagre");
 		rediger_retter.addActionListener(new ActionListener() {
@@ -1552,30 +1555,30 @@ public class Start extends Thread{
 		retterPris.setColumns(10);
 		retterPris.setBounds(453, 64, 156, 60);
 		retter.add(retterPris);
-		
+
 		scrollPane_10 = new JScrollPane();
 		scrollPane_10.setBounds(10, 199, 408, 202);
 		retter.add(scrollPane_10);
-		
-				retterKommentar = new JTextPane();
-				scrollPane_10.setViewportView(retterKommentar);
-				retterKommentar.addKeyListener(new KeyAdapter() {
-					@Override
-					public void keyPressed(KeyEvent arg0) {
-						if(arg0.getKeyCode() == arg0.VK_ENTER){
-							try{
-								Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
-								DatabaseConnector.newProduct(product);
-								getProducts();
-								retterNavn.setText("");
-								retterKommentar.setText("");
-								retterPris.setText("");
-							}catch(Exception e){
-								System.out.println("Failed to add new Product into database");
-							}					
-						}
-					}
-				});
+
+		retterKommentar = new JTextPane();
+		scrollPane_10.setViewportView(retterKommentar);
+		retterKommentar.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == arg0.VK_ENTER){
+					try{
+						Product product = new Product(retterNavn.getText(), retterKommentar.getText(), Double.parseDouble(retterPris.getText()));
+						DatabaseConnector.newProduct(product);
+						getProducts();
+						retterNavn.setText("");
+						retterKommentar.setText("");
+						retterPris.setText("");
+					}catch(Exception e){
+						System.out.println("Failed to add new Product into database");
+					}					
+				}
+			}
+		});
 		retterKommentar.setFont(new Font("Verdana", Font.PLAIN, 16));
 
 		lblProduktnavn = new JLabel("Produktnavn");
@@ -1616,17 +1619,17 @@ public class Start extends Thread{
 
 		pizzaInfo.setBounds(700, 68, 269, 492);
 		bestilling.add(pizzaInfo);
-		
+
 		label_2 = new JLabel("x ");
 		label_2.setBounds(16, 375, 219, 16);
 		bestilling.add(label_2);
-		
-		
+
+
 		menuBar = new JMenuBar();
 		menuBar.setForeground(Color.BLACK);
 		menuBar.setBackground(Color.WHITE);
 		frame.setJMenuBar(menuBar);
-		
+
 		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
 		label_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1644,11 +1647,11 @@ public class Start extends Thread{
 		});
 		menuBar.add(label_1);
 		label_1.setToolTipText("Avslutter Programmet");
-		
+
 		JMenu mnHjelp = new JMenu("Hjelp");
 		mnHjelp.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHjelp);
-		
+
 		JMenuItem mntmInstruksjoner = new JMenuItem("Instruksjoner");
 		mntmInstruksjoner.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1663,7 +1666,7 @@ public class Start extends Thread{
 			}
 		});
 		mnHjelp.add(mntmInstruksjoner);
-		
+
 		JMenuItem mntmOm = new JMenuItem("Om");
 		mntmOm.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1672,11 +1675,11 @@ public class Start extends Thread{
 			}
 		});
 		mnHjelp.add(mntmOm);
-		
+
 		JMenu mnHistorie = new JMenu("Historikk");
 		mnHistorie.setForeground(Color.DARK_GRAY);
 		menuBar.add(mnHistorie);
-		
+
 		JMenuItem mntmOrdrehistorikk = new JMenuItem("Ordrehistorikk");
 		mntmOrdrehistorikk.addMouseListener(new MouseAdapter() {
 			@Override
@@ -1697,7 +1700,7 @@ public class Start extends Thread{
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
-//			eee.printStackTrace();
+			//			eee.printStackTrace();
 			System.out.println("Finnes ingen produkter i database");
 			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGå til Rediger > Retter og legg inn retter");
 		}
@@ -1789,7 +1792,7 @@ public class Start extends Thread{
 				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-//			System.out.println("Finner ingen produkter i databasen");
+			//			System.out.println("Finner ingen produkter i databasen");
 		}
 	}
 	/**
@@ -1805,8 +1808,8 @@ public class Start extends Thread{
 				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-//			e.printStackTrace();
-//			System.out.println("Finner ingen kunder i databasen");
+			//			e.printStackTrace();
+			//			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
 	public void getOrders(){
@@ -1832,8 +1835,8 @@ public class Start extends Thread{
 				list_4.setModel(listModelFinished);
 			}
 		}catch(Exception e){
-//			System.out.println("Finner ingen orders i databasen");
-//			e.printStackTrace();
+			//			System.out.println("Finner ingen orders i databasen");
+			//			e.printStackTrace();
 		}
 	}
 	public String createReceipt(JList l){
@@ -1863,7 +1866,7 @@ public class Start extends Thread{
 
 		return temp;
 	}
-	
+
 	public String createOrder(JList l){
 
 		int temp = list_2.getSize() + 1;
