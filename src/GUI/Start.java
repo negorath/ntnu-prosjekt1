@@ -54,6 +54,7 @@ import javax.swing.JTextArea;
 import javax.swing.event.MenuKeyListener;
 import javax.swing.event.MenuKeyEvent;
 import javax.swing.JToggleButton;
+import javax.swing.JScrollPane;
 
 public class Start extends Thread{
 	private JFrame frame;
@@ -146,6 +147,16 @@ public class Start extends Thread{
 	private String[] temp;
 	private JMenuBar menuBar;
 	private JLabel label_1;
+	private JScrollPane scrollPane;
+	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane_2;
+	private JScrollPane scrollPane_3;
+	private JScrollPane scrollPane_4;
+	private JScrollPane scrollPane_5;
+	private JScrollPane scrollPane_6;
+	private JScrollPane scrollPane_7;
+	private JScrollPane scrollPane_8;
+	private JScrollPane scrollPane_9;
 
 	/**
 	 * Launch the application.
@@ -405,10 +416,13 @@ public class Start extends Thread{
 		reciept.add(btnFjernElement);
 		btnFjernAlt.setBounds(242, 0, 100, 23);
 		reciept.add(btnFjernAlt);
+		
+		scrollPane_7 = new JScrollPane();
+		scrollPane_7.setBounds(10, 25, 332, 567);
+		reciept.add(scrollPane_7);
 
-		list = new JList(model);		 
-		list.setBounds(10, 25, 332, 567);
-		reciept.add(list);
+		list = new JList(model);
+		scrollPane_7.setViewportView(list);
 
 
 		///////////////////////Drikkeknapper/////////////////////////
@@ -667,7 +681,7 @@ public class Start extends Thread{
 
 		bestillingsInfo = new JPanel();
 		bestillingsInfo.setPreferredSize(new Dimension(500, 550));
-		bestillingsInfo.setBackground(new Color(230, 230, 250));
+		bestillingsInfo.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("info", null, bestillingsInfo, null);
 		bestillingsInfo.setLayout(null);
 
@@ -697,10 +711,13 @@ public class Start extends Thread{
 		poststed.setBounds(160, 135, 134, 28);
 		bestillingsInfo.add(poststed);
 		poststed.setColumns(10);
+		
+		scrollPane_9 = new JScrollPane();
+		scrollPane_9.setBounds(16, 190, 190, 93);
+		bestillingsInfo.add(scrollPane_9);
 
 		kommentar = new JTextPane();
-		kommentar.setBounds(16, 190, 190, 93);
-		bestillingsInfo.add(kommentar);
+		scrollPane_9.setViewportView(kommentar);
 
 		chckbxLevering = new JCheckBox("Levering");
 		chckbxLevering.setSelected(true);
@@ -719,14 +736,18 @@ public class Start extends Thread{
 		bestillingsInfo.add(rdbtnKontant);
 
 		panel_1 = new JPanel();
+		panel_1.setBackground(Color.GRAY);
 		panel_1.setBorder(new TitledBorder(null, "Bestilling", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_1.setBounds(335, 30, 277, 407);
 		bestillingsInfo.add(panel_1);
 		panel_1.setLayout(null);
+		
+		scrollPane_8 = new JScrollPane();
+		scrollPane_8.setBounds(6, 22, 265, 379);
+		panel_1.add(scrollPane_8);
 
 		list_1 = new JList(model);
-		list_1.setBounds(6, 22, 265, 379);
-		panel_1.add(list_1);
+		scrollPane_8.setViewportView(list_1);
 
 		JButton btnRediger_1 = new JButton("Rediger");
 		btnRediger_1.setBounds(182, 0, 89, 23);
@@ -896,16 +917,22 @@ public class Start extends Thread{
 
 		
 		Utgaende = new JPanel();
-		Utgaende.setBackground(new Color(230, 230, 250));
+		Utgaende.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("Utg\u00E5ende", null, Utgaende, null);
 		Utgaende.setLayout(null);
 
 		panel_2 = new JPanel();
+		panel_2.setBackground(Color.GRAY);
 		panel_2.setBorder(new TitledBorder(null, "Ikke ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_2.setBounds(4, 35, 241, 515);
 		Utgaende.add(panel_2);
 		panel_2.setLayout(null);
+		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(6, 22, 229, 487);
+		panel_2.add(scrollPane);
 		list_3 = new JList(listModelOrders);
+		scrollPane.setViewportView(list_3);
 		list_3.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -945,57 +972,59 @@ public class Start extends Thread{
 				}
 			}
 		});
-		list_3.setBounds(6, 22, 229, 487);
-		panel_2.add(list_3);
 
 		JPanel panel_3 = new JPanel();
+		panel_3.setBackground(Color.GRAY);
 		panel_3.setBorder(new TitledBorder(null, "Ferdig", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_3.setBounds(423, 35, 241, 515);
 		Utgaende.add(panel_3);
 		panel_3.setLayout(null);
-
-		list_4 = new JList(listModelFinished);
-		list_4.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusGained(FocusEvent e) {
-				focusOnFinishedOrders = true;
-				}
-		});
-		list_4.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent arg0) {
-				if(arg0.getClickCount() == 1){
-					try{
-						int selected = list_4.getSelectedIndex();
-						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						showProductModel = o.getProductsAsDefaultListModel();
-						showProductList.setModel(showProductModel);
-						kvitering.setText(o.getProductsString());
-						getOrders();
-						if(listModelFinished.size() > 0){
-							list_4.setSelectedIndex(selected);							
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(6, 22, 229, 487);
+		panel_3.add(scrollPane_1);
+		
+				list_4 = new JList(listModelFinished);
+				scrollPane_1.setViewportView(list_4);
+				list_4.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusGained(FocusEvent e) {
+						focusOnFinishedOrders = true;
 						}
-						textArea.setText(o.getKommentar());
-					}catch(Exception e){
+				});
+				list_4.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mousePressed(MouseEvent arg0) {
+						if(arg0.getClickCount() == 1){
+							try{
+								int selected = list_4.getSelectedIndex();
+								Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+								showProductModel = o.getProductsAsDefaultListModel();
+								showProductList.setModel(showProductModel);
+								kvitering.setText(o.getProductsString());
+								getOrders();
+								if(listModelFinished.size() > 0){
+									list_4.setSelectedIndex(selected);							
+								}
+								textArea.setText(o.getKommentar());
+							}catch(Exception e){
 //						System.out.println("Fant ingen produkter i bestillingen");
+							}
+						}
+						else if(arg0.getClickCount() == 2){
+							try{
+								Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
+								DatabaseConnector.notFinished(o.getId());
+								getOrders();
+								textArea.setText("");
+								showProductModel.clear();
+								kvitering.setText("");
+							}catch(Exception e){
+								e.printStackTrace();
+							}
+						}
 					}
-				}
-				else if(arg0.getClickCount() == 2){
-					try{
-						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						DatabaseConnector.notFinished(o.getId());
-						getOrders();
-						textArea.setText("");
-						showProductModel.clear();
-						kvitering.setText("");
-					}catch(Exception e){
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		list_4.setBounds(6, 22, 229, 487);
-		panel_3.add(list_4);
+				});
 
 		btnLevert = new JButton("Levert");
 		btnLevert.addActionListener(new ActionListener() {
@@ -1010,7 +1039,7 @@ public class Start extends Thread{
 						showProductModel.clear();
 						kvitering.setText("");
 					}catch(Exception ett){
-						ett.printStackTrace();
+						System.out.println("Ingen ordre er valgt");
 					}
 				}
 			}
@@ -1117,27 +1146,37 @@ public class Start extends Thread{
 		btnVisKart.setFont(new Font("Verdana", Font.BOLD, 16));
 		btnVisKart.setBounds(255, 18, 158, 50);
 		Utgaende.add(btnVisKart);
+		
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(257, 151, 153, 195);
+		Utgaende.add(scrollPane_2);
 
 		
 		showProductList = new JList(showProductModel);
-		showProductList.setBounds(257, 151, 153, 195);
-		Utgaende.add(showProductList);
+		scrollPane_2.setViewportView(showProductList);
 
 		panel_4 = new JPanel();
+		panel_4.setBackground(Color.GRAY);
 		panel_4.setBorder(new TitledBorder(null, "Kvitering", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		panel_4.setBounds(676, 35, 297, 515);
 		Utgaende.add(panel_4);
 		panel_4.setLayout(null);
 		
+		scrollPane_4 = new JScrollPane();
+		scrollPane_4.setBounds(6, 22, 285, 487);
+		panel_4.add(scrollPane_4);
+		
 		kvitering = new JTextPane();
+		scrollPane_4.setViewportView(kvitering);
 		kvitering.setContentType("text/html");
-		kvitering.setBounds(6, 22, 285, 487);
 		kvitering.setEditable(false);
-		panel_4.add(kvitering);
+		
+		scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(255, 399, 158, 151);
+		Utgaende.add(scrollPane_3);
 		
 		textArea = new JTextArea();
-		textArea.setBounds(255, 399, 158, 151);
-		Utgaende.add(textArea);
+		scrollPane_3.setViewportView(textArea);
 		textArea.setEditable(false);
 		
 		JButton btnNewButton_2 = new JButton("Slett");
@@ -1166,7 +1205,7 @@ public class Start extends Thread{
 		//------------------------Rediger-------------------------------------------------
 
 		Rediger = new JPanel();
-		Rediger.setBackground(new Color(230, 230, 250));
+		Rediger.setBackground(new Color(255, 250, 250));
 		tabbedPane.addTab("Rediger", null, Rediger, null);
 		Rediger.setLayout(null);
 
@@ -1203,21 +1242,26 @@ public class Start extends Thread{
 		kunder = new JPanel();
 		tabbedPane_1.addTab("Kunder", null, kunder, null);
 		kunder.setLayout(null);
-
-		kunder_list = new JList(listmodelUsers);
-		kunder_list.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(arg0.getClickCount() == 1){
-					int selectedIndex = kunder_list.getSelectedIndex();
-					User user = (User)m1.getElementAt(selectedIndex);
-					redigerNavn.setText(user.getName());
-					redigerNummer.setText(user.getPhone());
-					redigerAdresse.setText(user.getAddress().getStreet());
-					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-					redigerPostNummer.setText(user.getAddress().getZipcode());
-					redigerPostSted.setText(user.getAddress().getCity());
-				}
+		
+		scrollPane_5 = new JScrollPane();
+		scrollPane_5.setBounds(722, 64, 213, 468);
+		kunder.add(scrollPane_5);
+		
+				kunder_list = new JList(listmodelUsers);
+				scrollPane_5.setViewportView(kunder_list);
+				kunder_list.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent arg0) {
+						if(arg0.getClickCount() == 1){
+							int selectedIndex = kunder_list.getSelectedIndex();
+							User user = (User)m1.getElementAt(selectedIndex);
+							redigerNavn.setText(user.getName());
+							redigerNummer.setText(user.getPhone());
+							redigerAdresse.setText(user.getAddress().getStreet());
+							redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+							redigerPostNummer.setText(user.getAddress().getZipcode());
+							redigerPostSted.setText(user.getAddress().getCity());
+						}
 //				else if(arg0.getButton() == arg0.BUTTON3){
 //					try{
 //						int id = kunder_list.getSelectedIndex();
@@ -1228,23 +1272,21 @@ public class Start extends Thread{
 //						System.out.println("Klarte ikke slette bruker");
 //					}
 //				}
-			}
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				if(arg0.getClickCount() == 1){
-					int selectedIndex = kunder_list.getSelectedIndex();
-					User user = (User)m1.getElementAt(selectedIndex);
-					redigerNavn.setText(user.getName());
-					redigerNummer.setText(user.getPhone());
-					redigerAdresse.setText(user.getAddress().getStreet());
-					redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
-					redigerPostNummer.setText(user.getAddress().getZipcode());
-					redigerPostSted.setText(user.getAddress().getCity());
-				}
-			}
-		});
-		kunder_list.setBounds(722, 64, 213, 468);
-		kunder.add(kunder_list);
+					}
+					@Override
+					public void mouseReleased(MouseEvent arg0) {
+						if(arg0.getClickCount() == 1){
+							int selectedIndex = kunder_list.getSelectedIndex();
+							User user = (User)m1.getElementAt(selectedIndex);
+							redigerNavn.setText(user.getName());
+							redigerNummer.setText(user.getPhone());
+							redigerAdresse.setText(user.getAddress().getStreet());
+							redigerHusNr.setText(String.valueOf(user.getAddress().getHouseNumber()));
+							redigerPostNummer.setText(user.getAddress().getZipcode());
+							redigerPostSted.setText(user.getAddress().getCity());
+						}
+					}
+				});
 
 		leggTil = new JButton("Opprett");
 		leggTil.addActionListener(new ActionListener() {
@@ -1392,19 +1434,25 @@ public class Start extends Thread{
 		kunder.add(button_7);
 
 		JPanel retter = new JPanel();
+		retter.setBackground(Color.GRAY);
 		tabbedPane_1.addTab("Retter", null, retter, null);
 		retter.setLayout(null);
-
-		retter_list = new JList(listModelProducts);
-		retter_list.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(e.getClickCount() == 1){
-					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-					retterNavn.setText(product.getName());
-					retterPris.setText(String.valueOf(product.getPrice()));
-					retterKommentar.setText(product.getDescription());
-				}
+		
+		scrollPane_6 = new JScrollPane();
+		scrollPane_6.setBounds(722, 64, 213, 468);
+		retter.add(scrollPane_6);
+		
+				retter_list = new JList(listModelProducts);
+				scrollPane_6.setViewportView(retter_list);
+				retter_list.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if(e.getClickCount() == 1){
+							Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+							retterNavn.setText(product.getName());
+							retterPris.setText(String.valueOf(product.getPrice()));
+							retterKommentar.setText(product.getDescription());
+						}
 //				else if(e.getButton() == e.BUTTON3){
 //					try{
 //						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
@@ -1413,19 +1461,17 @@ public class Start extends Thread{
 //						System.out.println("Klarte ikke slette produkt");
 //					}
 //				}
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if(e.getClickCount() == 1){
-					Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
-					retterNavn.setText(product.getName());
-					retterPris.setText(String.valueOf(product.getPrice()));
-					retterKommentar.setText(product.getDescription());
-				}
-			}
-		});
-		retter_list.setBounds(722, 64, 213, 468);
-		retter.add(retter_list);
+					}
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						if(e.getClickCount() == 1){
+							Product product = (Product)m2.getElementAt(retter_list.getSelectedIndex());
+							retterNavn.setText(product.getName());
+							retterPris.setText(String.valueOf(product.getPrice()));
+							retterKommentar.setText(product.getDescription());
+						}
+					}
+				});
 
 		rediger_retter = new JButton("Lagre");
 		rediger_retter.addActionListener(new ActionListener() {

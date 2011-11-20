@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import logic.DatabaseConnector;
 import logic.Order;
 import logic.User;
+import javax.swing.JScrollPane;
 
 public class History {
 
@@ -26,6 +27,9 @@ public class History {
 	private static DefaultListModel modelVarer = new DefaultListModel();
 	private static JList userList, historyList;
 	private static JList varerList;
+	private static JScrollPane scrollPane;
+	private static JScrollPane scrollPane_1;
+	private static JScrollPane scrollPane_2;
 	
 	/**
 	 * Opens a history window
@@ -38,8 +42,13 @@ public class History {
 		frame.setUndecorated(true);
 		frame.getContentPane().setLayout(null);
 		
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 26, 188, 263);
+		frame.getContentPane().add(scrollPane);
+		
 
 		userList = new JList(modelUsers);
+		scrollPane.setViewportView(userList);
 		userList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -62,10 +71,13 @@ public class History {
 				frame.repaint();
 			}
 		});
-		userList.setBounds(10, 26, 188, 263);
-		frame.getContentPane().add(userList);
+		
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(208, 26, 259, 263);
+		frame.getContentPane().add(scrollPane_1);
 		
 		historyList = new JList(modelHistory);
+		scrollPane_1.setViewportView(historyList);
 		historyList.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -79,8 +91,6 @@ public class History {
 				}
 			}
 		});
-		historyList.setBounds(208, 26, 259, 263);
-		frame.getContentPane().add(historyList);
 		
 		JLabel lblKunder = new JLabel("Kunder");
 		lblKunder.setForeground(Color.WHITE);
@@ -101,9 +111,12 @@ public class History {
 		btnLukk.setBounds(10, 300, 638, 23);
 		frame.getContentPane().add(btnLukk);
 		
+		scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(477, 26, 171, 263);
+		frame.getContentPane().add(scrollPane_2);
+		
 		varerList = new JList(modelVarer);
-		varerList.setBounds(477, 26, 171, 263);
-		frame.getContentPane().add(varerList);
+		scrollPane_2.setViewportView(varerList);
 		
 		JLabel lblVarer = new JLabel("Varer");
 		lblVarer.setForeground(Color.WHITE);
