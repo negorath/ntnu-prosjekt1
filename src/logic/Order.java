@@ -7,14 +7,50 @@ import javax.swing.JOptionPane;
 
 public class Order {
 	
+	/**
+	 * @uml.property  name="id"
+	 */
 	private String id;
+	/**
+	 * @uml.property  name="userId"
+	 */
 	private String userId;
+	/**
+	 * @uml.property  name="products"
+	 */
 	private String products;
-	private String ordered, due = "", delivered;
+	/**
+	 * @uml.property  name="ordered"
+	 */
+	private String ordered;
+	/**
+	 * @uml.property  name="due"
+	 */
+	private String due = "";
+	/**
+	 * @uml.property  name="delivered"
+	 */
+	private String delivered;
+	/**
+	 * @uml.property  name="antall" multiplicity="(0 -1)" dimension="1"
+	 */
 	private int[] antall;
+	/**
+	 * @uml.property  name="kommentar"
+	 */
 	private String kommentar;
+	/**
+	 * @uml.property  name="produkt" multiplicity="(0 -1)" dimension="1"
+	 */
 	private String[] produkt;
-	private int levering, kort;
+	/**
+	 * @uml.property  name="levering"
+	 */
+	private int levering;
+	/**
+	 * @uml.property  name="kort"
+	 */
+	private int kort;
 	/**
 	 * 
 	 * @param id
@@ -28,46 +64,51 @@ public class Order {
 	}
 	/**
 	 * sets levering
+	 * @uml.property  name="levering"
 	 */
 	public void setLevering(int i){
 		this.levering = i;
 	}
 	/**
-	 * 
-	 * @return levering true or false
+	 * @return  levering true or false
+	 * @uml.property  name="levering"
 	 */
 	public int getLevering(){
 		return levering;
 	}
 	/**
 	 * settter betaling med kort
-	 * @param boolean
+	 * @param  boolean
+	 * @uml.property  name="kort"
 	 */
 	public void setKort(int i){
 		this.kort = i;
 	}
 	/**
-	 * 
-	 * @return kort
+	 * @return  kort
+	 * @uml.property  name="kort"
 	 */
 	public int getKort(){
 		return kort;
 	}
 	
 	/**
-	 * @return the userId
+	 * @return  the userId
+	 * @uml.property  name="userId"
 	 */
 	public String getUserId() {
 		return userId;			
 	}
 	/**
-	 * @param userId the userId to set
+	 * @param userId  the userId to set
+	 * @uml.property  name="userId"
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	/**
-	 * @return the products
+	 * @return  the products
+	 * @uml.property  name="products"
 	 */
 	public String getProducts() {
 		return products;
@@ -75,7 +116,8 @@ public class Order {
 	
 	/**
 	 * Lager en string som viser hvilke produkter og hvor mange som er bestyilt.
-	 * @param produkter, array som inneholder produktene som er bestilt.
+	 * @param  produkter, array som inneholder produktene som er bestilt.
+	 * @uml.property  name="products"
 	 */
 	public void setProducts(String[] produkter){
 		this.products = "";
@@ -141,14 +183,16 @@ public class Order {
 		this.products = products;
 	}
 	/**
-	 * @return the id
+	 * @return  the id
+	 * @uml.property  name="id"
 	 */
 	public String getId() {
 		return id;
 	}
 	/**
 	 * sets the order id.
-	 * @param a
+	 * @param  a
+	 * @uml.property  name="id"
 	 */
 	public void setId(String a){
 		this.id = a;
@@ -168,20 +212,23 @@ public class Order {
 	/**
 	 * returns due
 	 * @return
+	 * @uml.property  name="due"
 	 */
 	public String getDue(){
 		return this.due;
 	}
 	/**
 	 * sets due
-	 * @param s
+	 * @param  s
+	 * @uml.property  name="due"
 	 */
 	public void setDue(String s){
 		this.due = s;
 	}
 	/**
 	 * sets delivered
-	 * @param s
+	 * @param  s
+	 * @uml.property  name="delivered"
 	 */
 	public void setDelivered(String s){
 		this.delivered = s;
@@ -189,6 +236,7 @@ public class Order {
 	/**
 	 * gets delivered
 	 * @return
+	 * @uml.property  name="delivered"
 	 */
 	public String getDelivered(){
 		return this.delivered;
@@ -254,7 +302,8 @@ public class Order {
 	}
 	/**
 	 * sets comment
-	 * @param kommentar
+	 * @param  kommentar
+	 * @uml.property  name="kommentar"
 	 */
 	public void setKommentar(String kommentar){
 		this.kommentar = kommentar;
@@ -262,6 +311,7 @@ public class Order {
 	/**
 	 * gets comment
 	 * @return
+	 * @uml.property  name="kommentar"
 	 */
 	public String getKommentar(){
 		return this.kommentar;

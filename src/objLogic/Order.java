@@ -3,10 +3,31 @@ import java.sql.Connection;
 
 class Order {
 	
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
+	/**
+	 * @uml.property  name="userId"
+	 */
 	private int userId;
+	/**
+	 * @uml.property  name="products"
+	 * @uml.associationEnd  multiplicity="(0 -1)"
+	 */
 	private Product[] products;
-	private String ordered, due, delivered;
+	/**
+	 * @uml.property  name="ordered"
+	 */
+	private String ordered;
+	/**
+	 * @uml.property  name="due"
+	 */
+	private String due;
+	/**
+	 * @uml.property  name="delivered"
+	 */
+	private String delivered;
 	/**
 	 * 
 	 * @param id
@@ -24,31 +45,36 @@ class Order {
 	
 	
 	/**
-	 * @return the userId
+	 * @return  the userId
+	 * @uml.property  name="userId"
 	 */
 	public int getUserId() {
 		return userId;
 	}
 	/**
-	 * @param userId the userId to set
+	 * @param userId  the userId to set
+	 * @uml.property  name="userId"
 	 */
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 	/**
-	 * @return the products
+	 * @return  the products
+	 * @uml.property  name="products"
 	 */
 	public Product[] getProducts() {
 		return products;
 	}
 	/**
-	 * @param products the products to set
+	 * @param products  the products to set
+	 * @uml.property  name="products"
 	 */
 	public void setProducts(Product[] products) {
 		this.products = products;
 	}
 	/**
-	 * @return the id
+	 * @return  the id
+	 * @uml.property  name="id"
 	 */
 	public int getId() {
 		return id;

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.18-bin.jar"/>
 	<classpathentry kind="lib" path="jpedal_trial.jar"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="com.soyatec.uml.CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

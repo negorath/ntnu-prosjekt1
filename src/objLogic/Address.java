@@ -5,12 +5,33 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Address {
+	/**
+	 * @uml.property  name="id"
+	 */
 	private int id;
+	/**
+	 * @uml.property  name="street"
+	 */
 	private String street;
+	/**
+	 * @uml.property  name="houseNumber"
+	 */
 	private int houseNumber;
+	/**
+	 * @uml.property  name="houseLetter"
+	 */
 	private String houseLetter;
+	/**
+	 * @uml.property  name="zipcode"
+	 */
 	private String zipcode;
+	/**
+	 * @uml.property  name="city"
+	 */
 	private String city;
+	/**
+	 * @uml.property  name="country"
+	 */
 	private String country;
 	
 	public static Connection con;
@@ -50,84 +71,101 @@ public class Address {
 	
 
 	/**
-	 * @return the address
+	 * @return  the address
+	 * @uml.property  name="street"
 	 */
 	public String getStreet() {
 		return street;
 	}
 	/**
-	 * @param address the address to set
+	 * @param address  the address to set
+	 * @uml.property  name="street"
 	 */
 	public void setStreet(String address) {
 		this.street = address;
 	}
 	/**
-	 * @return the houseNumber
+	 * @return  the houseNumber
+	 * @uml.property  name="houseNumber"
 	 */
 	
 	public int getHouseNumber() {
 		return houseNumber;
 	}
 	/**
-	 * @param houseNumber the houseNumber to set
+	 * @param houseNumber  the houseNumber to set
+	 * @uml.property  name="houseNumber"
 	 */
 	public void setHouseNumber(int houseNumber) {
 		this.houseNumber = houseNumber;
 	}
 	/**
-	 * @return the houseLetter
+	 * @return  the houseLetter
+	 * @uml.property  name="houseLetter"
 	 */
 	public String getHouseLetter() {
 		return houseLetter;
 	}
 	/**
-	 * @param houseLetter the houseLetter to set
+	 * @param houseLetter  the houseLetter to set
+	 * @uml.property  name="houseLetter"
 	 */
 	public void setHouseLetter(String houseLetter) {
 		this.houseLetter = houseLetter;
 	}
 	/**
-	 * @return the zipcode
+	 * @return  the zipcode
+	 * @uml.property  name="zipcode"
 	 */
 	public String getZipcode() {
 		return zipcode;
 	}
 	/**
-	 * @param zipcode the zipcode to set
+	 * @param zipcode  the zipcode to set
+	 * @uml.property  name="zipcode"
 	 */
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 	/**
-	 * @return the city
+	 * @return  the city
+	 * @uml.property  name="city"
 	 */
 	public String getCity() {
 		return city;
 	}
 	/**
-	 * @param city the city to set
+	 * @param city  the city to set
+	 * @uml.property  name="city"
 	 */
 	public void setCity(String city) {
 		this.city = city;
 	}
 	/**
-	 * @return the country
+	 * @return  the country
+	 * @uml.property  name="country"
 	 */
 	public String getCountry() {
 		return country;
 	}
 	/**
-	 * @param country the country to set
+	 * @param country  the country to set
+	 * @uml.property  name="country"
 	 */
 	public void setCountry(String country) {
 		this.country = country;
 	}
 	/**
-	 * @return the id
+	 * @return  the id
+	 * @uml.property  name="id"
 	 */
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id
+	 * @uml.property  name="id"
+	 */
 	public void setId(int id){
 		this.id = id;
 	}

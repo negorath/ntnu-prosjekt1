@@ -8,9 +8,22 @@ import java.sql.Connection;
 
 public class User{
 	
+	/**
+	 * @uml.property  name="name"
+	 */
 	private String name;
+	/**
+	 * @uml.property  name="phone"
+	 */
 	private String phone;
+	/**
+	 * @uml.property  name="address"
+	 * @uml.associationEnd  
+	 */
 	private Address address;
+	/**
+	 * @uml.property  name="con"
+	 */
 	private Connection con;
 	
 	
@@ -59,37 +72,42 @@ public class User{
 
 
 	/**
-	 * @return the name
+	 * @return  the name
+	 * @uml.property  name="name"
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * @param name the name to set
-	 * @throws SQLException 
+	 * @param name  the name to set
+	 * @throws SQLException
+	 * @uml.property  name="name"
 	 */
 	public void setName(String name) throws SQLException {
 		this.name = name;
 	}
 
 	/**
-	 * @return the phone
+	 * @return  the phone
+	 * @uml.property  name="phone"
 	 */
 	public String getPhone() {
 		return phone;
 	}
 
 	/**
-	 * @param phone the phone to set
-	 * @throws SQLException 
+	 * @param phone  the phone to set
+	 * @throws SQLException
+	 * @uml.property  name="phone"
 	 */
 	public void setPhone(String phone) throws SQLException {
 		this.phone = phone;
 	}
 
 	/**
-	 * @return the address
+	 * @return  the address
+	 * @uml.property  name="address"
 	 */
 	public Address getAddress() {
 		return address;

@@ -62,108 +62,654 @@ import javax.swing.JScrollPane;
  * Hovedklassen som kjører programmet
  */
 public class Start extends Thread{
+	/**
+	 * @uml.property  name="frame"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JFrame frame;
-	private JTextField nummer, navn, gatenavn, postnummer, poststed;
+	/**
+	 * @uml.property  name="nummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JTextField nummer;
+	/**
+	 * @uml.property  name="navn"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JTextField navn;
+	/**
+	 * @uml.property  name="gatenavn"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JTextField gatenavn;
+	/**
+	 * @uml.property  name="postnummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JTextField postnummer;
+	/**
+	 * @uml.property  name="poststed"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JTextField poststed;
+	/**
+	 * @uml.property  name="kommentar"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	JTextPane kommentar;
+	/**
+	 * @uml.property  name="buttonGroup"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	/**
+	 * @uml.property  name="label"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	private JLabel label;
-	private JPanel bestilling, reciept, panel, bestillingsInfo, Rediger;
+	/**
+	 * @uml.property  name="bestilling"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JPanel bestilling;
+	/**
+	 * @uml.property  name="reciept"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JPanel reciept;
+	/**
+	 * @uml.property  name="panel"
+	 * @uml.associationEnd  readOnly="true"
+	 */
+	private JPanel panel;
+	/**
+	 * @uml.property  name="bestillingsInfo"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JPanel bestillingsInfo;
+	/**
+	 * @uml.property  name="rediger"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JPanel Rediger;
+	/**
+	 * @uml.property  name="tabbedPane"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTabbedPane tabbedPane;
-	private JRadioButton rdbtnKort, rdbtnKontant;
-	private JButton toggleButton, toggleButton_1, toggleButton_2, toggleButton_3, toggleButton_4, toggleButton_5, toggleButton_6, toggleButton_7;
-	private JButton toggleButton_8, tglbtnCola, tglbtnFanta, tglbtnUrge, tglbtnSprite, tglbtnFarris, tglbtnLol;
-	private JButton button, button_1, button_2, button_3, button_4, button_5, button_6, btnNewButton_1, btnNewButton, btnNeste;
+	/**
+	 * @uml.property  name="rdbtnKort"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JRadioButton rdbtnKort;
+	/**
+	 * @uml.property  name="rdbtnKontant"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JRadioButton rdbtnKontant;
+	/**
+	 * @uml.property  name="toggleButton"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton;
+	/**
+	 * @uml.property  name="toggleButton_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_1;
+	/**
+	 * @uml.property  name="toggleButton_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_2;
+	/**
+	 * @uml.property  name="toggleButton_3"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_3;
+	/**
+	 * @uml.property  name="toggleButton_4"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_4;
+	/**
+	 * @uml.property  name="toggleButton_5"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_5;
+	/**
+	 * @uml.property  name="toggleButton_6"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_6;
+	/**
+	 * @uml.property  name="toggleButton_7"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_7;
+	/**
+	 * @uml.property  name="toggleButton_8"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton toggleButton_8;
+	/**
+	 * @uml.property  name="tglbtnCola"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnCola;
+	/**
+	 * @uml.property  name="tglbtnFanta"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnFanta;
+	/**
+	 * @uml.property  name="tglbtnUrge"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnUrge;
+	/**
+	 * @uml.property  name="tglbtnSprite"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnSprite;
+	/**
+	 * @uml.property  name="tglbtnFarris"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnFarris;
+	/**
+	 * @uml.property  name="tglbtnLol"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton tglbtnLol;
+	/**
+	 * @uml.property  name="button"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button;
+	/**
+	 * @uml.property  name="button_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_1;
+	/**
+	 * @uml.property  name="button_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_2;
+	/**
+	 * @uml.property  name="button_3"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_3;
+	/**
+	 * @uml.property  name="button_4"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_4;
+	/**
+	 * @uml.property  name="button_5"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_5;
+	/**
+	 * @uml.property  name="button_6"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton button_6;
+	/**
+	 * @uml.property  name="btnNewButton_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton btnNewButton_1;
+	/**
+	 * @uml.property  name="btnNewButton"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton btnNewButton;
+	/**
+	 * @uml.property  name="btnNeste"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private JButton btnNeste;
+	/**
+	 * @uml.property  name="btnIncall"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton btnIncall;
+	/**
+	 * @uml.property  name="chckbxLevering"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JCheckBox chckbxLevering; 
+	/**
+	 * @uml.property  name="list_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList list_1;
+	/**
+	 * @uml.property  name="image"
+	 */
 	private BufferedImage image;
 
+	/**
+	 * @uml.property  name="label_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel label_2;
+	/**
+	 * @uml.property  name="textArea"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextArea textArea;
+	/**
+	 * @uml.property  name="isBrus"
+	 */
 	private boolean isBrus = false;
+	/**
+	 * @uml.property  name="kvittering"
+	 */
 	private ArrayList<String> kvittering = new ArrayList<String>();
+	/**
+	 * @uml.property  name="list"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList list;
-	private DefaultListModel model = new DefaultListModel(), list_2 = new DefaultListModel(), listModelFinished = new DefaultListModel();
+	/**
+	 * @uml.property  name="model"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.String"
+	 */
+	private DefaultListModel model = new DefaultListModel();
+	/**
+	 * @uml.property  name="list_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
+	private DefaultListModel list_2 = new DefaultListModel();
+	/**
+	 * @uml.property  name="listModelFinished"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.String"
+	 */
+	private DefaultListModel listModelFinished = new DefaultListModel();
+	/**
+	 * @uml.property  name="m1"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="logic.User"
+	 */
 	private DefaultListModel m1 = new DefaultListModel();
+	/**
+	 * @uml.property  name="m2"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="logic.Product"
+	 */
 	private DefaultListModel m2 = new DefaultListModel();
+	/**
+	 * @uml.property  name="m3"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="logic.Order"
+	 */
 	private DefaultListModel m3 = new DefaultListModel();
+	/**
+	 * @uml.property  name="m4"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="logic.Order"
+	 */
 	private DefaultListModel m4 = new DefaultListModel();
 
+	/**
+	 * @uml.property  name="button_9"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	private JButton button_9;
+	/**
+	 * @uml.property  name="hvorMange"
+	 */
 	private String hvorMange = "";
+	/**
+	 * @uml.property  name="husnummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField husnummer;
+	/**
+	 * @uml.property  name="lblPostnummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblPostnummer;
+	/**
+	 * @uml.property  name="lblPoststed"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblPoststed;
+	/**
+	 * @uml.property  name="lblKommentar"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblKommentar;
+	/**
+	 * @uml.property  name="lblRingendeNummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblRingendeNummer;
+	/**
+	 * @uml.property  name="btnFjernElement"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton btnFjernElement;
+	/**
+	 * @uml.property  name="utgaende"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel Utgaende;
+	/**
+	 * @uml.property  name="list_3"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList list_3;
+	/**
+	 * @uml.property  name="list_4"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList list_4;
+	/**
+	 * @uml.property  name="btnDel"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton btnDel;
+	/**
+	 * @uml.property  name="button_8"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton button_8;
+	/**
+	 * @uml.property  name="sisteTrykteKnapp"
+	 */
 	private String sisteTrykteKnapp;
+	/**
+	 * @uml.property  name="map"
+	 * @uml.associationEnd  
+	 */
 	private Map map = new Map();
+	/**
+	 * @uml.property  name="btnRedigerAdresse"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton btnRedigerAdresse;
+	/**
+	 * @uml.property  name="users"
+	 */
 	private ArrayList<User> users = new ArrayList<User>();
 
+	/**
+	 * @uml.property  name="q"
+	 */
 	private int q;
+	/**
+	 * @uml.property  name="w"
+	 */
 	private int w;
+	/**
+	 * @uml.property  name="panel_4"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel panel_4;
+	/**
+	 * @uml.property  name="kvitering"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextPane kvitering;
+	/**
+	 * @uml.property  name="lblAddressNotFound"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblAddressNotFound;
+	/**
+	 * @uml.property  name="con"
+	 * @uml.associationEnd  
+	 */
 	private DatabaseConnector con = new DatabaseConnector();
+	/**
+	 * @uml.property  name="kunder"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel kunder;
+	/**
+	 * @uml.property  name="kunder_list"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList kunder_list;
+	/**
+	 * @uml.property  name="retter_list"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList retter_list;
+	/**
+	 * @uml.property  name="showProductList"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JList showProductList;
+	/**
+	 * @uml.property  name="leggTil"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton leggTil;
+	/**
+	 * @uml.property  name="slett"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton Slett;
+	/**
+	 * @uml.property  name="rediger_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton Rediger_1;
+	/**
+	 * @uml.property  name="rediger_retter"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton rediger_retter;
+	/**
+	 * @uml.property  name="leggTil_retter"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton leggTil_retter;
+	/**
+	 * @uml.property  name="leggTil_retter_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton leggTil_retter_1;
+	/**
+	 * @uml.property  name="redigerNavn"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerNavn;
+	/**
+	 * @uml.property  name="redigerNummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerNummer;
+	/**
+	 * @uml.property  name="redigerAdresse"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerAdresse;
+	/**
+	 * @uml.property  name="redigerHusNr"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerHusNr;
+	/**
+	 * @uml.property  name="redigerPostNummer"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerPostNummer;
+	/**
+	 * @uml.property  name="redigerPostSted"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField redigerPostSted;
+	/**
+	 * @uml.property  name="retterNavn"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField retterNavn;
+	/**
+	 * @uml.property  name="retterPris"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextField retterPris;
+	/**
+	 * @uml.property  name="retterKommentar"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JTextPane retterKommentar;
+	/**
+	 * @uml.property  name="lblProduktnavn"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblProduktnavn;
+	/**
+	 * @uml.property  name="lblPris"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblPris;
+	/**
+	 * @uml.property  name="lblBeskrivelse"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel lblBeskrivelse;
+	/**
+	 * @uml.property  name="retter"
+	 * @uml.associationEnd  readOnly="true"
+	 */
 	private JPanel Retter;
+	/**
+	 * @uml.property  name="listmodelUsers"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private DefaultListModel listmodelUsers = new DefaultListModel();
+	/**
+	 * @uml.property  name="listModelProducts"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private DefaultListModel listModelProducts = new DefaultListModel();
+	/**
+	 * @uml.property  name="listModelOrders"
+	 * @uml.associationEnd  multiplicity="(0 -1)" elementType="java.lang.String"
+	 */
 	private DefaultListModel listModelOrders = new DefaultListModel();
+	/**
+	 * @uml.property  name="showProductModel"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private DefaultListModel showProductModel = new DefaultListModel();
 
+	/**
+	 * @uml.property  name="alleUsers"
+	 */
 	private ArrayList<String> alleUsers = new ArrayList<String>();
+	/**
+	 * @uml.property  name="panel_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel panel_2;
+	/**
+	 * @uml.property  name="btnLevert"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton btnLevert;
+	/**
+	 * @uml.property  name="panel_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel panel_1;
+	/**
+	 * @uml.property  name="pizzaInfo"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel pizzaInfo = new JLabel();
+	/**
+	 * @uml.property  name="button_7"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JButton button_7;
+	/**
+	 * @uml.property  name="focusOnFinishedOrders"
+	 */
 	private boolean focusOnFinishedOrders = false;
 
+	/**
+	 * @uml.property  name="temp" multiplicity="(0 -1)" dimension="1"
+	 */
 	private String[] temp;
+	/**
+	 * @uml.property  name="menuBar"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JMenuBar menuBar;
+	/**
+	 * @uml.property  name="label_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JLabel label_1;
+	/**
+	 * @uml.property  name="scrollPane"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane;
+	/**
+	 * @uml.property  name="scrollPane_1"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_1;
+	/**
+	 * @uml.property  name="scrollPane_2"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_2;
+	/**
+	 * @uml.property  name="scrollPane_3"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_3;
+	/**
+	 * @uml.property  name="scrollPane_4"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_4;
+	/**
+	 * @uml.property  name="scrollPane_5"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_5;
+	/**
+	 * @uml.property  name="scrollPane_6"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_6;
+	/**
+	 * @uml.property  name="scrollPane_7"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_7;
+	/**
+	 * @uml.property  name="scrollPane_8"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_8;
+	/**
+	 * @uml.property  name="scrollPane_9"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_9;
+	/**
+	 * @uml.property  name="panel_5"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel panel_5;
+	/**
+	 * @uml.property  name="scrollPane_10"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JScrollPane scrollPane_10;
+	/**
+	 * @uml.property  name="panel_6"
+	 * @uml.associationEnd  multiplicity="(1 1)"
+	 */
 	private JPanel panel_6;
 
 	/**
@@ -1800,6 +2346,7 @@ public class Start extends Thread{
 	}
 	/**
 	 * Get or refresh all users
+	 * @uml.property  name="users"
 	 */
 	public void getUsers(){
 		try{
