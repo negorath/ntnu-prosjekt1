@@ -25,7 +25,8 @@ public class History {
 	private static DefaultListModel modelHistory = new DefaultListModel();
 	private static DefaultListModel modelUsers = new DefaultListModel();
 	private static DefaultListModel modelVarer = new DefaultListModel();
-	private static JList userList, historyList;
+	private static JList userList;
+	private static JList historyList;
 	private static JList varerList;
 	private static JScrollPane scrollPane;
 	private static JScrollPane scrollPane_1;
