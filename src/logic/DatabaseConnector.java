@@ -394,10 +394,10 @@ public class DatabaseConnector{
 	public static void delivered(Order o){
 		try{
 			con.setAutoCommit(true);
-			stmt.executeUpdate("UPDATE ORDERS SET delivered=now() WHERE id='" + o.getId() + "'");
+			stmt.executeUpdate("UPDATE orders SET delivered=now() WHERE id='" + o.getId() + "'");
 			con.setAutoCommit(false);
 		}catch(Exception e){
-
+			e.printStackTrace();
 		}
 	}
 	/**
