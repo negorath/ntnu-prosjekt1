@@ -1691,13 +1691,9 @@ public class Start extends Thread{
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
-<<<<<<< HEAD
 			//			eee.printStackTrace();
 			System.out.println("Finnes ingen produkter i database");
 			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGå til Rediger > Retter og legg inn retter");
-=======
-			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGŒ til Rediger > Retter og legg inn retter");
->>>>>>> afd7a5d30513260a68f0c1b52f6b5fcb676aab6a
 		}
 	}
 	/**
