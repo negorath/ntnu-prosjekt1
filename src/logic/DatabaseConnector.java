@@ -383,14 +383,14 @@ public class DatabaseConnector{
 			rs.close();
 			return ad;
 		} catch(Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 		return null;
 	}
 
 	public static Order getOrder(String s) throws Exception{
 		if(s.length() <= 0){
-			throw new Exception("k");
+			JOptionPane.showMessageDialog(null, "Ugyldig bestilling", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
 		}
 		String stringID = "";
 		boolean b = true;

@@ -885,6 +885,7 @@ public class Start extends Thread{
 						map.call("http://maps.google.com/maps/api/staticmap?zoom=15&size=400x400&sensor=false&markers=" + tmp + "&" + String.valueOf(husnummer.getText()) + "&" + tmp2 + ",norway", tmp + " " + String.valueOf(husnummer.getText()) + ", " + poststed.getText());
 						lblAddressNotFound.setVisible(false);
 					}catch(Exception haha){
+						JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
 						lblAddressNotFound.setVisible(true);
 						btnRedigerAdresse.setVisible(true);						
 					}
@@ -966,7 +967,7 @@ public class Start extends Thread{
 						}
 						textArea.setText(o.getKommentar());
 					}catch(Exception e){
-						JOptionPane.showMessageDialog(null, "Fant ingen produkcter i bestillingen", "Bestillings-Error",  JOptionPane.ERROR_MESSAGE);
+//						JOptionPane.showMessageDialog(null, "Fant ingen produkcter i bestillingen", "Bestillings-Error",  JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				else if(arg0.getClickCount() == 2){
@@ -978,7 +979,7 @@ public class Start extends Thread{
 						showProductModel.clear();
 						kvitering.setText("");
 					}catch(Exception e){
-						e.printStackTrace();
+//						e.printStackTrace();
 					}
 				}
 			}
@@ -1019,8 +1020,6 @@ public class Start extends Thread{
 						}
 						textArea.setText(o.getKommentar());
 					}catch(Exception e){
-						JOptionPane.showMessageDialog(null, "Fant ingen produkter i bestillingen", "Bestillings-Error",  JOptionPane.ERROR_MESSAGE);
-
 					}
 				}
 				else if(arg0.getClickCount() == 2){
@@ -1053,8 +1052,7 @@ public class Start extends Thread{
 						showProductModel.clear();
 						kvitering.setText("");
 					}catch(Exception ett){
-						JOptionPane.showMessageDialog(null, "Du må velge en bestilling først", "Error",  JOptionPane.ERROR_MESSAGE);
-
+						JOptionPane.showMessageDialog(null, "Velge en bestilling først", "Error",  JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -1089,7 +1087,7 @@ public class Start extends Thread{
 					getUsers();
 					kunder_list.repaint();
 				}catch(Exception ed){
-					JOptionPane.showMessageDialog(null, "Fant ikke brukeren i databasen", "Error",  JOptionPane.ERROR_MESSAGE);
+//					JOptionPane.showMessageDialog(null, "Fant ikke brukeren i databasen", "Error",  JOptionPane.ERROR_MESSAGE);
 
 				}
 				lblAddressNotFound.setVisible(false);
@@ -1152,7 +1150,7 @@ public class Start extends Thread{
 					map.call(constant + url, tittle);	
 					lblAddressNotFound.setVisible(false);
 				}catch(Exception e){
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Kart",  JOptionPane.ERROR_MESSAGE);
 					lblAddressNotFound.setVisible(true);
 					btnRedigerAdresse.setVisible(true);
 				}
@@ -1207,7 +1205,7 @@ public class Start extends Thread{
 					showProductModel.clear();
 					kvitering.setText("");
 				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Kunne ikke slette bestillingen", "Error",  JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Error",  JOptionPane.ERROR_MESSAGE);
 				}							
 			}
 		});
@@ -1494,7 +1492,7 @@ public class Start extends Thread{
 					DatabaseConnector.edit(oldProduct, newProduct);
 					getProducts();					
 				}catch(Exception ee){
-					ee.printStackTrace();
+//					ee.printStackTrace();
 				}
 			}
 		});
