@@ -903,22 +903,23 @@ public class Start extends Thread{
 						temp=null;
 						DatabaseConnector.newOrder(order);
 						getOrders();
+						navn.setText("");
+						nummer.setText("");
+						gatenavn.setText("");
+						postnummer.setText("");
+						poststed.setText("");
+						kommentar.setText("");
+						husnummer.setText("");
+						chckbxLevering.setSelected(false);
+						rdbtnKort.setSelected(false);
+						rdbtnKontant.setSelected(false);
+						model.clear();
+						frame.repaint();
 					}catch(Exception j){
-						JOptionPane.showMessageDialog(null, "Failed to create new User", "Send-Error",  JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Klarte ikke legge lage ny bruker", "Send-Error",  JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				navn.setText("");
-				nummer.setText("");
-				gatenavn.setText("");
-				postnummer.setText("");
-				poststed.setText("");
-				kommentar.setText("");
-				husnummer.setText("");
-				chckbxLevering.setSelected(false);
-				rdbtnKort.setSelected(false);
-				rdbtnKontant.setSelected(false);
-				model.clear();
-				frame.repaint();
+
 			}
 		});
 		btnNeste_1.setBounds(831, 555, 138, 68);
