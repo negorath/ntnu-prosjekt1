@@ -2,6 +2,7 @@ package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 
 import java.awt.event.ActionListener;
@@ -44,8 +45,8 @@ public class Instruksjoner {
 				temp = in.readLine();
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("Fant ikke fil");
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Fant ikke tekstdokumentet 'instruksjoner.txt'", "Tekstfil-error",  JOptionPane.ERROR_MESSAGE);
+
 		}
 		
 		JScrollPane scrollPane = new JScrollPane();
