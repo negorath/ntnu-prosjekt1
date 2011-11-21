@@ -70,6 +70,23 @@ CREATE TABLE IF NOT EXISTS `products` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+INSERT INTO `products` (`id`, `name`, `description`, `price`) VALUES
+(1, 'Margharita', 'Ost, tomatsaus og basilikum', '100'),
+(2, 'Vesuvio', 'Tomat, ost og skinke', '115'),
+(3, 'Milano', 'Tomat, ost og pepperoni', '115'),
+(4, 'Gabagol', 'Tomat, ost, peanøttsmørr, ostepop, gummibjørner', '150'),
+(5, 'Trondheim spesial', 'Tomat, ost, biff, løk, mais, ananas og chillisaus', '132'),
+(6, 'Capriciosa', 'Tomat, ost, skinke, sjampinjong', '130'),
+(7, 'Maffiosa', 'Tomat, ost, kebabkjøtt, løk og hvitløkssaus', '130'),
+(8, 'Grozzo', 'Tomat, ost, skinke, biff, pepperoni, kylling og løk', '140'),
+(9, 'Calzone', 'Tomat, ost, kylling, pesto, mozzarella', '130'),
+(10, 'Cola', 'Drikkevare', '20'),
+(11, 'Fanta', 'Drikkevare', '20'),
+(12, 'Sprite', 'Drikkevare', '20'),
+(13, 'Cola-Zero', 'Drikkevare', '20'),
+(14, 'BonAqua', 'Drikkevare', '15'),
+(15, 'Vann', 'Drikkevare', '10');
+
 -- --------------------------------------------------------
 
 --
