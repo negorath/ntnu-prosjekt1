@@ -13,14 +13,17 @@ public class User{
 		this.phone = phone;
 		this.address = address;
 	}
-	public void add(User user){
-		
-	}
-	
-	
+	/**
+	 * sets the user
+	 * @param id
+	 */
 	public void setUserId(String id){
 		this.userID = id;
 	}
+	/**
+	 * gets the user
+	 * @return user
+	 */
 	public String getId(){
 		return this.userID;
 	}
@@ -67,7 +70,9 @@ public class User{
 	public void setAddress(Address address) {
 		this.address = address;
 	}
-	
+	/**
+	 * returns a string representation of the user.
+	 */
 	public String toString(){
 		String result;
 		result = getPhone() + ": " + getName();

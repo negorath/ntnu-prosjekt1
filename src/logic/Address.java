@@ -120,10 +120,15 @@ public class Address {
 	public int getId() {
 		return id;
 	}
+	/**
+	 * @param id to set
+	 */
 	public void setId(int id){
 		this.id = id;
 	}
-	
+	/**
+	 * @return true if the address is saved correctly
+	 */
 	public boolean save(){
 		
 		try {

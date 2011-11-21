@@ -16,7 +16,7 @@ import localData.Config;
 
 
 /** Klassen som setter opp koblingen til databasen
- *  Bruk getConnection() for å få en kobling til databasen
+ *  Bruk getConnection() for Œ fŒ en kobling til databasen
  */
 public class DatabaseConnector{	
 	
