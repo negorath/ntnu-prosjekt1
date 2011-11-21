@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import logic.Address;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -77,8 +79,7 @@ public class ChangeAddress {
 					a.setCity(sted.getText());
 					
 					if (!a.save()) {
-						// TODO: Vis feilmelding til brukeren
-						System.out.println("Klarte ikke Œ lagre");
+						JOptionPane.showMessageDialog(null, "Klarte ikke lagre adressen i databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
 					}
 					
 					frame.dispose();
@@ -114,8 +115,7 @@ public class ChangeAddress {
 				a.setCity(sted.getText());
 				
 				if (!a.save()) {
-					// TODO: Vis feilmelding til brukeren
-					System.out.println("Klarte ikke Œ lagre");
+					JOptionPane.showMessageDialog(null, "Klarte ikke lagre adresse i databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
 				}
 				
 				frame.dispose();

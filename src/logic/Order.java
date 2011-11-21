@@ -3,6 +3,7 @@ import java.sql.Connection;
 import java.text.DecimalFormat;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class Order {
 	
@@ -145,7 +146,7 @@ public class Order {
 		try {
 			s += DatabaseConnector.getUser(Integer.parseInt(userId));
 		} catch (Exception e) {
-			System.out.println("Failed to make toString in class Order");
+			JOptionPane.showMessageDialog(null, "Klarte ikke lage toString i klasse Order", "toString",  JOptionPane.ERROR_MESSAGE);
 		}
 		return s;
 	}
@@ -172,8 +173,7 @@ public class Order {
 					dlm.add(i, antall[i] + " x " + navn);
 				}
 			}catch(Exception e){
-//				System.out.println("Klarte ikke lage listmodel av produkter i ordre");
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Klarte ikke lage liste med produkter", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
 			}
 		}		
 		return dlm;
@@ -194,8 +194,7 @@ public class Order {
 					mva14 += (Double.parseDouble(pris)/114)*14;
 				}
 			} catch (Exception e) {
-//				System.out.println("Greide ikke lage kvittering String");
-//				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Klarte ikke generere kvittering", "Bestilling",  JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		if(getLevering() == 1){

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 import localData.Config;
 
 
@@ -27,9 +29,8 @@ public class DatabaseConnector{
 			con = getConnection();
 			stmt = con.createStatement();
 			con.setAutoCommit(true);
-			System.out.println("Connected to " + Config.DBName);
 		}catch(Exception e){
-			System.out.println("klarer ikke laste inn databasen");
+			JOptionPane.showMessageDialog(null, "Klarte ikke laste inn databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
 		}
 		Address.setConnection(con);
     }
@@ -39,10 +40,10 @@ public class DatabaseConnector{
         String password = Config.DBPassword;
         
         try{
-        	Class.forName("com.mysql.jdbc.Driver");
-        	System.out.println("Driver loaded");        	
+        	Class.forName("com.mysql.jdbc.Driver");     	
         }catch(Exception e){
-        	System.out.println("Kunne ikke laste inn driver");
+			JOptionPane.showMessageDialog(null, "Klarte ikke laste inn sql driver", "Driver-error",  JOptionPane.ERROR_MESSAGE);
+
         }
 	    return DriverManager.getConnection(url, user, password);
 	  }
@@ -248,8 +249,7 @@ public class DatabaseConnector{
     		stmt.executeUpdate("INSERT INTO orders SET user_id = '" + order.getUserId() + "', due = NULL, delivered = NULL, products = '" + order.getProducts() + "', comment='" + order.getKommentar() + "', levering='" + order.getLevering() + "', kort='" + order.getKort() + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
-    		System.out.println("Failed to insert new order into database");
-    		e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Klarte ikke lagre ny bestilling i databasen", "Error",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -263,8 +263,7 @@ public class DatabaseConnector{
 			con.setAutoCommit(false);
 			newProduct_rs.close();
     	}catch(Exception e){
-    		System.out.println("Failed to insert new Product into database");
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, "Klarte ikke legge til nytt produkt i databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -280,8 +279,7 @@ public class DatabaseConnector{
     		con.setAutoCommit(false);
     		deleteUser_rs.close();
     	}catch(Exception e){
-    		System.out.println("Failed to delete User from database");
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, "Klarte ikke slette kunde fra databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -295,8 +293,7 @@ public class DatabaseConnector{
     		con.setAutoCommit(false);
     		deleteProduct_rs.close();
     	}catch(Exception e){
-    		System.out.println("Failed to delete Product from database");
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, "Klarte ikke slette produkt fra databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -306,7 +303,7 @@ public class DatabaseConnector{
     		stmt.executeUpdate("DELETE from orders WHERE id='" + order.getId() + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
-    		System.out.println("Failed to delete Order from database");
+    		JOptionPane.showMessageDialog(null, "Klarte ikke slette bestilling fra databasen", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -327,8 +324,7 @@ public class DatabaseConnector{
     		stmt.executeUpdate("UPDATE users SET name='" + newUser.getName() + "', phone='" + newUser.getPhone() + "' WHERE id='" + id + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
-    		System.out.println("Failed to edit User");
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, "Klarte ikke endre kundeinformasjon", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -343,8 +339,7 @@ public class DatabaseConnector{
     		stmt.executeUpdate("UPDATE products SET name='" + newProduct.getName() + "', description='" + newProduct.getDescription() + "', price='" + newProduct.getPrice() + "' WHERE id='" + id  + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
-    		System.out.println("Failed to edit Product");
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(null, "Klarte ikke endre produktet", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -354,7 +349,7 @@ public class DatabaseConnector{
     		stmt.executeUpdate("UPDATE orders SET due=now() WHERE id='" + id + "'");
     		con.setAutoCommit(false);
     	}catch(Exception e){
-    		System.out.println("Failed to edit order in database");
+    		JOptionPane.showMessageDialog(null, "Bestillingen ble ikke satt til ferdig", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -373,8 +368,8 @@ public class DatabaseConnector{
 			con.setAutoCommit(true);
 			stmt.executeUpdate("UPDATE orders SET due = NULL WHERE id='" + a + "'");
 			con.setAutoCommit(false);
-		} catch (Exception e) {
-			System.out.println("Failed to set the order to 'not finished'");
+		} catch (Exception e) {;
+			JOptionPane.showMessageDialog(null, "Bestillingen ble ikke satt til 'ikke ferdig'", "SQL-feil",  JOptionPane.ERROR_MESSAGE);
 		}
     }
 	public static Address getAddressFromUser(int user_id) {

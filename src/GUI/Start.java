@@ -188,13 +188,14 @@ public class Start extends Thread{
 		try{
 			DatabaseConnector.initialize();			
 		}catch(Exception e){
-			System.out.println("Could not connect to database");
+			JOptionPane.showMessageDialog(null, "Klarte ikke å koble til databasen", "Database error",  JOptionPane.ERROR_MESSAGE);
 		}
 		getUsers();
 		getProducts();
 		getOrders();
 		lagListe();
 		frame.repaint();
+
 	}
 
 	/**
@@ -416,7 +417,8 @@ public class Start extends Thread{
 					try{
 						model.remove(list.getSelectedIndex());
 					}catch(Exception t){
-						System.out.println("Ingenting er valgt");
+						JOptionPane.showMessageDialog(null, "Du må velge ett element først", "Fjern-Error",  JOptionPane.ERROR_MESSAGE);
+
 					}
 			}
 		});
@@ -824,13 +826,13 @@ public class Start extends Thread{
 					getUsers();
 					getOrders();
 					if (!u.getAddress().save()) {
-						System.out.println("Klarte ikke Œ lagre");
+						JOptionPane.showMessageDialog(null, "Klarte ikke lagre adresse i databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
+
 					}
 					frame.repaint();
 
 					Order order = new Order(DatabaseConnector.getUser(nummer.getText()).getId());
 					order.setProducts(temp);
-					System.out.println(order.getProducts());
 					order.setKommentar(kommentar.getText());
 					if(chckbxLevering.isSelected())
 						q = 1;
@@ -902,8 +904,7 @@ public class Start extends Thread{
 						DatabaseConnector.newOrder(order);
 						getOrders();
 					}catch(Exception j){
-						System.out.println("Failed to create new User");
-						j.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Failed to create new User", "Send-Error",  JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				navn.setText("");
@@ -965,7 +966,7 @@ public class Start extends Thread{
 						}
 						textArea.setText(o.getKommentar());
 					}catch(Exception e){
-						//						System.out.println("Fant ingen produkter i bestillingen");
+						JOptionPane.showMessageDialog(null, "Fant ingen produkcter i bestillingen", "Bestillings-Error",  JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				else if(arg0.getClickCount() == 2){
@@ -1018,7 +1019,8 @@ public class Start extends Thread{
 						}
 						textArea.setText(o.getKommentar());
 					}catch(Exception e){
-						//						System.out.println("Fant ingen produkter i bestillingen");
+						JOptionPane.showMessageDialog(null, "Fant ingen produkter i bestillingen", "Bestillings-Error",  JOptionPane.ERROR_MESSAGE);
+
 					}
 				}
 				else if(arg0.getClickCount() == 2){
@@ -1030,7 +1032,8 @@ public class Start extends Thread{
 						showProductModel.clear();
 						kvitering.setText("");
 					}catch(Exception e){
-						e.printStackTrace();
+						JOptionPane.showMessageDialog(null, "Kunne ikke sette bestillingen til 'ikke ferdig'", "Error",  JOptionPane.ERROR_MESSAGE);
+
 					}
 				}
 			}
@@ -1044,14 +1047,14 @@ public class Start extends Thread{
 				if(listModelFinished.getSize()>0){
 					try{
 						Order o = DatabaseConnector.getOrder((String)list_4.getSelectedValue());							
-						//						DatabaseConnector.deleteOrder(o);
 						DatabaseConnector.delivered(o);
 						getOrders();
 						textArea.setText("");
 						showProductModel.clear();
 						kvitering.setText("");
 					}catch(Exception ett){
-						System.out.println("Ingen ordre er valgt");
+						JOptionPane.showMessageDialog(null, "Du må velge en bestilling først", "Error",  JOptionPane.ERROR_MESSAGE);
+
 					}
 				}
 			}
@@ -1077,7 +1080,8 @@ public class Start extends Thread{
 						o = DatabaseConnector.getOrder((String)list_3.getSelectedValue());
 					}
 				}catch(Exception et){
-					//					et.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Velg en bestilling først", "Error",  JOptionPane.ERROR_MESSAGE);
+
 				}
 				try{
 					Address a = DatabaseConnector.getAddressFromUser(Integer.parseInt(o.getUserId()));
@@ -1085,8 +1089,8 @@ public class Start extends Thread{
 					getUsers();
 					kunder_list.repaint();
 				}catch(Exception ed){
-					System.out.println("fant ikke brukeren");
-					//					ed.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Fant ikke brukeren i databasen", "Error",  JOptionPane.ERROR_MESSAGE);
+
 				}
 				lblAddressNotFound.setVisible(false);
 			}
@@ -1203,8 +1207,7 @@ public class Start extends Thread{
 					showProductModel.clear();
 					kvitering.setText("");
 				} catch (Exception e) {
-					System.out.println("greide ikke slette ordre");
-					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Kunne ikke slette bestillingen", "Error",  JOptionPane.ERROR_MESSAGE);
 				}							
 			}
 		});
@@ -1238,7 +1241,7 @@ public class Start extends Thread{
 					postnummer.setText(user.getAddress().getZipcode());
 					poststed.setText(user.getAddress().getCity());
 				}catch(Exception ee){
-					System.out.println("New Customer");
+					JOptionPane.showMessageDialog(null, "Ny kunde", "Melding", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -1282,16 +1285,6 @@ public class Start extends Thread{
 					redigerPostNummer.setText(user.getAddress().getZipcode());
 					redigerPostSted.setText(user.getAddress().getCity());
 				}
-				//				else if(arg0.getButton() == arg0.BUTTON3){
-				//					try{
-				//						int id = kunder_list.getSelectedIndex();
-				//						User user = (User)m1.getElementAt(id);
-				//						DatabaseConnector.deleteUser(user);
-				//						getUsers();						
-				//					}catch(Exception e){
-				//						System.out.println("Klarte ikke slette bruker");
-				//					}
-				//				}
 			}
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -1322,8 +1315,8 @@ public class Start extends Thread{
 					redigerPostNummer.setText("");
 					redigerPostSted.setText("");
 				}catch(Exception et){
-					System.out.println("Kunne ikke legge til kunde");
-					et.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Kunne ikke legge til kunde i databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
+
 				}
 			}
 		});
@@ -1480,14 +1473,6 @@ public class Start extends Thread{
 					retterPris.setText(String.valueOf(product.getPrice()));
 					retterKommentar.setText(product.getDescription());
 				}
-				//				else if(e.getButton() == e.BUTTON3){
-				//					try{
-				//						DatabaseConnector.deleteProduct((Product)m2.getElementAt(retter_list.getSelectedIndex()));
-				//						getProducts();						
-				//					}catch(Exception hehe){
-				//						System.out.println("Klarte ikke slette produkt");
-				//					}
-				//				}
 			}
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -1527,7 +1512,7 @@ public class Start extends Thread{
 					retterKommentar.setText("");
 					retterPris.setText("");
 				}catch(Exception e){
-					System.out.println("Failed to add new User into database");
+					JOptionPane.showMessageDialog(null, "Klarte ikke legge til kunde i databasen", "Database-Error",  JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -1574,7 +1559,8 @@ public class Start extends Thread{
 						retterKommentar.setText("");
 						retterPris.setText("");
 					}catch(Exception e){
-						System.out.println("Failed to add new Product into database");
+						JOptionPane.showMessageDialog(null, "Klarte ikke legge til produkt i databasen", "Database-error",  JOptionPane.ERROR_MESSAGE);
+
 					}					
 				}
 			}
@@ -1661,9 +1647,7 @@ public class Start extends Thread{
 				try {
 					Instruksjoner.run();
 				} catch (Exception e1) {
-					// TODO Auto-generated catch block
-					System.out.println("Klarte ikke Œpne instruksjoner");
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, "Klarte ikke åpne instruksjoner", "Error",  JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -1705,8 +1689,6 @@ public class Start extends Thread{
 			}
 			pizzaInfo.setText(pizzaListe + "</html>");
 		}catch(Exception eee){
-			//			eee.printStackTrace();
-			System.out.println("Finnes ingen produkter i database");
 			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGŒ til Rediger > Retter og legg inn retter");
 		}
 	}
@@ -1797,7 +1779,7 @@ public class Start extends Thread{
 				listModelProducts.addElement("#" + pr.getId() + " " + m2.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			//			System.out.println("Finner ingen produkter i databasen");
+			JOptionPane.showMessageDialog(null, "Fant ingen produkter i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	/**
@@ -1813,8 +1795,7 @@ public class Start extends Thread{
 				listmodelUsers.addElement(user.getId() + ". " + m1.getElementAt(i).toString());
 			}
 		}catch(Exception e){
-			//			e.printStackTrace();
-			//			System.out.println("Finner ingen kunder i databasen");
+			JOptionPane.showMessageDialog(null, "Fant ingen kunder i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 	public void getOrders(){
@@ -1840,8 +1821,8 @@ public class Start extends Thread{
 				list_4.setModel(listModelFinished);
 			}
 		}catch(Exception e){
-			//			System.out.println("Finner ingen orders i databasen");
-			//			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Fant ingen bestillinger i databasen", "Database",  JOptionPane.INFORMATION_MESSAGE);
+
 		}
 	}
 	public String createReceipt(JList l){
