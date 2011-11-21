@@ -63,9 +63,16 @@ public class Product {
 	public String getId() {
 		return id;
 	}
+	/**
+	 * sets the id
+	 * @param id
+	 */
 	public void setId(String id){
 		this.id = id;
 	}
+	/**
+	 * returns a string representation of the product
+	 */
 	public String toString(){
 		String result;
 		result = getName() + ": " + getPrice() + " NOK";

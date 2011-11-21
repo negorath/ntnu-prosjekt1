@@ -72,6 +72,10 @@ public class Order {
 		return products;
 	}
 	
+	/**
+	 * Lager en string som viser hvilke produkter og hvor mange som er bestyilt.
+	 * @param produkter, array som inneholder produktene som er bestilt.
+	 */
 	public void setProducts(String[] produkter){
 		this.products = "";
 		
@@ -96,6 +100,10 @@ public class Order {
 			}
 		}
 	}
+	/**
+	 * Lager en liste over maten som er bestilt.
+	 * @param s
+	 */
 	public void createFoodList(String s){
 		int teller = 0;
 		for(int i = 0; i<s.length(); i++){
@@ -137,9 +145,16 @@ public class Order {
 	public String getId() {
 		return id;
 	}
+	/**
+	 * sets the order id.
+	 * @param a
+	 */
 	public void setId(String a){
 		this.id = a;
 	}
+	/**
+	 * Returns a string representation of the order.
+	 */
 	public String toString(){
 		String s = getId() + " ";
 		try {
@@ -149,20 +164,38 @@ public class Order {
 		}
 		return s;
 	}
-	
+	/**
+	 * returns due
+	 * @return
+	 */
 	public String getDue(){
 		return this.due;
 	}
+	/**
+	 * sets due
+	 * @param s
+	 */
 	public void setDue(String s){
 		this.due = s;
 	}
+	/**
+	 * sets delivered
+	 * @param s
+	 */
 	public void setDelivered(String s){
 		this.delivered = s;
 	}
+	/**
+	 * gets delivered
+	 * @return
+	 */
 	public String getDelivered(){
 		return this.delivered;
 	}
-	
+	/**
+	 * returns a istmodel containing the products in the order
+	 * @return
+	 */
 	public DefaultListModel getProductsAsDefaultListModel(){
 		DefaultListModel dlm = new DefaultListModel();
 		for(int i = 0; i<antall.length; i++){
@@ -178,6 +211,10 @@ public class Order {
 		}		
 		return dlm;
 	}
+	/**
+	 * Creates a string that represents the receipt.
+	 * @return String
+	 */
 	public String getProductsString(){
 		String temp = "<html><center>" + "Gruppe 10"  + "<br>" + "\tPizzeria\n" + "<br>Tlf: 13 37 13 37" + "</center>" + "<br>" + "---------------------------------------------------------" + "<br><br>";
 		double sum = 0;
@@ -216,10 +253,17 @@ public class Order {
 		
 		return temp;
 	}
-	
+	/**
+	 * sets comment
+	 * @param kommentar
+	 */
 	public void setKommentar(String kommentar){
 		this.kommentar = kommentar;
 	}
+	/**
+	 * gets comment
+	 * @return
+	 */
 	public String getKommentar(){
 		return this.kommentar;
 	}

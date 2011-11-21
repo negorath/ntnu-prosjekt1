@@ -811,7 +811,6 @@ public class Start extends Thread{
 
 
 				tabbedPane.setSelectedComponent(Utgaende);
-				list_2.addElement(createOrder(list));
 				String tmp = "";
 				try{
 					User u = DatabaseConnector.getUser(nummer.getText());
@@ -1695,6 +1694,9 @@ public class Start extends Thread{
 		mnHistorie.add(mntmOrdrehistorikk);
 		frame.setUndecorated(true);
 	}
+	/**
+	 * Henter produkter fra databasen og lager en liste over rettene.
+	 */
 	public void lagListe(){
 		try{
 			getProducts();
@@ -1707,9 +1709,14 @@ public class Start extends Thread{
 		}catch(Exception eee){
 			//			eee.printStackTrace();
 			System.out.println("Finnes ingen produkter i database");
-			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGŒ til Rediger > Retter og legg inn retter");
+			JOptionPane.showMessageDialog(null, "Finnes ingen produkter i databasen\nGå til Rediger > Retter og legg inn retter");
 		}
 	}
+	/**
+	 * 
+	 * @param String a, navnet på pizzaen eller brusen som ble sist trykt på
+	 * @return String a;
+	 */
 	private String menyKnappTrykk(String a) {
 		if (isBrus) {
 			for (int i = 0; i < model.getSize(); i++) {
@@ -1731,6 +1738,11 @@ public class Start extends Thread{
 		model.addElement("1" +" x "+a); 
 		return a;
 	}
+	/**
+	 * Tar inn et antall og skriver dette antall pizza inn i en bestilling.
+	 * @param nr, antallet som er blitt valgt.
+	 * @return null
+	 */
 	private String nummerKnappTrykk(String nr){
 		if (isBrus) {
 			isBrus = false;
@@ -1787,6 +1799,9 @@ public class Start extends Thread{
 		hvorMange = "";
 		return null;
 	}
+	/**
+	 * Get or refresh all products
+	 */
 	public void getProducts(){
 		try{
 			//m2 inneholder Product objektene, mens listModelProducts inneholder Product.toString();
@@ -1817,6 +1832,9 @@ public class Start extends Thread{
 			//			System.out.println("Finner ingen kunder i databasen");
 		}
 	}
+	/**
+	 * Get or refresh all orders
+	 */
 	public void getOrders(){
 		try{
 			listModelOrders.clear();
@@ -1843,39 +1861,5 @@ public class Start extends Thread{
 			//			System.out.println("Finner ingen orders i databasen");
 			//			e.printStackTrace();
 		}
-	}
-	public String createReceipt(JList l){
-
-		return "lololol";
-	}
-	/**
-	 * 
-	 * @param a
-	 * @return
-	 */
-	public String createReceipt(String a){
-
-		String temp = "";
-
-		switch (a.charAt(9)) {
-		case 1: temp = "x 1 Margarita" + "\t" + "110,-";
-		case 2: temp = "x 1 Vesuvio" + "\t" + "110,-";
-		case 3: temp = "x 1 Milano" + "\t" + "110,-";
-		case 4: temp = "x 1 Gabagol" + "\t" + "220,-";
-		case 5: temp = "x 1 Trondheim spesial" + "\t" + "110,-";	
-		case 6: temp = "x 1 Calzone" + "\t" + "120,-";
-		case 7: temp = "x 1 Capriciosa" + "\t" + "120,-";
-		case 8: temp = "x 1 Maffioso" + "\t" + "120,-";
-		case 9: temp = "x 1 Grozzo" + "\t" + "130,-";
-		}
-
-		return temp;
-	}
-
-	public String createOrder(JList l){
-
-		int temp = list_2.getSize() + 1;
-		String lol = "Ordre nr." + temp;
-		return lol;
 	}
 }
