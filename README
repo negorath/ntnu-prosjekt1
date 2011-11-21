@@ -1,1 +1,25 @@
-Prosjekt 1 
+
+Steg 1.
+Først trengs en driver for å få programmet til å kommunisere med databasen. Dette gjøres ved å installere MYSQL Connector/J som finnes her: http://dev.mysql.com/downloads/connector/j/
+
+Steg 2.
+åpne structure.sql i MYSQL, enten via phpmyadmin, eller via MYSQL command line client.
+
+Steg 3.
+åpne Config.java og legg inn riktig informasjon
+	public static String DBHost = "//localhost";
+	public static String DBUsername = "root";
+	public static String DBport = "3306";
+	public static String DBPassword = "";
+	public static String DBName = "prosjekt";
+DBHost 	er standard.
+DBUsername 	er ditt MYSQL username, standard skal være root
+DBport		er standard.
+DBPassword	er ditt MYSQL passord som du opprettet da du installerte driver fra 			steg1, med mindre du allerede har mysql fra før.
+DBName		navnet som ble gitt til databasen
+
+Steg 4.
+
+
+
+

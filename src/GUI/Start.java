@@ -1614,23 +1614,23 @@ public class Start extends Thread{
 		menuBar.setBackground(Color.BLACK);
 		frame.setJMenuBar(menuBar);
 
-		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
-		label_1.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
-				System.exit(0);
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				label_1.setIcon(new ImageIcon("src/Bilder/exit_on.gif"));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				label_1.setIcon(new ImageIcon("src/Bilder/exit.gif"));
-			}
-		});
-		menuBar.add(label_1);
-		label_1.setToolTipText("Avslutter Programmet");
+//		label_1 = new JLabel(new ImageIcon("src/Bilder/exit.gif"));
+//		label_1.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseReleased(MouseEvent arg0) {
+//				System.exit(0);
+//			}
+//			@Override
+//			public void mouseEntered(MouseEvent e) {
+//				label_1.setIcon(new ImageIcon("src/Bilder/exit_on.gif"));
+//			}
+//			@Override
+//			public void mouseExited(MouseEvent e) {
+//				label_1.setIcon(new ImageIcon("src/Bilder/exit.gif"));
+//			}
+//		});
+//		menuBar.add(label_1);
+//		label_1.setToolTipText("Avslutter Programmet");
 
 		JMenu mnHjelp = new JMenu("Hjelp");
 		mnHjelp.setBackground(Color.BLACK);
@@ -1675,7 +1675,7 @@ public class Start extends Thread{
 			}
 		});
 		mnHistorie.add(mntmOrdrehistorikk);
-		frame.setUndecorated(true);
+//		frame.setUndecorated(true);
 	}
 	/**
 	 * Henter produkter fra databasen og lager en liste over rettene.
